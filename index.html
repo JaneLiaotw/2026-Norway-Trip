@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Norway 2026 Trip App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --primary-blue: #00205B; --norway-red: #BA0C2F; --bg-gray: #f8f9fa; }
+        body { background-color: var(--bg-gray); font-family: -apple-system, sans-serif; padding-bottom: 30px; }
+        .navbar { background-color: var(--primary-blue); color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .card { border-radius: 12px; border: none; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 15px; }
+        .btn-norway { background-color: var(--primary-blue); color: white; }
+        .btn-norway:hover { color: white; opacity: 0.9; }
+        .itinerary-card { border-left: 5px solid var(--norway-red); transition: 0.3s; }
+        .weather-btn { background: #e3f2fd; color: #0d47a1; border: none; padding: 8px 15px; border-radius: 8px; font-size: 0.9rem; }
+        .currency-box { background: #fff3f3; border: 1px solid #ffcdd2; border-radius: 10px; padding: 15px; }
+        .input-group-text { background: var(--primary-blue); color: white; border: none; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-dark p-3 sticky-top">
+    <div class="container d-flex justify-content-between">
+        <span class="navbar-brand mb-0 h1"><i class="fas fa-ship"></i> Norway 2026 自駕系統</span>
+        <button class="btn btn-outline-light btn-sm" onclick="saveToLocal()"><i class="fas fa-save"></i> 儲存修改</button>
+    </div>
+</nav>
+
+<div class="container mt-3">
+    <div class="card p-3 mb-4">
+        <h6 class="fw-bold"><i class="fas fa-calculator text-danger"></i> 即時換匯計算 (1 NOK ≈ 3.0 TWD)</h6>
+        <div class="row g-2 mt-2">
+            <div class="col-6">
+                <div class="input-group">
+                    <span class="input-group-text">NOK</span>
+                    <input type="number" id="nokInput" class="form-control" placeholder="金額" oninput="convert('nok')">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="input-group">
+                    <span class="input-group-text">TWD</span>
+                    <input type="number" id="twdInput" class="form-control" placeholder="金額" oninput="convert('twd')">
+                </div>
+            </div>
+        </div>
+        <small class="text-muted mt-2">註：匯率以 3.0 估算，可依實際匯率手動調整。</small>
+    </div>
+
+    <div class="d-flex overflow-auto pb-2 mb-3 gap-2">
+        <a href="https://www.yr.no/en/forecast/daily-table/1-72833/Norway/Oslo" target="_blank" class="weather-btn text-decoration-none">Oslo 🌤️</a>
+        <a href="https://www.yr.no/en/forecast/daily-table/1-92416/Norway/Bergen" target="_blank" class="weather-btn text-decoration-none">Bergen 🌧️</a>
+        <a href="https://www.yr.no/en/forecast/daily-table/1-49340/Norway/Geiranger" target="_blank" class="weather-btn text-decoration-none">Geiranger 🏔️</a>
+        <a href="https://www.yr.no/en/forecast/daily-table/1-42036/Norway/Stavanger" target="_blank" class="weather-btn text-decoration-none">Stavanger ⚓</a>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h5 class="fw-bold mb-0">📅 完整行程清單</h5>
+        <button class="btn btn-sm btn-norway" onclick="addCustomItem()"><i class="fas fa-plus-circle"></i> 新增行程</button>
+    </div>
+
+    <div id="itinerary-container">
+        </div>
+</div>
+
+<script>
+    // 匯率常數
+    const RATE = 3.0;
+
+    // 原始行程數據
+    const defaultTrip = [
+        { date: "7/09 D1", title: "OSL 機場 -> Kristiansand", hotel: "Radisson Blu Caledonien Hotel", note: "取車(07:00), 沿E18南下" },
+        { date: "7/10 D2", title: "Kristiansand -> Stavanger", hotel: "Radisson Blu Atlantic Hotel", note: "Mandal/Lindesnes 包船捕撈行程" },
+        { date: "7/11 D3", title: "聖壇岩健行 (Preikestolen)", hotel: "Pulpit Rock Mountain Lodge", note: "下午3點開始健行(建議)" },
+        { date: "7/12 D4", title: "Stavanger -> Haugesund", hotel: "Radisson Hotel Haugesund", note: "沿E39北上, 需搭乘渡輪" },
+        { date: "7/13 D5", title: "Haugesund -> Bergen", hotel: "Thon Hotel Rosenkrantz Bergen", note: "遊覽布呂根碼頭、弗羅伊恩山" },
+        { date: "7/14 D6", title: "Bergen -> Flåm", hotel: "Flåm Marina", note: "E16公路, Stegastein觀景台" },
+        { date: "7/15 D7", title: "Flåm -> Stryn", hotel: "Stryn Kaffebar & Vertshus", note: "長途駕駛, 跨越松恩峽灣" },
+        { date: "7/16 D8", title: "Stryn -> Geiranger (1)", hotel: "Geirangerfjorden Feriesenter", note: "老鷹之路、Dalsnibba觀景台" },
+        { date: "7/17 D9", title: "Geiranger (2)", hotel: "Geirangerfjorden Feriesenter", note: "蓋朗厄爾峽灣遊船" },
+        { date: "7/18 D10", title: "Geiranger -> Ålesund", hotel: "Quality Hotel Ålesund", note: "阿克斯拉山俯瞰市景" },
+        { date: "7/19 D11", title: "Ålesund -> 內陸地區", hotel: "Grand Hotel by Classic Norway", note: "往Rondane國家公園前進" },
+        { date: "7/20 D12", title: "Rondane 國家公園", hotel: "Rondane Gjestegård", note: "體驗挪威高山與國家公園景致" },
+        { date: "7/21 D13", title: "Rondane -> Oslo (1)", hotel: "HI Oslo Haraldsheim", note: "市郊免費停車, 搭電車進市區" },
+        { date: "7/22 D14", title: "Oslo 市區觀光 (2)", hotel: "HI Oslo Haraldsheim", note: "歌劇院、維格蘭雕塑公園" },
+        { date: "7/23 D15", title: "Oslo -> 機場還車", hotel: "Radisson Hotel Oslo Airport", note: "18:00前機場還車, 隔日搭機" },
+        { date: "7/24 D16", title: "賦歸", hotel: "搭機離開", note: "11:00 班機" }
+    ];
+
+    // 初始化：檢查是否有儲存過的數據，否則載入預設值
+    let tripData = JSON.parse(localStorage.getItem('myNorwayTrip')) || defaultTrip;
+
+    // 換匯功能
+    function convert(type) {
+        const nok = document.getElementById('nokInput');
+        const twd = document.getElementById('twdInput');
+        if (type === 'nok') twd.value = (nok.value * RATE).toFixed(1);
+        else nok.value = (twd.value / RATE).toFixed(1);
+    }
+
+    // 渲染行程
+    function renderItinerary() {
+        const container = document.getElementById('itinerary-container');
+        container.innerHTML = '';
+        tripData.forEach((item, index) => {
+            const card = document.createElement('div');
+            card.className = 'card p-3 itinerary-card';
+            card.innerHTML = `
+                <div class="d-flex justify-content-between">
+                    <span class="badge bg-danger mb-2">${item.date}</span>
+                    <button class="btn btn-sm text-muted" onclick="deleteItem(${index})"><i class="fas fa-trash"></i></button>
+                </div>
+                <h6 class="fw-bold mb-1" contenteditable="true" onblur="updateData(${index}, 'title', this.innerText)">${item.title}</h6>
+                <div class="small text-primary mb-1"><i class="fas fa-hotel"></i> <span contenteditable="true" onblur="updateData(${index}, 'hotel', this.innerText)">${item.hotel}</span></div>
+                <div class="small text-muted"><i class="fas fa-info-circle"></i> <span contenteditable="true" onblur="updateData(${index}, 'note', this.innerText)">${item.note}</span></div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    // 更新數據內容
+    function updateData(index, field, value) {
+        tripData[index][field] = value;
+        saveToLocal();
+    }
+
+    // 新增行程
+    function addCustomItem() {
+        const newDay = { date: "New Day", title: "點擊修改標題", hotel: "修改飯店名稱", note: "修改內容備註" };
+        tripData.push(newDay);
+        renderItinerary();
+        saveToLocal();
+    }
+
+    // 刪除行程
+    function deleteItem(index) {
+        if(confirm("確定要刪除這天的行程嗎？")) {
+            tripData.splice(index, 1);
+            renderItinerary();
+            saveToLocal();
+        }
+    }
+
+    // 儲存至瀏覽器 LocalStorage
+    function saveToLocal() {
+        localStorage.setItem('myNorwayTrip', JSON.stringify(tripData));
+        console.log("數據已儲存");
+    }
+
+    // 頁面載入執行
+    window.onload = renderItinerary;
+</script>
+
+</body>
+</html>
