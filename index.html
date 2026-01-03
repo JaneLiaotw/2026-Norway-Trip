@@ -3,38 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Norway 2026 Trip App</title>
+    <title>Hygge Norway 2026</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
     <style>
-        :root { --primary-blue: #00205B; --norway-red: #BA0C2F; --bg-gray: #f8f9fa; }
-        body { background-color: var(--bg-gray); font-family: -apple-system, sans-serif; padding-bottom: 30px; }
-        .navbar { background-color: var(--primary-blue); color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        .card { border-radius: 12px; border: none; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 15px; }
-        .btn-norway { background-color: var(--primary-blue); color: white; }
-        .btn-norway:hover { color: white; opacity: 0.9; }
-        .itinerary-card { border-left: 5px solid var(--norway-red); transition: 0.3s; }
-        .weather-btn { background: #e3f2fd; color: #0d47a1; border: none; padding: 8px 15px; border-radius: 8px; font-size: 0.9rem; }
-        .currency-box { background: #fff3f3; border: 1px solid #ffcdd2; border-radius: 10px; padding: 15px; }
-        .input-group-text { background: var(--primary-blue); color: white; border: none; }
+        :root {
+            --nordic-blue: #5E81AC; --warm-sand: #ECEFF4;
+            --forest-green: #4C566A; --hygge-orange: #D08770;
+        }
+        body { background-color: #F8F9FB; font-family: 'Noto Sans TC', sans-serif; color: #2E3440; }
+        .nav-hygge { background-color: white; border-bottom: 1px solid #D8DEE9; padding: 1.5rem; }
+        .nav-link { color: var(--forest-green); font-weight: 500; }
+        .card-hygge { 
+            background: white; border-radius: 20px; border: none; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03); padding: 25px; margin-bottom: 25px;
+        }
+        .culture-note { 
+            background-color: #f0f4f8; border-left: 4px solid var(--nordic-blue); 
+            padding: 15px; font-size: 0.95rem; font-style: italic; color: #434C5E;
+        }
+        .btn-main { background-color: var(--nordic-blue); color: white; border-radius: 12px; padding: 10px 25px; }
+        h1, h2 { font-family: 'Playfair Display', serif; }
     </style>
 </head>
 <body>
 
-<nav class="navbar navbar-dark p-3 sticky-top">
-    <div class="container d-flex justify-content-between">
-        <span class="navbar-brand mb-0 h1"><i class="fas fa-ship"></i> Norway 2026 自駕系統</span>
-        <button class="btn btn-outline-light btn-sm" onclick="saveToLocal()"><i class="fas fa-save"></i> 儲存修改</button>
+<nav class="nav-hygge sticky-top mb-4">
+    <div class="container d-flex justify-content-between align-items-center">
+        <span class="h4 mb-0">Hygge Norway <small class="text-muted">2026</small></span>
+        <div class="d-none d-md-block">
+            <a href="#itinerary" class="nav-link d-inline mx-2">深度行程</a>
+            <a href="#guide" class="nav-link d-inline mx-2">生活指南</a>
+        </div>
     </div>
 </nav>
 
-<div class="container mt-3">
-    <div class="card p-3 mb-4">
-        <h6 class="fw-bold"><i class="fas fa-calculator text-danger"></i> 即時換匯計算 (1 NOK ≈ 3.0 TWD)</h6>
-        <div class="row g-2 mt-2">
-            <div class="col-6">
-                <div class="input-group">
-                    <span class="input-group-text">NOK</span>
+<div class="container">
+    <div class="card-hygge row d-flex flex-row m-0">
+        <div class="col-6 border-end">
+            <small class="text-muted">匯率參考</small>
+            <div class="h5">1 NOK ≈ 3.05 TWD</div>
+        </div>
+        <div class="col-6 ps-4">
+            <small class="text-muted">當前氛圍</small>
+            <div class="h5">Nordic Summer 🌿</div>
+        </div>
+    </div>
+
+    <section id="itinerary">
+        <h2 class="mb-4">深度旅程細節</h2>
+
+        <div class="card-hygge">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div>
+                    <span class="badge bg-secondary mb-2">Day 01 - 02</span>
+                    <h3>南方門戶與古老漁村</h3>
+                </div>
+                <div class="text-end">📍 Kristiansand & Stavanger</div>
+            </div>
+            <p><strong>文化探訪：</strong> Kristiansand 是挪威人的夏季避暑勝地。這裡的舊城區 Posebyen 擁有北歐最大規模的白色木屋建築群。這抹白色在歷史上代表了富庶與純潔。</p>
+            
+            <div class="culture-note mb-3">
+                <i class="fas fa-lightbulb"></i> <strong>生活小提醒：</strong> 在挪威餐廳用餐時，水通常是免費且可以直接飲用的（Kranvann），自來水的品質甚至是世界頂尖的，不需要買瓶裝水。
+            </div>
+
+            <p><strong>Stavanger 歷史：</strong> 這裡曾是貧窮的沙丁魚罐頭加工港，直到 1969 年在北海發現石油，搖身一變成為「挪威石油之都」。建議參觀石油博物館，建築外型模擬鑽油平台，非常震撼。</p>
+        </div>
+
+        <div class="card-hygge">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div>
+                    <span class="badge bg-secondary mb-2">Day 05</span>
+                    <h3>中世紀商人的足跡：卑爾根</h3>
+                </div>
+                <div class="text-end">📍 Bergen</div>
+            </div>
+            <p><strong>漢薩同盟歷史：</strong> 走進布呂根 (Bryggen) 的木質長廊，你是在踏訪 14 世紀德國商人的地盤。這裡曾經壟斷了全歐洲的鱈魚貿易。注意看房屋上的木雕，那是當時商會的標誌。</p>
+            <div class="culture-note">
+                <i class="fas fa-cloud-rain"></i> <strong>生存提醒：</strong> 卑爾根一年有 240 天在下雨。挪威人說：「沒有壞天氣，只有穿錯衣服。」準備一件有質感的防風防水外套 (Shell Jacket) 是最道地的北歐穿搭。
+            </div>
+        </div>
+    </section>
+</div>
+
+</body>
+</html>                    <span class="input-group-text">NOK</span>
                     <input type="number" id="nokInput" class="form-control" placeholder="金額" oninput="convert('nok')">
                 </div>
             </div>
