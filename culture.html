@@ -3,51 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Journey Diary</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <style>
-        .timeline-badge { background: var(--primary-pink); color: white; padding: 4px 12px; border-radius: 10px; font-size: 0.7rem; font-weight: 700; }
-        .culture-quote { border-left: 3px solid var(--primary-pink); padding-left: 15px; margin-top: 15px; color: var(--light-text); font-style: italic; font-size: 0.85rem; }
-    </style>
 </head>
-<body style="padding: 20px 0 100px;">
+<body class="p-3">
 
-<div class="container">
-    <h3 class="fw-bold mb-4 px-2">Journey Diary</h3>
+    <header class="mb-4">
+        <h2 class="fw-bold">The Nordic Saga</h2>
+        <p class="text-soft">16 天，關於峽灣、巨魔與我們的回憶。</p>
+    </header>
 
-    <script>
-        const trip = [
-            { day: "01", loc: "Oslo ➟ Kristiansand", activity: "南方陽光起程", detail: "沿 E18 觀看海岸線，漫步 Posebyen 白色木屋區。", culture: "白色外牆曾是財富象徵，如今是南挪威的浪漫印記。" },
-            { day: "02", loc: "Lindesnes", activity: "最南端燈塔", detail: "包船捕撈挪威小龍蝦，拜訪 1656 年燈塔。", culture: "航海文化是挪威人的血脈，燈塔則是歸家的信仰。" },
-            { day: "03", loc: "Preikestolen", activity: "聖壇岩健行", detail: "604公尺垂直峭壁，俯瞰呂瑟峽灣地標風景。", culture: "漫遊權（Allemannsretten）保障了所有人親近自然的自由。" },
-            // ...以此類推至 Day 16
-        ];
-
-        // 這裡可以寫一個 loop 來渲染 16 天，或手動複製 16 份 div
-    </script>
-
-    <div class="app-card">
-        <div class="d-flex justify-content-between align-items-center mb-2">
-            <span class="timeline-badge">DAY 08</span>
-            <span class="small text-muted"><i class="fas fa-location-dot"></i> Geiranger</span>
+    <div class="glass-card">
+        <div class="d-flex justify-content-between mb-2">
+            <span class="badge bg-dark">DAY 01-02</span>
+            <span class="x-small text-muted">Kristiansand</span>
         </div>
-        <h5 class="fw-bold mb-1">峽灣之王蓋朗厄爾</h5>
-        <p class="small text-muted mb-3">行程：老鷹之路、七姊妹瀑布</p>
-        <p class="small content-text">從海拔1500米俯瞰冰河切割出的深邃峽谷，體驗自然力的極致震撼。</p>
-        <div class="culture-quote">
-            挪威人與地質共生的頑強：看那些峭壁上的廢棄農場，曾是為了逃稅而收起梯子的秘密基地。
+        <h4 class="fw-bold">白色序幕與海味探險</h4>
+        <p class="small text-soft">我們將從奧斯陸南下，進入那個把房子漆得像鮮奶油一樣白的南方世界。別忘了去 Lindesnes 燈塔，那裡是陸地的盡頭，也是冒險的起點。</p>
+        <div class="quote-text small">
+            「挪威人把房子漆成白色，是為了在陰天裡偷一點陽光。」—— 這是南方人的浪漫。
         </div>
     </div>
-    
+
+    <div class="glass-card">
+        <div class="d-flex justify-content-between mb-2">
+            <span class="badge bg-dark">DAY 08-09</span>
+            <span class="x-small text-muted">Geiranger</span>
+        </div>
+        <h4 class="fw-bold">與峽灣之王的私人約會</h4>
+        <p class="small text-soft">當你從 Dalsnibba 俯瞰蓋朗厄爾，你會明白為什麼這片土地不需要圍欄 —— 壯闊會讓你自動屏住呼吸。</p>
+        <div class="quote-text small">
+            相傳七姊妹瀑布正在對岸等待求婚者，而他已經喝醉了一千年，化作了對面的瀑布。
+        </div>
     </div>
 
-<nav class="footer-nav">
-    <a href="index.html"><i class="fas fa-house"></i>首頁</a>
-    <a href="culture.html" class="active"><i class="fas fa-map"></i>行程</a>
-    <a href="guide.html"><i class="fas fa-shield-heart"></i>指南</a>
-</nav>
+    <div class="glass-card">
+        <div class="d-flex justify-content-between mb-2">
+            <span class="badge bg-dark">DAY 14</span>
+            <span class="x-small text-muted">Oslo</span>
+        </div>
+        <h4 class="fw-bold">文明的回歸與屋頂漫步</h4>
+        <p class="small text-soft">在歌劇院的斜坡上走走。在挪威，連建築物都邀請你踩在它頭上，這就是平等的極致。</p>
+    </div>
 
+    <nav class="bottom-nav">
+        <a href="index.html"><i class="fas fa-house-chimney"></i><span>總覽</span></a>
+        <a href="culture.html" class="active"><i class="fas fa-compass"></i><span>行程</span></a>
+        <a href="guide.html"><i class="fas fa-feather-pointed"></i><span>指南</span></a>
+    </nav>
 </body>
 </html>
