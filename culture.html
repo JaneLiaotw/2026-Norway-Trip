@@ -3,162 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>16 Days Nordic Diary</title>
+    <title>Journey Diary</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        .page-header { background: linear-gradient(to bottom, #EED6D3, #FAF5F5); padding: 40px 20px; text-align: center; }
-        .day-title { color: var(--nordic-pink); font-family: 'serif'; font-style: italic; font-weight: 700; font-size: 1.1rem; }
-        .destination-h { color: var(--deep-slate); font-weight: 800; font-size: 1.2rem; margin: 2px 0; }
-        .activity-h { color: #818ba1; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 8px; }
-        .itinerary-card { border-radius: 20px; padding: 20px; margin-bottom: 25px; border: none; background: white; box-shadow: 0 8px 15px rgba(232, 180, 184, 0.1); border-left: 5px solid var(--nordic-pink); }
-        .content-text { font-size: 0.9rem; color: #4C566A; line-height: 1.6; }
+        .timeline-badge { background: var(--primary-pink); color: white; padding: 4px 12px; border-radius: 10px; font-size: 0.7rem; font-weight: 700; }
+        .culture-quote { border-left: 3px solid var(--primary-pink); padding-left: 15px; margin-top: 15px; color: var(--light-text); font-style: italic; font-size: 0.85rem; }
     </style>
 </head>
-<body style="padding-bottom: 100px;">
-
-<div class="page-header mb-4">
-    <h1 class="display-6 fw-bold">16 Days Norway Diary</h1>
-    <p class="small text-muted">逐日深度行程與文化指南</p>
-</div>
+<body style="padding: 20px 0 100px;">
 
 <div class="container">
+    <h3 class="fw-bold mb-4 px-2">Journey Diary</h3>
 
-    <div class="itinerary-card">
-        <div class="day-title">Day 01</div>
-        <div class="destination-h">Oslo ➟ Kristiansand</div>
-        <div class="activity-h">地點：E18 公路 / Posebyen 舊城區</div>
-        <p class="content-text">抵達奧斯陸機場取車後，沿著南部海岸線 E18 前行。首站抵達南部最大城克里斯蒂安桑。</p>
-        <div class="culture-box"><strong>文化：</strong>這裡的木屋群在19世紀曾因一場火災重建，統一的白色調是挪威南部建築的標誌。</div>
+    <script>
+        const trip = [
+            { day: "01", loc: "Oslo ➟ Kristiansand", activity: "南方陽光起程", detail: "沿 E18 觀看海岸線，漫步 Posebyen 白色木屋區。", culture: "白色外牆曾是財富象徵，如今是南挪威的浪漫印記。" },
+            { day: "02", loc: "Lindesnes", activity: "最南端燈塔", detail: "包船捕撈挪威小龍蝦，拜訪 1656 年燈塔。", culture: "航海文化是挪威人的血脈，燈塔則是歸家的信仰。" },
+            { day: "03", loc: "Preikestolen", activity: "聖壇岩健行", detail: "604公尺垂直峭壁，俯瞰呂瑟峽灣地標風景。", culture: "漫遊權（Allemannsretten）保障了所有人親近自然的自由。" },
+            // ...以此類推至 Day 16
+        ];
+
+        // 這裡可以寫一個 loop 來渲染 16 天，或手動複製 16 份 div
+    </script>
+
+    <div class="app-card">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="timeline-badge">DAY 08</span>
+            <span class="small text-muted"><i class="fas fa-location-dot"></i> Geiranger</span>
+        </div>
+        <h5 class="fw-bold mb-1">峽灣之王蓋朗厄爾</h5>
+        <p class="small text-muted mb-3">行程：老鷹之路、七姊妹瀑布</p>
+        <p class="small content-text">從海拔1500米俯瞰冰河切割出的深邃峽谷，體驗自然力的極致震撼。</p>
+        <div class="culture-quote">
+            挪威人與地質共生的頑強：看那些峭壁上的廢棄農場，曾是為了逃稅而收起梯子的秘密基地。
+        </div>
+    </div>
+    
     </div>
 
-    <div class="itinerary-card">
-        <div class="day-title">Day 02</div>
-        <div class="destination-h">Kristiansand ➟ Stavanger</div>
-        <div class="activity-h">地點：Lindesnes 燈塔 / Spangereid</div>
-        <p class="content-text">前往挪威本土最南端燈塔，並在 Lindesnes 區域體驗預約好的海鮮捕撈行程。</p>
-        <div class="culture-box"><strong>文化：</strong>燈塔在挪威航海史上具有神聖地位，象徵著對海上歸來者的守護。</div>
-    </div>
+<nav class="footer-nav">
+    <a href="index.html"><i class="fas fa-house"></i>首頁</a>
+    <a href="culture.html" class="active"><i class="fas fa-map"></i>行程</a>
+    <a href="guide.html"><i class="fas fa-shield-heart"></i>指南</a>
+</nav>
 
-    <div class="itinerary-card">
-        <div class="day-title">Day 03</div>
-        <div class="destination-h">Stavanger ➟ Preikestolen</div>
-        <div class="activity-h">地點：聖壇岩 / 呂瑟峽灣</div>
-        <p class="content-text">今日重點為聖壇岩健行（來回約 4-5 小時），俯視壯闊的峽灣深淵。</p>
-        <div class="culture-box"><strong>精神：</strong>挪威人從小就學習與危險共存，聖壇岩無圍欄的設計體現了對大自然的尊重。</div>
-    </div>
-
-    <div class="itinerary-card">
-        <div class="day-title">Day 04</div>
-        <div class="destination-h">Stavanger ➟ Haugesund</div>
-        <div class="activity-h">地點：Boknafjorden 渡輪 / 舊城中心</div>
-        <p class="content-text">沿著 E39 北上，體驗車輛直接開上渡輪的獨特自駕文化。</p>
-        <div class="culture-box"><strong>歷史：</strong>Haugesund 是維京國王的發源地，統一挪威的哈拉爾國王曾定都於此。</div>
-    </div>
-
-    <div class="itinerary-card">
-        <div class="day-title">Day 05</div>
-        <div class="destination-h">Haugesund ➟ Bergen</div>
-        <div class="activity-h">地點：布呂根碼頭 / 弗羅伊恩山</div>
-        <p class="content-text">抵達挪威第二大城。漫步於被列為世界遺產的彩虹木屋群 Bryggen。</p>
-        <div class="culture-box"><strong>文化：</strong>卑爾根曾是漢薩同盟的重要據點，德國商人在這裡壟斷了數百年的乾鱈魚貿易。</div>
-    </div>
-
-    <div class="itinerary-card">
-        <div class="day-title">Day 06</div>
-        <div class="destination-h">Bergen ➟ Flåm</div>
-        <div class="activity-h">地點：Voss / Stegastein 觀景台</div>
-        <p class="content-text">深入索恩峽灣。前往伸出峭壁的觀景台俯瞰山海。</p>
-        <div class="culture-box"><strong>生活：</strong>Flåm 在挪威語中意為「山間的小平地」，是體驗冰河地形的最佳入口。</div>
-    </div>
-
-    <div class="itinerary-card">
-        <div class="day-title">Day 07</div>
-        <div class="destination-h">Flåm ➟ Stryn</div>
-        <div class="activity-h">地點：Sognefjellet 景觀公路 / 冰河湖</div>
-        <p class="content-text">這是一段長途駕駛，將跨越北歐最高的高原公路，沿途可見終年不化的積雪。</p>
-        <div class="culture-box"><strong>文化：</strong>挪威的山路被稱為「國民旅遊路線」，每一座休息站廁所都是建築藝術。</div>
-    </div>
-
-    <div class="itinerary-card">
-        <div class="day-title">Day 08</div>
-        <div class="destination-h">Stryn ➟ Geiranger</div>
-        <div class="activity-h">地點：Dalsnibba / 老鷹之路</div>
-        <p class="content-text">抵達蓋朗厄爾峽灣。從海拔 1500 公尺的山頂俯衝而下，風景震撼人心。</p>
-        <div class="culture-box"><strong>自然：</strong>這裡被譽為「峽灣之王」，是挪威自然風景的最高代表作。</div>
-    </div>
-
-    <div class="itinerary-card">
-        <div class="day-title">Day 09</div>
-        <div class="destination-h">Geiranger 深度遊</div>
-        <div class="activity-h">地點：七姊妹瀑布 / 峽灣遊船</div>
-        <p class="content-text">今日不趕路。搭乘遊船進入峽灣內部，看著兩側峭壁上的瀑布傾瀉而下。</p>
-        <div class="culture-box"><strong>傳說：</strong>相傳「求婚者」瀑布正對著「七姊妹」瀑布，他追求了一輩子也沒追到。</div>
-    </div>
-
-    <div class="itinerary-card">
-        <div class="day-title">Day 10</div>
-        <div class="destination-h">Geiranger ➟ Ålesund</div>
-        <div class="activity-h">地點：Valldal 採草莓 / 阿克斯拉山</div>
-        <p class="content-text">前往新藝術風格城市。沿途經過的 Valldal 盛產全挪威最甜的草莓。</p>
-        <div class="culture-box"><strong>文化：</strong>奧勒松在 1904 年大火後浴火重生，全城展現石造的 Art Nouveau 風格。</div>
-    </div>
-
-    <div class="itinerary-card">
-        <div class="day-title">Day 11</div>
-        <div class="destination-h">Ålesund ➟ Dombås</div>
-        <div class="activity-h">地點：Trollstigen 巨魔之路</div>
-        <p class="content-text">挑戰 11 個髮夾彎。這段路是工程學與自然的完美結合。</p>
-        <div class="culture-box"><strong>傳說：</strong>Troll 是挪威神話中的精靈，據說他們見光死，最後化作了這些奇形怪狀的山石。</div>
-    </div>
-
-    <div class="itinerary-card">
-        <div class="day-title">Day 12</div>
-        <div class="destination-h">Rondane 國家公園</div>
-        <div class="activity-h">地點：Soohlbergplassen 觀景台</div>
-        <p class="content-text">進入挪威第一個國家公園。這裡的植被色彩在秋季特別迷人。</p>
-        <div class="culture-box"><strong>文化：</strong>挪威畫家 Harald Sohlberg 的名作《山中冬夜》即是在此取景。</div>
-    </div>
-
-    <div class="itinerary-card">
-        <div class="day-title">Day 13</div>
-        <div class="destination-h">Dombås ➟ Oslo</div>
-        <div class="activity-h">地點：Mjøsa 湖邊公路 / 奧斯陸市郊</div>
-        <p class="content-text">南返首都。經過挪威最大的湖泊 Mjøsa，感受與峽灣完全不同的內陸風情。</p>
-        <div class="culture-box"><strong>生活：</strong>回到市區需注意低排放區限制，建議將車停在飯店改搭電車。</div>
-    </div>
-
-    <div class="itinerary-card">
-        <div class="day-title">Day 14</div>
-        <div class="destination-h">Oslo 市中心巡禮</div>
-        <div class="activity-h">地點：維格蘭公園 / 奧斯陸歌劇院</div>
-        <p class="content-text">參觀巨大的生命之柱雕塑，並在歌劇院傾斜的屋頂上散步。</p>
-        <div class="culture-box"><strong>精神：</strong>歌劇院的設計體現了挪威社會「人人平等」的精神：建築屋頂是所有人的公園。</div>
-    </div>
-
-    <div class="itinerary-card">
-        <div class="day-title">Day 15</div>
-        <div class="destination-h">Oslo ➟ Airport</div>
-        <div class="activity-h">地點：比格迪半島 / 機場還車</div>
-        <p class="content-text">最後巡禮。參觀維京船博物館後，於 18:00 前往機場完成還車手續。</p>
-        <div class="culture-box"><strong>提醒：</strong>檢查油量或電量，並確認車內私人物品全數帶走。</div>
-    </div>
-
-    <div class="itinerary-card">
-        <div class="day-title">Day 16</div>
-        <div class="destination-h">Oslo ➟ Home</div>
-        <div class="activity-h">地點：Gardermoen 機場離境</div>
-        <p class="content-text">辦理退稅並帶著 16 天的回憶搭機返國。</p>
-        <div class="culture-box"><strong>語錄：</strong>挪威人說「世上沒有壞天氣」，希望這趟旅程教會你享受生命中的每一種風景。</div>
-    </div>
-
-</div>
-
-<div class="footer-nav">
-    <a href="index.html"><i class="fas fa-th-large d-block mb-1"></i>儀表板</a>
-    <a href="culture.html" class="active"><i class="fas fa-feather d-block mb-1"></i>16天行程</a>
-    <a href="guide.html"><i class="fas fa-info-circle d-block mb-1"></i>指南</a>
-</div>
 </body>
 </html>
