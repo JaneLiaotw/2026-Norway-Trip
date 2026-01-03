@@ -3,94 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Norway 2026 | Master Dashboard</title>
+    <title>Norway 2026 Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-
-<nav class="hygge-nav mb-4">
-    <div class="container d-flex justify-content-between align-items-center">
-        <span class="h5 fw-bold mb-0" style="color: var(--nordic-pink);">NORWAY EXPLORER</span>
-        <span class="badge rounded-pill bg-light text-dark border">July 2026</span>
-    </div>
-</nav>
+<body style="padding: 20px 0 100px;">
 
 <div class="container">
-    <div class="dashboard-card">
-        <h6 class="fw-bold mb-3"><i class="fas fa-wallet me-2"></i> 旅費與即時換匯 (1:3.05)</h6>
-        <div class="row g-2 align-items-end">
+    <header class="d-flex justify-content-between align-items-center mb-4 px-2">
+        <div>
+            <h4 class="fw-bold mb-0">Hei, Explorer!</h4>
+            <p class="small text-muted mb-0">2026 Norway Adventure</p>
+        </div>
+        <div style="width: 45px; height: 45px; background: var(--primary-pink); border-radius: 15px; display: flex; align-items: center; justify-content: center; color: white;">
+            <i class="fas fa-user"></i>
+        </div>
+    </header>
+
+    <div class="app-card">
+        <div class="d-flex justify-content-between mb-3">
+            <span class="fw-bold small">Currency Exchange</span>
+            <span class="badge bg-light text-dark">1 NOK ≈ 3.05 TWD</span>
+        </div>
+        <div class="row g-2">
             <div class="col-5">
-                <small class="text-muted d-block mb-1">NOK 挪威克朗</small>
-                <input type="number" id="nok" class="form-control form-control-sm border-0 bg-light" placeholder="0.0" oninput="document.getElementById('twd').value=(this.value*3.05).toFixed(0)">
+                <input type="number" id="nok" class="form-control border-0 bg-light py-2" placeholder="NOK" oninput="document.getElementById('twd').value=(this.value*3.05).toFixed(0)">
             </div>
-            <div class="col-2 text-center pb-1 text-muted"><i class="fas fa-exchange-alt"></i></div>
+            <div class="col-2 text-center align-self-center text-muted"><i class="fas fa-arrow-right-arrow-left"></i></div>
             <div class="col-5">
-                <small class="text-muted d-block mb-1">TWD 新台幣</small>
-                <input type="number" id="twd" class="form-control form-control-sm border-0 bg-light" placeholder="0.0" oninput="document.getElementById('nok').value=(this.value/3.05).toFixed(0)">
+                <input type="number" id="twd" class="form-control border-0 bg-light py-2" placeholder="TWD" oninput="document.getElementById('nok').value=(this.value/3.05).toFixed(0)">
             </div>
         </div>
     </div>
 
     <div class="row g-3 mb-4">
-        <div class="col-4 text-center">
-            <a href="https://www.yr.no/en" target="_blank" class="text-decoration-none">
-                <div class="dashboard-card p-3 mb-0">
-                    <div class="icon-circle"><i class="fas fa-sun"></i></div>
-                    <small>YR 氣象</small>
+        <div class="col-4">
+            <a href="https://www.yr.no" class="text-decoration-none text-dark">
+                <div class="app-card p-3 text-center mb-0">
+                    <i class="fas fa-cloud-sun text-info mb-2 h4"></i>
+                    <div class="small fw-bold">天氣</div>
                 </div>
             </a>
         </div>
-        <div class="col-4 text-center">
-            <a href="https://www.autopass.no/" target="_blank" class="text-decoration-none">
-                <div class="dashboard-card p-3 mb-0">
-                    <div class="icon-circle"><i class="fas fa-road"></i></div>
-                    <small>AutoPass</small>
+        <div class="col-4">
+            <a href="https://www.autopass.no" class="text-decoration-none text-dark">
+                <div class="app-card p-3 text-center mb-0">
+                    <i class="fas fa-gas-pump text-danger mb-2 h4"></i>
+                    <div class="small fw-bold">過路費</div>
                 </div>
             </a>
         </div>
-        <div class="col-4 text-center">
-            <a href="https://www.google.com/maps" target="_blank" class="text-decoration-none">
-                <div class="dashboard-card p-3 mb-0">
-                    <div class="icon-circle"><i class="fas fa-map-marked"></i></div>
-                    <small>導航</small>
+        <div class="col-4">
+            <a href="googlemaps://" class="text-decoration-none text-dark">
+                <div class="app-card p-3 text-center mb-0">
+                    <i class="fas fa-location-arrow text-success mb-2 h4"></i>
+                    <div class="small fw-bold">導航</div>
                 </div>
             </a>
         </div>
     </div>
 
-    <div class="dashboard-card">
-        <h6 class="fw-bold mb-3"><i class="fas fa-tasks me-2"></i> 自駕必備清單</h6>
-        <div class="form-check mb-2">
-            <input class="form-check-input" type="checkbox" id="c1">
-            <label class="form-check-label small" for="c1">國際駕照 + 台灣駕照正本</label>
-        </div>
-        <div class="form-check mb-2">
-            <input class="form-check-input" type="checkbox" id="c2">
-            <label class="form-check-label small" for="c2">下載 Elton 充電 App</label>
-        </div>
-        <div class="form-check mb-2">
-            <input class="form-check-input" type="checkbox" id="c3">
-            <label class="form-check-label small" for="c3">預訂挪威小龍蝦包船行程</label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="c4">
-            <label class="form-check-label small" for="c4">信用卡 PIN 碼 (4碼密碼)</label>
-        </div>
-    </div>
-
-    <div class="dashboard-card" style="border-left: 5px solid var(--nordic-pink);">
-        <h6 class="fw-bold mb-2">💡 專家小提醒</h6>
-        <p class="small mb-0 text-muted">挪威夏季日照極長（白夜），開車易疲勞，請務必每兩小時在「景觀廁所」休息一次。</p>
+    <div class="app-card py-4" style="background: linear-gradient(135deg, #E8B4B8 0%, #EED6D3 100%); color: white;">
+        <h6 class="fw-bold mb-1">今日目的地</h6>
+        <div class="h4 fw-bold">Geiranger Fjord</div>
+        <p class="small mb-0 opacity-75">Check-in at: Feriesenter (15:00)</p>
     </div>
 </div>
 
-<div class="footer-nav">
-    <a href="index.html" class="active"><i class="fas fa-th-large d-block h5 mb-1"></i>儀表板</a>
-    <a href="culture.html"><i class="fas fa-feather d-block h5 mb-1"></i>16天行程</a>
-    <a href="guide.html"><i class="fas fa-info-circle d-block h5 mb-1"></i>指南</a>
-</div>
+<nav class="footer-nav">
+    <a href="index.html" class="active"><i class="fas fa-house"></i>首頁</a>
+    <a href="culture.html"><i class="fas fa-map"></i>行程</a>
+    <a href="guide.html"><i class="fas fa-shield-heart"></i>指南</a>
+</nav>
 
 </body>
 </html>
