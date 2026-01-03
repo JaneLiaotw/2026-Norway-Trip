@@ -1,210 +1,39 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
-    <a href="culture.html">點我去看文化介紹</a>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hygge Norway 2026</title>
+    <title>Norway 2026 | Home</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --nordic-blue: #5E81AC; --warm-sand: #ECEFF4;
-            --forest-green: #4C566A; --hygge-orange: #D08770;
-        }
-        body { background-color: #F8F9FB; font-family: 'Noto Sans TC', sans-serif; color: #2E3440; }
-        .nav-hygge { background-color: white; border-bottom: 1px solid #D8DEE9; padding: 1.5rem; }
-        .nav-link { color: var(--forest-green); font-weight: 500; }
-        .card-hygge { 
-            background: white; border-radius: 20px; border: none; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03); padding: 25px; margin-bottom: 25px;
-        }
-        .culture-note { 
-            background-color: #f0f4f8; border-left: 4px solid var(--nordic-blue); 
-            padding: 15px; font-size: 0.95rem; font-style: italic; color: #434C5E;
-        }
-        .btn-main { background-color: var(--nordic-blue); color: white; border-radius: 12px; padding: 10px 25px; }
-        h1, h2 { font-family: 'Playfair Display', serif; }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<nav class="nav-hygge sticky-top mb-4">
-    <div class="container d-flex justify-content-between align-items-center">
-        <span class="h4 mb-0">Hygge Norway <small class="text-muted">2026</small></span>
-        <div class="d-none d-md-block">
-            <a href="#itinerary" class="nav-link d-inline mx-2">深度行程</a>
-            <a href="#guide" class="nav-link d-inline mx-2">生活指南</a>
-        </div>
-    </div>
-</nav>
-
-<div class="container">
-    <div class="card-hygge row d-flex flex-row m-0">
-        <div class="col-6 border-end">
-            <small class="text-muted">匯率參考</small>
-            <div class="h5">1 NOK ≈ 3.05 TWD</div>
-        </div>
-        <div class="col-6 ps-4">
-            <small class="text-muted">當前氛圍</small>
-            <div class="h5">Nordic Summer 🌿</div>
+<div class="container py-4">
+    <h2 class="fw-bold text-center mb-4">God tur! 挪威自駕</h2>
+    
+    <div class="hygge-card">
+        <h6><i class="fas fa-calculator me-2"></i>即時匯率換算 (1:3.0)</h6>
+        <div class="row g-2">
+            <div class="col-6"><input type="number" id="nok" class="form-control" placeholder="NOK" oninput="document.getElementById('twd').value=(this.value*3).toFixed(0)"></div>
+            <div class="col-6"><input type="number" id="twd" class="form-control" placeholder="TWD" oninput="document.getElementById('nok').value=(this.value/3).toFixed(0)"></div>
         </div>
     </div>
 
-    <section id="itinerary">
-        <h2 class="mb-4">深度旅程細節</h2>
-
-        <div class="card-hygge">
-            <div class="d-flex justify-content-between align-items-start mb-3">
-                <div>
-                    <span class="badge bg-secondary mb-2">Day 01 - 02</span>
-                    <h3>南方門戶與古老漁村</h3>
-                </div>
-                <div class="text-end">📍 Kristiansand & Stavanger</div>
-            </div>
-            <p><strong>文化探訪：</strong> Kristiansand 是挪威人的夏季避暑勝地。這裡的舊城區 Posebyen 擁有北歐最大規模的白色木屋建築群。這抹白色在歷史上代表了富庶與純潔。</p>
-            
-            <div class="culture-note mb-3">
-                <i class="fas fa-lightbulb"></i> <strong>生活小提醒：</strong> 在挪威餐廳用餐時，水通常是免費且可以直接飲用的（Kranvann），自來水的品質甚至是世界頂尖的，不需要買瓶裝水。
-            </div>
-
-            <p><strong>Stavanger 歷史：</strong> 這裡曾是貧窮的沙丁魚罐頭加工港，直到 1969 年在北海發現石油，搖身一變成為「挪威石油之都」。建議參觀石油博物館，建築外型模擬鑽油平台，非常震撼。</p>
+    <div class="hygge-card text-center" style="background: linear-gradient(to right, #88c0d0, #5e81ac); color: white;">
+        <div class="row">
+            <div class="col-4">Oslo<br>🌤️</div>
+            <div class="col-4">Bergen<br>🌧️</div>
+            <div class="col-4">Geiranger<br>🏔️</div>
         </div>
-
-        <div class="card-hygge">
-            <div class="d-flex justify-content-between align-items-start mb-3">
-                <div>
-                    <span class="badge bg-secondary mb-2">Day 05</span>
-                    <h3>中世紀商人的足跡：卑爾根</h3>
-                </div>
-                <div class="text-end">📍 Bergen</div>
-            </div>
-            <p><strong>漢薩同盟歷史：</strong> 走進布呂根 (Bryggen) 的木質長廊，你是在踏訪 14 世紀德國商人的地盤。這裡曾經壟斷了全歐洲的鱈魚貿易。注意看房屋上的木雕，那是當時商會的標誌。</p>
-            <div class="culture-note">
-                <i class="fas fa-cloud-rain"></i> <strong>生存提醒：</strong> 卑爾根一年有 240 天在下雨。挪威人說：「沒有壞天氣，只有穿錯衣服。」準備一件有質感的防風防水外套 (Shell Jacket) 是最道地的北歐穿搭。
-            </div>
-        </div>
-    </section>
+    </div>
 </div>
 
-</body>
-</html>                    <span class="input-group-text">NOK</span>
-                    <input type="number" id="nokInput" class="form-control" placeholder="金額" oninput="convert('nok')">
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="input-group">
-                    <span class="input-group-text">TWD</span>
-                    <input type="number" id="twdInput" class="form-control" placeholder="金額" oninput="convert('twd')">
-                </div>
-            </div>
-        </div>
-        <small class="text-muted mt-2">註：匯率以 3.0 估算，可依實際匯率手動調整。</small>
-    </div>
-
-    <div class="d-flex overflow-auto pb-2 mb-3 gap-2">
-        <a href="https://www.yr.no/en/forecast/daily-table/1-72833/Norway/Oslo" target="_blank" class="weather-btn text-decoration-none">Oslo 🌤️</a>
-        <a href="https://www.yr.no/en/forecast/daily-table/1-92416/Norway/Bergen" target="_blank" class="weather-btn text-decoration-none">Bergen 🌧️</a>
-        <a href="https://www.yr.no/en/forecast/daily-table/1-49340/Norway/Geiranger" target="_blank" class="weather-btn text-decoration-none">Geiranger 🏔️</a>
-        <a href="https://www.yr.no/en/forecast/daily-table/1-42036/Norway/Stavanger" target="_blank" class="weather-btn text-decoration-none">Stavanger ⚓</a>
-    </div>
-
-    <div class="d-flex justify-content-between align-items-center mb-2">
-        <h5 class="fw-bold mb-0">📅 完整行程清單</h5>
-        <button class="btn btn-sm btn-norway" onclick="addCustomItem()"><i class="fas fa-plus-circle"></i> 新增行程</button>
-    </div>
-
-    <div id="itinerary-container">
-        </div>
+<div class="footer-nav">
+    <a href="index.html"><i class="fas fa-home d-block h4"></i>首頁</a>
+    <a href="culture.html"><i class="fas fa-map-marked-alt d-block h4"></i>深度行程</a>
+    <a href="guide.html"><i class="fas fa-info-circle d-block h4"></i>生存指南</a>
 </div>
-
-<script>
-    // 匯率常數
-    const RATE = 3.0;
-
-    // 原始行程數據
-    const defaultTrip = [
-        { date: "7/09 D1", title: "OSL 機場 -> Kristiansand", hotel: "Radisson Blu Caledonien Hotel", note: "取車(07:00), 沿E18南下" },
-        { date: "7/10 D2", title: "Kristiansand -> Stavanger", hotel: "Radisson Blu Atlantic Hotel", note: "Mandal/Lindesnes 包船捕撈行程" },
-        { date: "7/11 D3", title: "聖壇岩健行 (Preikestolen)", hotel: "Pulpit Rock Mountain Lodge", note: "下午3點開始健行(建議)" },
-        { date: "7/12 D4", title: "Stavanger -> Haugesund", hotel: "Radisson Hotel Haugesund", note: "沿E39北上, 需搭乘渡輪" },
-        { date: "7/13 D5", title: "Haugesund -> Bergen", hotel: "Thon Hotel Rosenkrantz Bergen", note: "遊覽布呂根碼頭、弗羅伊恩山" },
-        { date: "7/14 D6", title: "Bergen -> Flåm", hotel: "Flåm Marina", note: "E16公路, Stegastein觀景台" },
-        { date: "7/15 D7", title: "Flåm -> Stryn", hotel: "Stryn Kaffebar & Vertshus", note: "長途駕駛, 跨越松恩峽灣" },
-        { date: "7/16 D8", title: "Stryn -> Geiranger (1)", hotel: "Geirangerfjorden Feriesenter", note: "老鷹之路、Dalsnibba觀景台" },
-        { date: "7/17 D9", title: "Geiranger (2)", hotel: "Geirangerfjorden Feriesenter", note: "蓋朗厄爾峽灣遊船" },
-        { date: "7/18 D10", title: "Geiranger -> Ålesund", hotel: "Quality Hotel Ålesund", note: "阿克斯拉山俯瞰市景" },
-        { date: "7/19 D11", title: "Ålesund -> 內陸地區", hotel: "Grand Hotel by Classic Norway", note: "往Rondane國家公園前進" },
-        { date: "7/20 D12", title: "Rondane 國家公園", hotel: "Rondane Gjestegård", note: "體驗挪威高山與國家公園景致" },
-        { date: "7/21 D13", title: "Rondane -> Oslo (1)", hotel: "HI Oslo Haraldsheim", note: "市郊免費停車, 搭電車進市區" },
-        { date: "7/22 D14", title: "Oslo 市區觀光 (2)", hotel: "HI Oslo Haraldsheim", note: "歌劇院、維格蘭雕塑公園" },
-        { date: "7/23 D15", title: "Oslo -> 機場還車", hotel: "Radisson Hotel Oslo Airport", note: "18:00前機場還車, 隔日搭機" },
-        { date: "7/24 D16", title: "賦歸", hotel: "搭機離開", note: "11:00 班機" }
-    ];
-
-    // 初始化：檢查是否有儲存過的數據，否則載入預設值
-    let tripData = JSON.parse(localStorage.getItem('myNorwayTrip')) || defaultTrip;
-
-    // 換匯功能
-    function convert(type) {
-        const nok = document.getElementById('nokInput');
-        const twd = document.getElementById('twdInput');
-        if (type === 'nok') twd.value = (nok.value * RATE).toFixed(1);
-        else nok.value = (twd.value / RATE).toFixed(1);
-    }
-
-    // 渲染行程
-    function renderItinerary() {
-        const container = document.getElementById('itinerary-container');
-        container.innerHTML = '';
-        tripData.forEach((item, index) => {
-            const card = document.createElement('div');
-            card.className = 'card p-3 itinerary-card';
-            card.innerHTML = `
-                <div class="d-flex justify-content-between">
-                    <span class="badge bg-danger mb-2">${item.date}</span>
-                    <button class="btn btn-sm text-muted" onclick="deleteItem(${index})"><i class="fas fa-trash"></i></button>
-                </div>
-                <h6 class="fw-bold mb-1" contenteditable="true" onblur="updateData(${index}, 'title', this.innerText)">${item.title}</h6>
-                <div class="small text-primary mb-1"><i class="fas fa-hotel"></i> <span contenteditable="true" onblur="updateData(${index}, 'hotel', this.innerText)">${item.hotel}</span></div>
-                <div class="small text-muted"><i class="fas fa-info-circle"></i> <span contenteditable="true" onblur="updateData(${index}, 'note', this.innerText)">${item.note}</span></div>
-            `;
-            container.appendChild(card);
-        });
-    }
-
-    // 更新數據內容
-    function updateData(index, field, value) {
-        tripData[index][field] = value;
-        saveToLocal();
-    }
-
-    // 新增行程
-    function addCustomItem() {
-        const newDay = { date: "New Day", title: "點擊修改標題", hotel: "修改飯店名稱", note: "修改內容備註" };
-        tripData.push(newDay);
-        renderItinerary();
-        saveToLocal();
-    }
-
-    // 刪除行程
-    function deleteItem(index) {
-        if(confirm("確定要刪除這天的行程嗎？")) {
-            tripData.splice(index, 1);
-            renderItinerary();
-            saveToLocal();
-        }
-    }
-
-    // 儲存至瀏覽器 LocalStorage
-    function saveToLocal() {
-        localStorage.setItem('myNorwayTrip', JSON.stringify(tripData));
-        console.log("數據已儲存");
-    }
-
-    // 頁面載入執行
-    window.onload = renderItinerary;
-</script>
-
 </body>
 </html>
