@@ -1,1 +1,63 @@
+:root {
+    --nordic-blue: #5E81AC;
+    --warm-sand: #E5E9F0;
+    --soft-white: #FFFFFF;
+    --earth-brown: #4C566A;
+    --accent-orange: #D08770;
+}
 
+body {
+    background-color: #F8F9FB;
+    font-family: 'Noto Sans TC', -apple-system, sans-serif;
+    color: #2E3440;
+    line-height: 1.6;
+}
+
+.hygge-nav {
+    background: white;
+    padding: 1rem 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.hygge-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 20px;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+}
+
+.badge-date {
+    background-color: var(--nordic-blue);
+    color: white;
+    border-radius: 8px;
+    padding: 5px 12px;
+}
+
+.culture-box {
+    background: #F0F4F8;
+    border-radius: 12px;
+    padding: 15px;
+    margin-top: 15px;
+    font-size: 0.9rem;
+    border-left: 4px solid var(--accent-orange);
+}
+
+.footer-nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+}
+
+.footer-nav a {
+    text-decoration: none;
+    color: var(--earth-brown);
+    font-size: 0.8rem;
+    text-align: center;
+}
