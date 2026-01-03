@@ -1,63 +1,79 @@
 :root {
-    --nordic-blue: #5E81AC;
-    --warm-sand: #E5E9F0;
+    --nordic-pink: #E8B4B8;    /* 乾燥玫瑰粉 */
+    --warm-taupe: #EED6D3;     /* 溫暖粉灰 */
+    --deep-slate: #4C566A;     /* 深岩灰字體 */
     --soft-white: #FFFFFF;
-    --earth-brown: #4C566A;
-    --accent-orange: #D08770;
+    --accent-gold: #D08770;    /* 暖橘點綴 */
 }
 
 body {
-    background-color: #F8F9FB;
-    font-family: 'Noto Sans TC', -apple-system, sans-serif;
-    color: #2E3440;
+    background-color: #FAF5F5; /* 極淺粉底色 */
+    font-family: 'Noto Sans TC', sans-serif;
+    color: var(--deep-slate);
     line-height: 1.6;
+    padding-bottom: 80px;
 }
 
 .hygge-nav {
-    background: white;
-    padding: 1rem 0;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    background: var(--soft-white);
+    padding: 1.2rem;
+    box-shadow: 0 2px 15px rgba(232, 180, 184, 0.2);
+    border-bottom: 2px solid var(--nordic-pink);
 }
 
-.hygge-card {
-    background: white;
-    border-radius: 16px;
-    padding: 24px;
+/* 專業儀表板卡片 */
+.dashboard-card {
+    background: var(--soft-white);
+    border-radius: 20px;
+    padding: 20px;
     margin-bottom: 20px;
+    border: 1px solid rgba(232, 180, 184, 0.3);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+}
+
+.icon-circle {
+    width: 45px;
+    height: 45px;
+    background-color: var(--warm-taupe);
+    color: var(--deep-slate);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 8px;
+    font-size: 1.2rem;
+}
+
+.btn-primary-pink {
+    background-color: var(--nordic-pink);
     border: none;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
-}
-
-.badge-date {
-    background-color: var(--nordic-blue);
     color: white;
-    border-radius: 8px;
-    padding: 5px 12px;
-}
-
-.culture-box {
-    background: #F0F4F8;
     border-radius: 12px;
-    padding: 15px;
-    margin-top: 15px;
-    font-size: 0.9rem;
-    border-left: 4px solid var(--accent-orange);
+    padding: 10px;
+    width: 100%;
+    font-weight: 500;
 }
 
 .footer-nav {
     position: fixed;
     bottom: 0;
     width: 100%;
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
     display: flex;
     justify-content: space-around;
-    padding: 10px 0;
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    padding: 12px 0;
+    border-top: 1px solid var(--nordic-pink);
 }
 
 .footer-nav a {
     text-decoration: none;
-    color: var(--earth-brown);
-    font-size: 0.8rem;
-    text-align: center;
+    color: var(--deep-slate);
+    font-size: 0.75rem;
+    transition: 0.3s;
+}
+
+.footer-nav a.active {
+    color: var(--nordic-pink);
+    font-weight: bold;
 }
