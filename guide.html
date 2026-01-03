@@ -5,81 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Survival Guide</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <style>
-        .guide-section { margin-bottom: 25px; }
-        .guide-header { border-left: 5px solid var(--nordic-pink); padding-left: 15px; margin-bottom: 15px; font-weight: 700; color: var(--deep-slate); }
-        .survival-card { background: white; border-radius: 15px; padding: 15px; display: flex; align-items: flex-start; margin-bottom: 10px; border: 1px solid rgba(232, 180, 184, 0.2); }
-        .survival-icon { font-size: 1.5rem; color: var(--nordic-pink); margin-right: 15px; width: 30px; }
-        .survival-text h6 { margin-bottom: 3px; font-weight: 700; font-size: 0.95rem; }
-        .survival-text p { font-size: 0.85rem; color: #6c757d; margin-bottom: 0; }
-    </style>
 </head>
-<body style="padding-bottom: 80px; background-color: #FAF5F5;">
+<body style="padding: 20px 0 100px;">
 
-<div class="container py-4">
-    <h3 class="fw-bold mb-4">挪威自駕生存指南</h3>
+<div class="container">
+    <h3 class="fw-bold mb-4 px-2">Survival Guide</h3>
 
-    <div class="guide-section">
-        <div class="guide-header">🚗 自駕與電力</div>
-        <div class="survival-card">
-            <div class="survival-icon"><i class="fas fa-charging-station"></i></div>
-            <div class="survival-text">
-                <h6>充電邏輯</h6>
-                <p>下載 Elton 與 Tesla App。挪威充電樁普及，但山區請保持 30% 以上電量。</p>
-            </div>
-        </div>
-        <div class="survival-card">
-            <div class="survival-icon"><i class="fas fa-ship"></i></div>
-            <div class="survival-text">
-                <h6>渡輪自動付費</h6>
-                <p>租車已內建 AutoPass，直接駛入即可，費用將從信用卡扣除。</p>
-            </div>
-        </div>
+    <div class="app-card">
+        <h6 class="fw-bold mb-3 d-flex align-items-center">
+            <i class="fas fa-bolt text-warning me-2"></i> 自駕必讀
+        </h6>
+        <div class="small text-muted mb-2">● 下載 <strong>Elton</strong> App：整合全挪威 90% 充電樁。</div>
+        <div class="small text-muted mb-2">● 隧道與過路費：系統會自動掃描車牌，還車時由租車公司結算。</div>
+        <div class="small text-muted">● 駕駛規範：挪威限速嚴格且罰金極高，務必遵循。</div>
     </div>
 
-    <div class="guide-section">
-        <div class="guide-header">🛒 購物與消費</div>
-        <div class="survival-card">
-            <div class="survival-icon"><i class="fas fa-store-slash"></i></div>
-            <div class="survival-text">
-                <h6>週日超市公休</h6>
-                <p>週日除了加油站與小型商店，連鎖超市皆不營業。請提前採買。</p>
-            </div>
-        </div>
-        <div class="survival-card">
-            <div class="survival-icon"><i class="fas fa-credit-card"></i></div>
-            <div class="survival-text">
-                <h6>信用卡 PIN 碼</h6>
-                <p>無人加油站或停車場必備「4 位數密碼」。</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="guide-section">
-        <div class="guide-header">🆘 安全與求助</div>
-        <div class="survival-card">
-            <div class="survival-icon"><i class="fas fa-phone-alt"></i></div>
-            <div class="survival-text">
-                <h6>緊急電話</h6>
-                <p>救護車 113 / 警察 112 / 火警 110</p>
-            </div>
-        </div>
-        <div class="survival-card" style="background-color: #FFF0F0;">
-            <div class="survival-icon"><i class="fas fa-tint"></i></div>
-            <div class="survival-text">
-                <h6>直接飲水</h6>
-                <p>挪威水龍頭生水極甜。注意：只有冷水可飲，熱水不可飲用。</p>
-            </div>
-        </div>
+    <div class="app-card">
+        <h6 class="fw-bold mb-3 d-flex align-items-center">
+            <i class="fas fa-basket-shopping text-primary me-2"></i> 生活必學
+        </h6>
+        <div class="small text-muted mb-2">● 超市公休：<strong>週日不營業</strong>，週六晚上需備齊物資。</div>
+        <div class="small text-muted mb-2">● 空瓶回收：機器（PANT）回收瓶罐可換超市購物金。</div>
+        <div class="small text-muted">● 飲用水：水龍頭冷水極佳；<strong>熱水不可飲用</strong>。</div>
     </div>
 </div>
 
-<div class="footer-nav">
-    <a href="index.html"><i class="fas fa-th-large d-block mb-1"></i>總覽</a>
-    <a href="culture.html"><i class="fas fa-feather d-block mb-1"></i>日程</a>
-    <a href="guide.html" class="active"><i class="fas fa-info-circle d-block mb-1"></i>指南</a>
-</div>
+<nav class="footer-nav">
+    <a href="index.html"><i class="fas fa-house"></i>首頁</a>
+    <a href="culture.html"><i class="fas fa-map"></i>行程</a>
+    <a href="guide.html" class="active"><i class="fas fa-shield-heart"></i>指南</a>
+</nav>
+
 </body>
 </html>
