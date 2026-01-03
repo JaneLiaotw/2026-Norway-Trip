@@ -3,119 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Norway 2026 | Journey Details</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* 針對文化頁面的字體細節配置 */
+        .page-title { color: var(--deep-slate); font-size: 1.8rem; font-weight: 800; letter-spacing: 1px; }
+        .day-badge { background-color: var(--nordic-pink); font-size: 0.75rem; letter-spacing: 1px; padding: 4px 12px; border-radius: 6px; }
+        
+        /* 標題與副標題顏色配置 */
+        .main-destination { color: #434C5E; font-size: 1.25rem; font-weight: 700; margin-top: 10px; }
+        .sub-activity { color: var(--nordic-pink); font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; }
+        
+        /* 內文配置 */
+        .content-text { color: #4C566A; font-size: 0.95rem; line-height: 1.7; text-align: justify; }
+        .location-tag { color: #818ba1; font-size: 0.85rem; margin-bottom: 12px; }
+        
+        /* 裝飾性線條 */
+        .itinerary-card { position: relative; overflow: hidden; }
+        .itinerary-card::after {
+            content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+            background: linear-gradient(to bottom, var(--nordic-pink), var(--warm-taupe));
+        }
+    </style>
 </head>
 <body style="padding-bottom: 100px;">
 
 <div class="container py-4">
-    <h2 class="fw-bold mb-4"><i class="fas fa-feather-alt text-danger"></i> 16天挪威全覽</h2>
+    <header class="mb-4">
+        <h1 class="page-title text-center">16 Days Story</h1>
+        <p class="text-center text-muted small">紀錄每一段挪威的靈魂時刻</p>
+    </header>
 
-    <div class="hygge-card">
-        <span class="badge-date">D1 奧斯陸機場 -> Kristiansand</span>
-        <h5 class="mt-3">起點：向南方的陽光出發</h5>
-        <p class="small text-muted">地點：E18 公路, 舊城區 Posebyen</p>
+    <div class="dashboard-card itinerary-card">
+        <span class="day-badge text-white">DAY 01 - 02</span>
+        <h2 class="main-destination">南方門戶：克里斯蒂安桑</h2>
+        <h3 class="sub-activity">起點 · 白色木屋與深海探險</h3>
+        <div class="location-tag"><i class="fas fa-map-marker-alt me-1"></i> E18 Highway, Lindesnes Lighthouse</div>
+        <p class="content-text">
+            旅程從奧斯陸南下展開。在 <strong>Kristiansand</strong>，歷史隱藏在白色街道間。隨後前往 <strong>Mandal</strong>，這裡有你期待的小龍蝦包船行程。在北海的波浪中，親手拉起海鮮陷阱，感受最道地的漁民生活。
+        </p>
         <div class="culture-box">
-            <strong>文化：</strong> Kristiansand 被稱為挪威人的夏日花園。舊城區的木屋群在 19 世紀是貧富混合區，現在則是珍貴的文化遺產。
+            <strong>文化觀察：</strong> 挪威南部的「白色建築」起源於 19 世紀，當時白色顏料昂貴，只有富裕的船主能負擔，如今則成了優雅與純潔的象徵。
         </div>
     </div>
 
-    <div class="hygge-card">
-        <span class="badge-date">D2 Mandal / Lindesnes -> Stavanger</span>
-        <h5 class="mt-3">行程：海鮮探險與挪威最南端</h5>
-        <p class="small text-muted">地點：Lindesnes 燈塔, 斯塔萬格碼頭</p>
+    <div class="dashboard-card itinerary-card">
+        <span class="day-badge text-white">DAY 03</span>
+        <h2 class="main-destination">聖壇岩挑戰</h2>
+        <h3 class="sub-activity">勇氣 · 俯瞰呂瑟峽灣的震撼</h3>
+        <div class="location-tag"><i class="fas fa-map-marker-alt me-1"></i> Preikestolen, Lysefjord</div>
+        <p class="content-text">
+            今日將考驗體力，攀登著名的聖壇岩。當你站在 604 公尺高的垂直峭壁邊緣，腳下是深邃的藍色峽灣，那一刻的寂靜將讓你重新思考人與自然的關係。
+        </p>
         <div class="culture-box">
-            <strong>文化：</strong> Lindesnes 燈塔是挪威最古老的燈塔（1656年）。這裡的捕撈文化展現了挪威人「與海共生」的韌性。
+            <strong>生活提醒：</strong> 挪威健行文化崇尚「責任自負」，懸崖邊不會有圍欄。保持敬畏，並隨身攜帶高熱量巧克力與足夠的水。
         </div>
     </div>
 
-    <div class="hygge-card">
-        <span class="badge-date">D3 Stavanger -> Preikestolen</span>
-        <h5 class="mt-3">行程：朝聖「聖壇岩」</h5>
-        <p class="small text-muted">地點：呂瑟峽灣 (Lysefjord)</p>
+    <div class="dashboard-card itinerary-card">
+        <span class="day-badge text-white">DAY 05</span>
+        <h2 class="main-destination">雨中卑爾根</h2>
+        <h3 class="sub-activity">貿易 · 漢薩同盟的遺產</h3>
+        <div class="location-tag"><i class="fas fa-map-marker-alt me-1"></i> Bryggen, Fløibanen</div>
+        <p class="content-text">
+            走進布呂根的木質長廊，彷彿聞到了中世紀的鱈魚乾香。這裡曾是漢薩商人的貿易據點，每棟歪斜的彩虹木屋都承載著數百年的商業傳奇。
+        </p>
         <div class="culture-box">
-            <strong>文化：</strong> 聖壇岩是冰河時期侵蝕出的奇蹟。挪威法律規定「漫遊權」，因此這裡不設圍欄，展現對冒險者勇氣與自負責任的尊重。
+            <strong>歷史亮點：</strong> 布呂根的每棟房子都有名字，且建築結構完全使用木釘與卡榫，展現了 14 世紀極致的工藝智慧。
         </div>
     </div>
 
-    <div class="hygge-card">
-        <span class="badge-date">D4 Stavanger -> Haugesund</span>
-        <h5 class="mt-3">地點：維京國王的故鄉</h5>
-        <p class="small text-muted">地點：Haraldshaugen 紀念碑</p>
+    <div class="dashboard-card itinerary-card">
+        <span class="day-badge text-white">DAY 08 - 10</span>
+        <h2 class="main-destination">峽灣之王與新藝術</h2>
+        <h3 class="sub-activity">極致 · 蓋朗厄爾與奧勒松</h3>
+        <div class="location-tag"><i class="fas fa-map-marker-alt me-1"></i> Eagle Road, Ålesund Skyline</div>
+        <p class="content-text">
+            從老鷹之路俯視 <strong>Geiranger</strong>，那是挪威最美的弧線。抵達 <strong>Ålesund</strong> 後，你會發現這座石造城市散發著優雅的新藝術風格，與峽灣的狂野形成強烈對比。
+        </p>
         <div class="culture-box">
-            <strong>文化：</strong> 這裡被認為是挪威統一的發源地。第一位國王金髮哈拉爾曾在此建立基地，正式開啟了挪威國家的歷史。
+            <strong>文化觀察：</strong> 奧勒松在 1904 年大火後浴火重生，城市中的石刻裝飾隱藏著許多維京神話與海洋圖騰。
         </div>
     </div>
 
-    <div class="hygge-card">
-        <span class="badge-date">D5 Haugesund -> Bergen</span>
-        <h5 class="mt-3">地點：雨都與漢薩傳奇</h5>
-        <p class="small text-muted">地點：布呂根 (Bryggen), 魚市場</p>
+    <div class="dashboard-card itinerary-card">
+        <span class="day-badge text-white">DAY 13 - 14</span>
+        <h2 class="main-destination">和平與文明的交匯</h2>
+        <h3 class="sub-activity">回歸 · 奧斯陸的現代靈魂</h3>
+        <div class="location-tag"><i class="fas fa-map-marker-alt me-1"></i> Vigeland Park, Opera House</div>
+        <p class="content-text">
+            旅程的終點回到首都。在維格蘭雕塑公園看盡人生的生老病死，在歌劇院的屋頂散步，感受挪威社會「人人平等」的核心價值。
+        </p>
         <div class="culture-box">
-            <strong>文化：</strong> 14世紀德國漢薩商人在此掌控鱈魚貿易。布呂根木屋因火災多次重建，但地基始終不變，見證了卑爾根的商業歷史。
+            <strong>生活提醒：</strong> 奧斯陸是無現金城市的巔峰，連投幣式廁所都已絕跡，請確保你的電子支付或信用卡隨時可用。
         </div>
     </div>
 
-    <div class="hygge-card">
-        <span class="badge-date">D6-D7 Bergen -> Flåm -> Stryn</span>
-        <h5 class="mt-3">行程：穿越松恩峽灣心臟</h5>
-        <p class="small text-muted">地點：Stegastein 觀景台, 老屋達爾村</p>
-        <div class="culture-box">
-            <strong>文化：</strong> Flåm 是世界最陡鐵路的起點。Stryn 則展現了內陸冰河湖的靜謐感，是挪威人冬季滑雪、夏季划船的秘密基地。
-        </div>
-    </div>
-
-    <div class="hygge-card">
-        <span class="badge-date">D8-D9 Geiranger 深入探索</span>
-        <h5 class="mt-3">行程：大自然的王冠</h5>
-        <p class="small text-muted">地點：七姊妹瀑布, Dalsnibba 觀景台</p>
-        <div class="culture-box">
-            <strong>文化：</strong> 聯合國遺產區。這裡流傳著關於「求婚者瀑布」與「七姊妹」的古老傳說，農夫在峭壁上耕種的歷史令人震撼。
-        </div>
-    </div>
-
-    <div class="hygge-card">
-        <span class="badge-date">D10 Geiranger -> Ålesund</span>
-        <h5 class="mt-3">地點：新藝術風格之美</h5>
-        <p class="small text-muted">地點：阿克斯拉山 (Aksla), 市中心</p>
-        <div class="culture-box">
-            <strong>文化：</strong> 1904年全城大火後，由全歐洲建築師合力在廢墟上重建，成為北歐唯一完整的石造 Art Nouveau 風格城市。
-        </div>
-    </div>
-
-    <div class="hygge-card">
-        <span class="badge-date">D11-D12 內陸山脈與國家公園</span>
-        <h5 class="mt-3">地點：巨魔的棲息地</h5>
-        <p class="small text-muted">地點：Rondane 國家公園, 索利亞公路</p>
-        <div class="culture-box">
-            <strong>文化：</strong> 挪威第一個國家公園。這裡的荒原啟發了易卜生的文學名著，被視為最能體現挪威靈魂的地方。
-        </div>
-    </div>
-
-    <div class="hygge-card">
-        <span class="badge-date">D13-D14 Oslo 城市巡禮</span>
-        <h5 class="mt-3">地點：和平與藝術的首都</h5>
-        <p class="small text-muted">地點：維格蘭雕塑公園, 歌劇院</p>
-        <div class="culture-box">
-            <strong>文化：</strong> 奧斯陸歌劇院讓全民都能在屋頂漫步，打破了藝術殿堂的隔閡，完美詮釋了挪威的平等主義精神。
-        </div>
-    </div>
-
-    <div class="hygge-card">
-        <span class="badge-date">D15-D16 奧斯陸機場與賦歸</span>
-        <h5 class="mt-3">終點：回憶裝箱</h5>
-        <p class="small text-muted">地點：Gardermoen 機場</p>
-        <div class="culture-box">
-            <strong>生活提醒：</strong> 挪威機場自動化程度極高，建議嘗試自助托運行李。在免稅店可以買些挪威巧克力 (Freia) 作為最後的回憶。
-        </div>
-    </div>
 </div>
 
 <div class="footer-nav">
-    <a href="index.html"><i class="fas fa-th-large d-block"></i>總覽</a>
-    <a href="culture.html" class="active"><i class="fas fa-book-open d-block"></i>16天日程</a>
-    <a href="guide.html"><i class="fas fa-compass d-block"></i>指南</a>
+    <a href="index.html"><i class="fas fa-th-large d-block h5 mb-1"></i>儀表板</a>
+    <a href="culture.html" class="active"><i class="fas fa-feather d-block h5 mb-1"></i>16天行程</a>
+    <a href="guide.html"><i class="fas fa-info-circle d-block h5 mb-1"></i>指南</a>
 </div>
+
 </body>
 </html>
