@@ -3,36 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saga of Norway | Professional Itinerary</title>
+    <title>Norway 2026 | Saga of the North</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        .day-scroller { display: flex; overflow-x: auto; padding: 10px 0; gap: 10px; scrollbar-width: none; }
+        /* 頁面專屬高級排版 */
+        .day-scroller { 
+            display: flex; overflow-x: auto; padding: 15px 5px; gap: 12px; 
+            scrollbar-width: none; -ms-overflow-style: none;
+        }
         .day-scroller::-webkit-scrollbar { display: none; }
-        .day-btn { min-width: 60px; height: 60px; border-radius: 18px; background: white; border: 1px solid var(--nordic-pink); display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--nordic-pink); cursor: pointer; transition: 0.3s; }
-        .day-btn.active { background: var(--nordic-pink); color: white; transform: scale(1.1); box-shadow: 0 5px 15px rgba(232, 180, 184, 0.4); }
         
-        .detail-header { background: linear-gradient(135deg, #434C5E 0%, #2D3436 100%); color: white; border-radius: 25px; padding: 25px; margin-bottom: 20px; }
-        .info-tag { background: rgba(255, 255, 255, 0.1); padding: 5px 12px; border-radius: 10px; font-size: 0.75rem; margin-right: 8px; }
-        .history-box { border-left: 4px solid var(--nordic-pink); padding-left: 20px; margin: 20px 0; }
-        .map-link { color: var(--nordic-pink); font-size: 0.85rem; text-decoration: none; font-weight: 600; }
+        .day-btn { 
+            min-width: 55px; height: 55px; border-radius: 16px; background: white; 
+            border: 1.5px solid var(--nordic-pink); display: flex; align-items: center; 
+            justify-content: center; font-weight: 800; color: var(--nordic-pink); 
+            cursor: pointer; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        }
+        .day-btn.active { background: var(--nordic-pink); color: white; transform: scale(1.1); box-shadow: 0 8px 20px rgba(232, 180, 184, 0.3); }
+
+        .detail-card { animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .hero-info { 
+            background: linear-gradient(135deg, #434C5E 0%, #2D3436 100%); 
+            color: white; border-radius: 28px; padding: 30px; margin-bottom: 25px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        .meta-badge { background: rgba(255, 255, 255, 0.15); padding: 6px 14px; border-radius: 12px; font-size: 0.75rem; margin-right: 10px; }
+        .history-section { border-left: 4px solid var(--nordic-pink); padding-left: 20px; margin: 25px 0; }
+        .humor-card { background: #FFF9F9; border: 1px dashed var(--nordic-pink); border-radius: 20px; padding: 20px; }
     </style>
 </head>
-<body class="p-3">
+<body class="p-3 bg-warm">
 
-    <header class="mb-4">
-        <h2 class="fw-bold">The Great Odyssey</h2>
-        <p class="text-muted small">16 Days, 2,000 Kilometers, Infinite Memories.</p>
+    <header class="mb-4 mt-2 px-2">
+        <h2 class="fw-bold">The Great Saga</h2>
+        <p class="text-muted small">16 Days, 2,200 Kilometers of Wonder.</p>
     </header>
 
-    <div class="day-scroller mb-4" id="dayPicker">
-        </div>
+    <div class="day-scroller mb-4" id="dayPicker"></div>
 
-    <div id="dayContent">
-        </div>
+    <div id="dayContent" class="detail-card"></div>
 
-    <nav class="bottom-nav">
+    <nav class="footer-nav">
         <a href="index.html"><i class="fas fa-house-chimney"></i><span>總覽</span></a>
         <a href="culture.html" class="active"><i class="fas fa-compass"></i><span>行程</span></a>
         <a href="guide.html"><i class="fas fa-feather-pointed"></i><span>指南</span></a>
@@ -40,228 +55,222 @@
 
     <script>
         const itineraryData = {
-            const itineraryData = {
-    1: {
-        title: "南下的白色前奏",
-        engTitle: "The White Prelude",
-        route: "Oslo Airport ➟ Kristiansand",
-        dist: "325 km",
-        time: "3.5 - 4 hrs",
-        desc: "取車後沿著 E18 公路南下。這是挪威的『夏日里維耶拉』，路況極佳，適合練習如何在不超速的情況下控制你的右腳。",
-        history: "Kristiansand 舊城區 Posebyen 是北歐保存最完好的木屋區之一。19世紀中期，白色顏料是最昂貴的，漆成白色是財富的象徵。",
-        humor: "挪威的測速照相機會在你最帥的時候拍照，但照片很貴，一張可能要你台幣兩萬塊。請保持微笑，或乾脆別超速。",
-        map: "https://maps.google.com/?q=Kristiansand"
-    },
-    2: {
-        title: "最南端的孤獨守望",
-        engTitle: "The Southernmost Guardian",
-        route: "Kristiansand ➟ Mandal ➟ Lindesnes",
-        dist: "90 km",
-        time: "1.5 hrs",
-        desc: "前往挪威本土最南端 Lindesnes 燈塔。在 Mandal 體驗預約好的海鮮捕撈，與龍蝦進行深度對話。",
-        history: "Lindesnes 燈塔建於 1656 年，是挪威第一座燈塔。它標誌著北海與斯卡格拉克海峽的交界。",
-        humor: "在燈塔看日落很浪漫，但風大的時候，你的髮型會從『知性文青』變成『被雷打到』。請帶好帽子。",
-        map: "https://maps.google.com/?q=Lindesnes+Lighthouse"
-    },
-    3: {
-        title: "聖壇岩的朝聖之路",
-        engTitle: "Pulpit Rock Hike",
-        route: "Stavanger ➟ Preikestolen",
-        dist: "40 km + 8 km Hike",
-        time: "1 hr Drive + 4 hrs Hike",
-        desc: "攀登 604 公尺高的垂直懸崖。這是挪威最著名的自然景觀，也是考驗你是否有懼高症的終極測試。",
-        history: "聖壇岩（Preikestolen）是在一萬年前的冰河時期形成的，巨大的冰塊凍結在裂縫中，最後帶走了大塊岩石，留下了這個完美的平台。",
-        humor: "這裡沒有圍欄，因為挪威人認為如果你連懸崖邊不能亂跳都不知道，那政府也救不了你。請發揮你的生存本能。",
-        map: "https://maps.google.com/?q=Preikestolen"
-    },
-    4: {
-        title: "維京國王的誕生地",
-        engTitle: "Birthplace of Viking Kings",
-        route: "Stavanger ➟ Haugesund",
-        dist: "85 km",
-        time: "2 hrs (Incl. Ferry)",
-        desc: "穿越海底隧道並搭乘渡輪前往 Haugesund。這是挪威歷史的起點。",
-        history: "Haugesund 附近的 Haraldshaugen 是為了紀念哈拉爾國王統一挪威一千週年而建的。這裡被視為挪威國家的發源地。",
-        humor: "搭渡輪時記得去買個 Svele（鬆餅）。在挪威，沒有在渡輪上吃過鬆餅的自駕，只能算是在開車散步。",
-        map: "https://maps.google.com/?q=Haugesund"
-    },
-    5: {
-        title: "雨都卑爾根的時光機",
-        engTitle: "Bergen's Time Machine",
-        route: "Haugesund ➟ Bergen",
-        dist: "140 km",
-        time: "3 hrs",
-        desc: "抵達挪威第二大城。走在 Bryggen 的木地板上，感覺像回到了漢薩同盟時代。",
-        history: "Bryggen 漢薩碼頭在 1343 年建立。這些彩色房子雖然多次燒毀，但每次都原地重建，堅持了 700 年。",
-        humor: "卑爾根一年有 240 天在下雨。如果今天沒下雨，請立刻去買樂透，或者檢查你是不是在做夢。",
-        map: "https://maps.google.com/?q=Bryggen"
-    },
-    6: {
-        title: "穿過世界最長的隧道",
-        engTitle: "Through the Longest Tunnel",
-        route: "Bergen ➟ Flåm",
-        dist: "170 km",
-        time: "2.5 hrs",
-        desc: "行經 Lærdal 隧道（24.5公里）。這不是開車，這是地心歷險記。",
-        history: "Flåm 鐵路是世界最陡的標準軌距鐵路之一，在 20 公里的路程內爬升了 863 公尺。",
-        humor: "隧道裡有藍色的燈光區，那是為了怕你開到睡著。如果你看到藍光以為是外星人，別怕，那只是燈。",
-        map: "https://maps.google.com/?q=Flam"
-    },
-    7: {
-        title: "冰河與山脈的對話",
-        engTitle: "Glaciers & Heights",
-        route: "Flåm ➟ Stryn",
-        dist: "210 km",
-        time: "4 hrs",
-        desc: "沿著 5 號公路行駛，經過 Boyabreen 冰河。感受那種萬年不化的寒冷感。",
-        history: "Stryn 位於冰河湖畔，是挪威最頂尖的夏季滑雪勝地（夏日雪場是在 6、7 月才最熱門）。",
-        humor: "路邊如果有羊群擋路，請別按喇叭。在挪威，羊的地位比觀光客高，牠們享有合法的路權。",
-        map: "https://maps.google.com/?q=Stryn"
-    },
-    8: {
-        title: "老鷹之路與峽灣之王",
-        engTitle: "Eagle Road & The King",
-        route: "Stryn ➟ Geiranger",
-        dist: "85 km",
-        time: "2.5 hrs",
-        desc: "挑戰 11 個髮夾彎的老鷹之路。這段路能讓你的腎上腺素噴發，同時視神經飽受震撼。",
-        history: "Geiranger 峽灣是挪威最窄、最壯觀的峽灣，2005 年與松恩峽灣一同被列入世界遺產。",
-        humor: "開這段路時請副駕不要尖叫，那會干擾駕駛的穩定度。如果忍不住，請把窗戶關起來叫。",
-        map: "https://maps.google.com/?q=Geiranger"
-    },
-    9: {
-        title: "七姊妹與求婚者的宿怨",
-        engTitle: "Sisters & The Suitor",
-        route: "Geiranger Fjord Cruise",
-        dist: "0 km (Boat Day)",
-        time: "3 hrs Cruise",
-        desc: "搭船深度遊覽峽灣。看著峭壁上的瀑布，想像古人的生活。",
-        history: "求婚者瀑布（Friaren）對面就是七姊妹瀑布。傳說他求婚被拒絕後，從此借酒澆愁，這就是為什麼瀑布形狀像個瓶子。",
-        humor: "在峽灣搭船要小心海鷗，牠們不是在歡迎你，是在計畫搶走你手上的三明治。那是海上的土匪。",
-        map: "https://maps.google.com/?q=Geirangerfjord"
-    },
-    10: {
-        title: "浴火重生的新藝術之城",
-        engTitle: "Art Nouveau Revival",
-        route: "Geiranger ➟ Ålesund",
-        dist: "110 km",
-        time: "3 hrs (Incl. Ferry)",
-        desc: "離開峽灣前往海港城市 Ålesund。從 Aksla 觀景台俯視全城。",
-        history: "1904 年一場大火將全城木屋燒毀，隨後在全歐洲建築師幫助下，以當時最流行的 Art Nouveau 風格重建。",
-        humor: "這座城市美得像童話，但停車位貴得像惡夢。請小心尋找停車場，別讓罰單毀了美景。",
-        map: "https://maps.google.com/?q=Alesund"
-    },
-    11: {
-        title: "巨魔之路的驚心動魄",
-        engTitle: "Trollstigen Adventure",
-        route: "Ålesund ➟ Dombås",
-        dist: "160 km",
-        time: "3.5 hrs",
-        desc: "挑戰挪威自駕最高殿堂：Trollstigen。在巨魔的領地裡小心前行。",
-        history: "巨魔之路於 1936 年開通，是挪威工程技術的傑作。路邊的 Stigfossen 瀑布垂直高度達 320 公尺。",
-        humor: "如果你看到有人在路邊疊石頭，那是在蓋巨魔的小屋。請別踢倒它，除非你想被巨魔詛咒車子爆胎。",
-        map: "https://maps.google.com/?q=Trollstigen"
-    },
-    12: {
-        title: "寂靜荒原的脈動",
-        engTitle: "Pulse of the Wilderness",
-        route: "Dombås ➟ Rondane",
-        dist: "80 km",
-        time: "1.5 hrs",
-        desc: "進入挪威第一個國家公園。這裡有野生馴鹿和極具孤寂感的苔原地形。",
-        history: "Rondane 成立於 1962 年。這裡的地質非常古老，岩石上覆蓋著灰綠色的地衣，是馴鹿的主食。",
-        humor: "如果你看到馴鹿，請保持冷靜。牠們不負責送快遞，也不是魯道夫，牠們只是想安靜地吃午餐。",
-        map: "https://maps.google.com/?q=Rondane+National+Park"
-    },
-    13: {
-        title: "南下回歸文明",
-        engTitle: "Return to Civilization",
-        route: "Rondane ➟ Oslo",
-        dist: "290 km",
-        time: "4 hrs",
-        desc: "沿著 Mjøsa 湖（挪威最大湖）行駛。準備回歸現代都市的懷抱。",
-        history: "Hamar 附近的溜冰館（維京船外型）是 1994 年冬奧的遺產。當時挪威橫掃金牌，舉國瘋狂。",
-        humor: "開回奧斯陸時，請複習一下什麼叫『塞車』。這是在峽灣待太久後最難適應的現代文明。",
-        map: "https://maps.google.com/?q=Oslo"
-    },
-    14: {
-        title: "文化與藝術的饗宴",
-        engTitle: "Culture & Arts",
-        route: "Oslo Exploration",
-        dist: "10 km",
-        time: "By Tram",
-        desc: "今日不開車。搭電車造訪維格蘭公園和奧斯陸歌劇院。",
-        history: "維格蘭公園有 212 件青銅和花崗岩雕塑，呈現了人從出生到死亡的各種情感狀態。",
-        humor: "歌劇院的屋頂可以斜著走。如果你在這裡跌倒，這叫『沉浸式體驗藝術』，非常有層次感。",
-        map: "https://maps.google.com/?q=Oslo+Opera+House"
-    },
-    15: {
-        title: "維京魂的最後巡禮",
-        engTitle: "Last Viking Salute",
-        route: "Oslo ➟ Airport",
-        dist: "50 km",
-        time: "1 hr",
-        desc: "參觀 Bygdøy 半島的探險博物館。下午前往機場還車，揮別這台戰友。",
-        history: "Fram 博物館展示了世界上最強固的木造極地探險船，它曾載著挪威探險家抵達南極與北極。",
-        humor: "還車時請清理車內的空瓶和零食袋。如果你把挪威的垃圾帶回家，那不叫紀念品，那叫偷渡垃圾。",
-        map: "https://maps.google.com/?q=Oslo+Airport"
-    },
-    16: {
-        title: "賦歸：挪威的印記",
-        engTitle: "Homebound",
-        route: "Oslo Airport ➟ Home",
-        dist: "0 km",
-        time: "Flight Time",
-        desc: "帶著記憶、照片和稍微變輕的荷包離境。",
-        history: "挪威雖然不是歐盟成員，但屬於申根區。退稅記得在入關前辦理。",
-        humor: "回到家後，如果發現開水龍頭沒有冰河水，那很正常。這叫『旅遊戒斷症』，唯一的解藥是規劃下一次旅行。",
-        map: "#"
-    }
-};
-            // ...其餘日期可依此結構擴充
+            1: {
+                title: "南下的白色序曲",
+                eng: "The White Prelude",
+                route: "Oslo Airport ➟ Kristiansand",
+                dist: "325 km",
+                time: "4 hrs",
+                desc: "取車後沿著 E18 公路南下。這是挪威的夏日度假勝地，路況平穩但測速照相極多。請保持耐心，欣賞窗外波光粼粼的斯卡格拉克海峽。",
+                history: "Kristiansand 的 <b>Posebyen</b> 舊城區擁有北歐最大規模的白色木屋群。19 世紀時，白色顏料含鉛且昂貴，漆成白色是財富與品味的頂級象徵。",
+                humor: "挪威的測速照相機拍出的照片可能是全世界最貴的藝術品，一張要價 8,000 克朗起跳。如果你想拍照，請用自己的手機，別用政府的相機。",
+                map: "https://www.google.com/maps/dir/Oslo+Airport/Kristiansand"
+            },
+            2: {
+                title: "本土最南端的孤獨",
+                eng: "Southernmost Solitude",
+                route: "Kristiansand ➟ Lindesnes",
+                dist: "90 km",
+                time: "1.5 hrs",
+                desc: "前往挪威本土最南端燈塔 Lindesnes。隨後在 Mandal 展開海鮮捕撈行程，與挪威小龍蝦進行一場關於生命意義的對話。",
+                history: "<b>Lindesnes 燈塔</b>建於 1656 年，是挪威第一座燈塔。它不僅是航標，更是挪威人對抗北海狂風巨浪的勇氣象徵。",
+                humor: "在海邊吃現撈小龍蝦時，請記得對牠們表示敬意，因為牠們剛剛放棄了在冰冷海水中游泳的權利，轉而為你的味蕾服務。",
+                map: "https://www.google.com/maps/dir/Kristiansand/Lindesnes+Lighthouse"
+            },
+            3: {
+                title: "諸神的聖壇",
+                eng: "Pulpit of the Gods",
+                route: "Stavanger ➟ Preikestolen",
+                dist: "40 km + 8 km Hike",
+                time: "1 hr Drive + 4 hrs Hike",
+                desc: "攀登 604 公尺高的聖壇岩（Preikestolen）。這是一段體力活，但當你站在懸崖邊緣看著呂瑟峽灣時，你會覺得一切都值了。",
+                history: "這塊巨岩是在一萬年前冰河時期形成的，巨大的冰凍應力在岩石上切出了完美的平面，大自然的鬼斧神工莫過於此。",
+                humor: "這裡沒有圍欄，因為挪威政府相信你的生存本能。如果你想練習後空翻，請換個地方，這裡的重力加速度非常慷慨。",
+                map: "https://www.google.com/maps/dir/Stavanger/Preikestolen+Basecamp"
+            },
+            4: {
+                title: "維京國王的發源地",
+                eng: "Cradle of Viking Kings",
+                route: "Stavanger ➟ Haugesund",
+                dist: "85 km",
+                time: "2 hrs (Incl. Ferry)",
+                desc: "北上前往 Haugesund。這是一座充滿硬派海洋色彩的城市，也是維京歷史的核心重鎮。",
+                history: "<b>Haraldshaugen</b> 紀念碑標誌著哈拉爾一世統一挪威的地方。在一千年前，維京戰船就是從這裡啟航震懾歐洲。",
+                humor: "搭乘渡輪時請一定要買一個 <b>Svele</b>（挪威鬆餅）。在渡輪上不吃鬆餅，就像在挪威不喝咖啡一樣，會被當地人投以疑惑的目光。",
+                map: "https://www.google.com/maps/dir/Stavanger/Haugesund"
+            },
+            5: {
+                title: "卑爾根的時光長廊",
+                eng: "Bergen's Timeless Wharf",
+                route: "Haugesund ➟ Bergen",
+                dist: "140 km",
+                time: "3 hrs",
+                desc: "抵達雨都卑爾根。漫步在 Bryggen 的彩色木屋間，這裡是漢薩同盟商務菁英曾經奮鬥過的地方。",
+                history: "這些木屋經歷了數百年的火災與重建，結構保持著中世紀的風格。卑爾根曾是全挪威最大的城市，甚至曾是王國的首都。",
+                humor: "卑爾根一年下雨 240 天。如果今天出太陽，那是奇蹟；如果下雨，那是『正常發揮』。請享受這濕潤的專業氛圍。",
+                map: "https://www.google.com/maps/dir/Haugesund/Bergen"
+            },
+            6: {
+                title: "跨越地心的隧道",
+                eng: "Into the Heart of Earth",
+                route: "Bergen ➟ Flåm",
+                dist: "170 km",
+                time: "2.5 hrs",
+                desc: "穿過 Lærdal 隧道，這是世界最長的公路隧道。隨後抵達 Flåm，準備搭乘世界最美的登山鐵路。",
+                history: "Flåm 鐵路坡度高達 5.5%，在短短 20 公里內展現了人類克服高山地形的極致工程智慧。",
+                humor: "隧道長度達 24.5 公里，裡面的藍色燈光是為了讓駕駛員不要以為自己在開往另一個星球。保持清醒，終點有美景等著。",
+                map: "https://www.google.com/maps/dir/Bergen/Flåm"
+            },
+            7: {
+                title: "冰河與山脈的史詩",
+                eng: "Epic of Glaciers",
+                route: "Flåm ➟ Stryn",
+                dist: "210 km",
+                time: "4 hrs",
+                desc: "行經景觀公路，近距離觀察 Boyabreen 冰河。感受那股來自上個冰河時期的冰冷氣息。",
+                history: "Stryn 湖區是挪威夏季滑雪的最佳場所。這裡的湖水顏色因含有冰河粉末而呈現出一種迷幻的翡翠綠。",
+                humor: "路邊的羊群如果擋路，請慢慢等待。牠們正在進行重要的社群會議，討論哪邊的草比較甜。你只是個過路客，牠們才是地主。",
+                map: "https://www.google.com/maps/dir/Flåm/Stryn"
+            },
+            8: {
+                title: "挑戰老鷹之路",
+                eng: "Conquering Eagle Road",
+                route: "Stryn ➟ Geiranger",
+                dist: "85 km",
+                time: "2.5 hrs",
+                desc: "挑戰 Ørnevegen (老鷹之路) 的 11 個髮夾彎。這是一段會讓副駕屏息、讓駕駛手心出汗的夢幻路線。",
+                history: "蓋朗厄爾峽灣是聯合國教科文組織認定的世界遺產。它展示了冰河如何將堅硬的花崗岩山脈切割成深邃的海溝。",
+                humor: "如果開完這段路你沒有暈車，那代表你具備成為拉力賽車手的潛力。請記得在山頂觀景台補拍一張『我很鎮定』的照片。",
+                map: "https://www.google.com/maps/dir/Stryn/Geiranger"
+            },
+            9: {
+                title: "峽灣深處的秘密",
+                eng: "Secrets of the Fjord",
+                route: "Geiranger Fjord Cruise",
+                dist: "0 km (Boat)",
+                time: "3 hrs",
+                desc: "搭船深度遊覽峽灣。看著峭壁上的瀑布群，想像那些與世隔絕的農場生活。",
+                history: "峭壁上的 <b>Skageflå</b> 農場曾有人居住。為了躲避收稅員，居民會收起唯一的木梯，讓官方只能在山腳下乾瞪眼。",
+                humor: "七姊妹瀑布正在對面等待求婚者。而求婚者瀑布形狀像個瓶子，因為他求婚失敗後從此酗酒 —— 多麼知性又警世的傳說。",
+                map: "https://www.google.com/maps/search/Geiranger+Fjord"
+            },
+            10: {
+                title: "新藝術風格之美",
+                eng: "Art Nouveau Elegance",
+                route: "Geiranger ➟ Ålesund",
+                dist: "110 km",
+                time: "3 hrs",
+                desc: "前往挪威最美麗的城市奧勒松。這裡的建築風格優雅統一，彷彿一座巨大的藝術館。",
+                history: "1904 年的一場大火將全城木屋焚毀，全城在 3 年內重建，並全面採用當時最流行的石造新藝術風格，成為災後重生的經典。",
+                humor: "爬上 Aksla 觀景台需要 418 階。每一階都在燃燒你中午吃的甜點熱量。堅持下去，山頂的風景是免費的。",
+                map: "https://www.google.com/maps/dir/Geiranger/Ålesund"
+            },
+            11: {
+                title: "走進巨魔的領地",
+                eng: "The Troll's Path",
+                route: "Ålesund ➟ Dombås",
+                dist: "160 km",
+                time: "3.5 hrs",
+                desc: "征服 <b>Trollstigen</b> (巨魔之路)。這段路被高聳的山脈包圍，充滿了神秘的傳說氣息。",
+                history: "這條路於 1936 年由國王哈康七世親自剪綵。工程期間面臨巨大的落石風險，完全是人類工程學與自然搏鬥的產物。",
+                humor: "在挪威，如果你覺得石頭長得很像人臉，別懷疑，那真的是被太陽曬乾的巨魔。請不要隨意挑釁牠們，免得導航壞掉。",
+                map: "https://www.google.com/maps/dir/Ålesund/Dombås"
+            },
+            12: {
+                title: "苔原上的生命力",
+                eng: "Life on the Tundra",
+                route: "Dombås ➟ Rondane",
+                dist: "80 km",
+                time: "1.5 hrs",
+                desc: "進入挪威第一個國家公園 Rondane。這裡的地景蒼茫而壯麗，是野生馴鹿的最後堡壘。",
+                history: "這片土地啟發了無數藝術家，包括易卜生的《培爾·金特》。其特有的岩石苔蘚呈現出一種淡灰綠色，非常具有禪意。",
+                humor: "這裡的馴鹿非常害羞。如果你看到牠們，請保持距離。牠們不會幫你送聖誕禮物，牠們只想要安靜地吃地衣。",
+                map: "https://www.google.com/maps/dir/Dombås/Rondane+Nasjonalpark"
+            },
+            13: {
+                title: "重返繁華之路",
+                eng: "Road to Modernity",
+                route: "Rondane ➟ Oslo",
+                dist: "290 km",
+                time: "4 hrs",
+                desc: "沿著 E6 公路南返首都。經過挪威最大的湖泊 Mjøsa，享受最後的公路寧靜。",
+                history: "Hamar 附近的維京船滑冰館是 1994 年冬奧的代表作，它展示了現代木構造建築的結構美學。",
+                humor: "開回奧斯陸時，你會突然發現紅綠燈變多了。這是在提醒你：假期快結束了，現實生活正在路口等著你。",
+                map: "https://www.google.com/maps/dir/Rondane/Oslo"
+            },
+            14: {
+                title: "屋頂與靈魂的散步",
+                eng: "Roofwalks & Soul Searching",
+                route: "Oslo City Day",
+                dist: "15 km (Tram)",
+                time: "All Day",
+                desc: "放下方向盤。利用電車系統造訪維格蘭雕塑公園與奧斯陸歌劇院。在建築的屋頂俯瞰峽灣日落。",
+                history: "維格蘭雕塑公園是單一藝術家的心血結晶，212 件作品完整呈現了生老病死。歌劇院則是現代挪威民主價值的空間體現。",
+                humor: "憤怒的小孩雕像前總是排滿遊客。其實他的表情是在說：『別拍了，我也想下班回家喝咖啡。』",
+                map: "https://www.google.com/maps/search/Oslo+Opera+House"
+            },
+            15: {
+                title: "維京魂的告別",
+                eng: "Farewell Viking Soul",
+                route: "Oslo ➟ Airport",
+                dist: "50 km",
+                time: "1 hr",
+                desc: "在 Bygdøy 半島參觀探險博物館。下午前往機場還車，正式結束這場 2,200 公里的征途。",
+                history: "Fram 博物館內的探險船曾搭載過阿蒙森抵達南極點。挪威人的血液裡流淌著探索未知的基因。",
+                humor: "還車時請檢查後座。如果有剩下的挪威魚罐頭，請送給租車公司的人，這能增加他們對台灣遊客的好感度（大概吧）。",
+                map: "https://www.google.com/maps/dir/Oslo/Oslo+Airport"
+            },
+            16: {
+                title: "挪威的戒斷症狀",
+                eng: "Norway Withdrawal",
+                route: "Oslo Airport ➟ Home",
+                dist: "0 km",
+                time: "Sky High",
+                desc: "在機場辦理退稅，帶著飽滿的記憶卡與變輕的荷包，踏上回家的路。",
+                history: "挪威雖然物價昂貴，但其社會福利與自然保育是全球標竿。這次旅行是你對地球最美角落的一次投資。",
+                humor: "回到家後，如果發現開水龍頭沒有冰河水，請別驚慌。這叫『旅遊戒斷症』，唯一的解藥是現在就打開電腦，搜尋下一次旅行。",
+                map: "#"
+            }
         };
 
         function renderDay(d) {
-            const data = itineraryData[d] || { title: "深度行程準備中", engTitle: "Coming Soon", route: "Exploring...", dist: "???", time: "???", desc: "這天的行程太過神祕，連導航都還在思考。", history: "相傳這裡曾有巨魔出沒，但牠們現在都去開發觀光 App 了。", humor: "幽默感正在瑞典海關轉運中，請稍候。", map: "#" };
-            
+            const data = itineraryData[d];
             const html = `
-                <div class="detail-header">
-                    <div class="d-flex justify-content-between align-items-start mb-3">
-                        <span class="badge bg-white text-dark fw-bold">DAY ${d.toString().padStart(2, '0')}</span>
-                        <div class="text-end">
-                            <i class="fas fa-cloud-sun me-1"></i> <small>Check YR.no</small>
-                        </div>
+                <div class="hero-info">
+                    <div class="d-flex justify-content-between mb-3">
+                        <span class="badge bg-white text-dark">DAY ${d.toString().padStart(2, '0')}</span>
+                        <div><i class="fas fa-gas-pump me-1"></i> <small>Gas Check</small></div>
                     </div>
                     <h3 class="fw-bold mb-1">${data.title}</h3>
-                    <p class="small opacity-75 mb-3">${data.engTitle}</p>
-                    <div class="d-flex flex-wrap">
-                        <span class="info-tag"><i class="fas fa-route me-1"></i> ${data.dist}</span>
-                        <span class="info-tag"><i class="fas fa-clock me-1"></i> ${data.time}</span>
+                    <p class="small opacity-75 mb-3">${data.eng}</p>
+                    <div class="d-flex">
+                        <span class="meta-badge"><i class="fas fa-route"></i> ${data.dist}</span>
+                        <span class="meta-badge"><i class="fas fa-clock"></i> ${data.time}</span>
                     </div>
                 </div>
 
-                <div class="glass-card">
-                    <h6 class="fw-bold mb-2"><i class="fas fa-map-pin text-danger me-2"></i>當日路線：${data.route}</h6>
-                    <p class="content-text small">${data.desc}</p>
-                    <a href="${data.map}" target="_blank" class="map-link">
-                        <i class="fas fa-external-link-alt me-1"></i> 在 Google Maps 中查看座標
+                <div class="glass-card mb-3">
+                    <h6 class="fw-bold"><i class="fas fa-map-location-dot me-2 text-primary"></i>路線重點：${data.route}</h6>
+                    <p class="small text-muted mb-3">${data.desc}</p>
+                    <a href="${data.map}" target="_blank" class="text-decoration-none small fw-bold" style="color:var(--nordic-pink)">
+                        <i class="fas fa-up-right-from-square me-1"></i> 在 Google Maps 中開啟導航
                     </a>
                 </div>
 
-                <div class="history-box">
-                    <h6 class="fw-bold"><i class="fas fa-university me-2"></i>知性脈絡</h6>
-                    <p class="content-text small text-muted mb-0">${data.history}</p>
+                <div class="history-section">
+                    <h6 class="fw-bold"><i class="fas fa-landmark-dome me-2"></i>知性與歷史</h6>
+                    <p class="small text-soft mb-0">${data.history}</p>
                 </div>
 
-                <div class="glass-card" style="border-top: 4px solid #F1C40F;">
-                    <h6 class="fw-bold"><i class="fas fa-comment-dots me-2"></i>北歐式幽默</h6>
-                    <p class="content-text small mb-0"><em>"${data.humor}"</em></p>
+                <div class="humor-card">
+                    <h6 class="fw-bold"><i class="fas fa-quote-left me-2"></i>幽默小報</h6>
+                    <p class="small mb-0"><em>"${data.humor}"</em></p>
                 </div>
             `;
             document.getElementById('dayContent').innerHTML = html;
         }
 
-        // 初始化日期選擇器
+        // 生成日期按鈕
         const picker = document.getElementById('dayPicker');
         for (let i = 1; i <= 16; i++) {
             const btn = document.createElement('div');
@@ -271,6 +280,7 @@
                 document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
                 renderDay(i);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             };
             picker.appendChild(btn);
         }
