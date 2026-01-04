@@ -3,209 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Nordic Saga</title>
+    <title>Saga of Norway | Professional Itinerary</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        .itinerary-section { padding: 10px; }
-        .day-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; }
-        .day-num { background: var(--nordic-pink); color: white; padding: 5px 15px; border-radius: 12px; font-weight: 800; font-size: 0.9rem; }
-        .loc-text { font-weight: 700; color: var(--text-deep); font-size: 1.1rem; }
-        .humor-note { background: rgba(232, 180, 184, 0.1); border-radius: 15px; padding: 12px; margin-top: 10px; font-size: 0.85rem; color: #8a6d6d; }
+        .day-scroller { display: flex; overflow-x: auto; padding: 10px 0; gap: 10px; scrollbar-width: none; }
+        .day-scroller::-webkit-scrollbar { display: none; }
+        .day-btn { min-width: 60px; height: 60px; border-radius: 18px; background: white; border: 1px solid var(--nordic-pink); display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--nordic-pink); cursor: pointer; transition: 0.3s; }
+        .day-btn.active { background: var(--nordic-pink); color: white; transform: scale(1.1); box-shadow: 0 5px 15px rgba(232, 180, 184, 0.4); }
+        
+        .detail-header { background: linear-gradient(135deg, #434C5E 0%, #2D3436 100%); color: white; border-radius: 25px; padding: 25px; margin-bottom: 20px; }
+        .info-tag { background: rgba(255, 255, 255, 0.1); padding: 5px 12px; border-radius: 10px; font-size: 0.75rem; margin-right: 8px; }
+        .history-box { border-left: 4px solid var(--nordic-pink); padding-left: 20px; margin: 20px 0; }
+        .map-link { color: var(--nordic-pink); font-size: 0.85rem; text-decoration: none; font-weight: 600; }
     </style>
 </head>
 <body class="p-3">
 
-    <header class="mb-4 mt-3 text-center">
-        <h2 class="fw-bold">16 Days of Hygge</h2>
-        <p class="text-soft small">如果風景太美讓你忘了呼吸，請記得人工呼吸不包含在保險內。</p>
+    <header class="mb-4">
+        <h2 class="fw-bold">The Great Odyssey</h2>
+        <p class="text-muted small">16 Days, 2,000 Kilometers, Infinite Memories.</p>
     </header>
 
-    <div class="itinerary-section">
-
-        <div class="glass-card">
-            <div class="day-header">
-                <span class="day-num">DAY 01</span>
-                <span class="loc-text">Oslo ➟ Kristiansand</span>
-            </div>
-            <p class="small text-soft">取車後南下。去看看 Posebyen 舊城區那些漂亮的白色房子。</p>
-            <div class="humor-note">
-                <i class="fas fa-face-grin-wink me-2"></i><strong>幽默小報：</strong>挪威人把房子漆成白色是因為以前白色油漆最貴，這是一種「低調的炫富」。
-            </div>
+    <div class="day-scroller mb-4" id="dayPicker">
         </div>
 
-        <div class="glass-card">
-            <div class="day-header">
-                <span class="day-num">DAY 02</span>
-                <span class="loc-text">南方燈塔之約</span>
-            </div>
-            <p class="small text-soft">拜訪 Lindesnes 燈塔。這是挪威的最南端，再往南你就得游泳去丹麥了。</p>
-            <div class="humor-note">
-                <i class="fas fa-shrimp me-2"></i><strong>知性時刻：</strong>去包船捕小龍蝦吧，記得對龍蝦有禮貌一點，牠們等一下會變成你身體的一部分。
-            </div>
+    <div id="dayContent">
         </div>
-
-        <div class="glass-card">
-            <div class="day-header">
-                <span class="day-num">DAY 03</span>
-                <span class="loc-text">Preikestolen 聖壇岩</span>
-            </div>
-            <p class="small text-soft">攀登 604 公尺高的懸崖。這裡沒有圍欄，因為挪威人相信「達爾文進化論」。</p>
-            <div class="humor-note">
-                <i class="fas fa-mountain me-2"></i><strong>幽默小報：</strong>站在邊緣時，請確保你的遺言已經想好，或者至少拍一張夠漂亮的照片。
-            </div>
-        </div>
-
-        <div class="glass-card">
-            <div class="day-header">
-                <span class="day-num">DAY 04</span>
-                <span class="loc-text">Haugesund 維京之路</span>
-            </div>
-            <p class="small text-soft">跨過 Boknafjorden 渡輪，尋找統一挪威的哈拉爾國王足跡。</p>
-            <div class="humor-note">
-                <i class="fas fa-crown me-2"></i><strong>知性時刻：</strong>維京人以前沒有 GPS，但他們有星星和勇氣。你有 GPS，所以請別開進海裡。
-            </div>
-        </div>
-
-        <div class="glass-card">
-            <div class="day-header">
-                <span class="day-num">DAY 05</span>
-                <span class="loc-text">Bergen 雨都巡禮</span>
-            </div>
-            <p class="small text-soft">走進 Bryggen 漢薩碼頭。這是一個被火燒了幾十次還堅持長在那裡的奇蹟。</p>
-            <div class="humor-note">
-                <i class="fas fa-umbrella me-2"></i><strong>幽默小報：</strong>如果卑爾根沒下雨，那代表你可能進到了平行時空。
-            </div>
-        </div>
-
-        <div class="glass-card">
-            <div class="day-header">
-                <span class="day-num">DAY 06</span>
-                <span class="loc-text">Bergen ➟ Flåm</span>
-            </div>
-            <p class="small text-soft">Stegastein 觀景台。那片伸出懸崖的玻璃會讓你重新審視你的人生選擇。</p>
-            <div class="humor-note">
-                <i class="fas fa-train me-2"></i><strong>知性時刻：</strong>Flåm 鐵路是世界最美，也是最貴的火車票之一，這就是錢變成風景的樣子。
-            </div>
-        </div>
-
-        <div class="glass-card">
-            <div class="day-header">
-                <span class="day-num">DAY 07</span>
-                <span class="loc-text">Flåm ➟ Stryn</span>
-            </div>
-            <p class="small text-soft">穿越松恩山脈公路。這是挪威公路旅行的靈魂，也是測試副駕會不會睡著的終極挑戰。</p>
-            <div class="humor-note">
-                <i class="fas fa-snowflake me-2"></i><strong>幽默小報：</strong>路邊的積雪到七月都不會化，別試著拿它來做剉冰，那是歷史的味道。
-            </div>
-        </div>
-
-        <div class="glass-card">
-            <div class="day-header">
-                <span class="day-num">DAY 08</span>
-                <span class="loc-text">Geiranger 峽灣之王</span>
-            </div>
-            <p class="small text-soft">挑戰老鷹之路。11 個髮夾彎會讓你轉到懷疑人生，但風景會讓你覺得人生真好。</p>
-            <div class="humor-note">
-                <i class="fas fa-camera-retro me-2"></i><strong>知性時刻：</strong>這是世界遺產。那些峭壁上的老農場，以前是為了躲稅才把梯子撤掉的。稅收果然是進步的動力。
-            </div>
-        </div>
-
-        <div class="glass-card">
-            <div class="day-header">
-                <span class="day-num">DAY 09</span>
-                <span class="loc-text">Geiranger 深度漫遊</span>
-            </div>
-            <p class="small text-soft">搭船看看七姊妹瀑布。聽說求婚者瀑布在對面喝醉了，那是很浪漫的酗酒傳說。</p>
-            <div class="humor-note">
-                <i class="fas fa-water me-2"></i><strong>幽默小報：</strong>如果船上的解說你聽不懂，就微笑點頭，假裝自己非常有深度。
-            </div>
-        </div>
-
-        <div class="glass-card">
-            <div class="day-header">
-                <span class="day-num">DAY 10</span>
-                <span class="loc-text">Geiranger ➟ Ålesund</span>
-            </div>
-            <p class="small text-soft">前往新藝術風格城市。別忘了在 Valldal 買草莓，那是挪威草莓界的愛馬仕。</p>
-            <div class="humor-note">
-                <i class="fas fa-city me-2"></i><strong>知性時刻：</strong>奧勒松在 1904 年全毀於火災。現在這座美得像電影的地點，完全是從灰燼中長出來的。
-            </div>
-        </div>
-
-        <div class="glass-card">
-            <div class="day-header">
-                <span class="day-num">DAY 11</span>
-                <span class="loc-text">Ålesund ➟ Dombås</span>
-            </div>
-            <p class="small text-soft">巨魔之路 (Trollstigen)。如果你在路上看到長得很醜的石頭，那可能就是被太陽曬乾的巨魔。</p>
-            <div class="humor-note">
-                <i class="fas fa-truck-monster me-2"></i><strong>幽默小報：</strong>髮夾彎很窄，如果你遇到大巴士，請展現紳士風度（或是展現你的煞車皮強度）。
-            </div>
-        </div>
-
-        <div class="glass-card">
-            <div class="day-header">
-                <span class="day-num">DAY 12</span>
-                <span class="loc-text">Rondane 國家公園</span>
-            </div>
-            <p class="small text-soft">進入荒原。這裡的風景啟發了無數藝術家，也會啟發你想在路邊野餐的欲望。</p>
-            <div class="humor-note">
-                <i class="fas fa-hippo me-2"></i><strong>知性時刻：</strong>這裡是野生馴鹿的家。如果你看到牠們，請保持安靜，牠們不喜歡被當成聖誕老人的員工。
-            </div>
-        </div>
-
-        <div class="glass-card">
-            <div class="day-header">
-                <span class="day-num">DAY 13</span>
-                <span class="loc-text">Dombås ➟ Oslo</span>
-            </div>
-            <p class="small text-soft">南返首都。經過最大的 Mjøsa 湖，準備回歸充滿紅綠燈和停車費的世界。</p>
-            <div class="humor-note">
-                <i class="fas fa-gas-pump me-2"></i><strong>幽默小報：</strong>進城前請深呼吸，因為奧斯陸的物價會讓你呼吸困難。
-            </div>
-        </div>
-
-        <div class="glass-card">
-            <div class="day-header">
-                <span class="day-num">DAY 14</span>
-                <span class="loc-text">Oslo 市區探索</span>
-            </div>
-            <p class="small text-soft">維格蘭雕塑公園。去看那個著名的「憤怒的小孩」，他完美詮釋了沒喝到咖啡的挪威人。</p>
-            <div class="humor-note">
-                <i class="fas fa-masks-theater me-2"></i><strong>知性時刻：</strong>歌劇院的屋頂可以爬，這代表藝術不該高高在上，而是應該被你踩在腳下。
-            </div>
-        </div>
-
-        <div class="glass-card">
-            <div class="day-header">
-                <span class="day-num">DAY 15</span>
-                <span class="loc-text">Oslo ➟ Airport</span>
-            </div>
-            <p class="small text-soft">比格迪半島看維京船。傍晚前往機場還車。記得把這幾天累積的空瓶拿去回收換錢。</p>
-            <div class="humor-note">
-                <i class="fas fa-car me-2"></i><strong>幽默小報：</strong>還車時請檢查後車廂，別把買太多的巧克力遺留在那裡，那是給租車員的非法獎金。
-            </div>
-        </div>
-
-        <div class="glass-card">
-            <div class="day-header">
-                <span class="day-num">DAY 16</span>
-                <span class="loc-text">Farewell Norway</span>
-            </div>
-            <p class="small text-soft">辦理離境。帶著行李和幾千張照片，以及縮水的錢包回家。</p>
-            <div class="humor-note">
-                <i class="fas fa-plane-departure me-2"></i><strong>終章：</strong>挪威語說 "Takk for turen"，謝謝這場旅行。下次再來時，希望你已經學會怎麼跟巨魔溝通了。
-            </div>
-        </div>
-
-    </div>
 
     <nav class="bottom-nav">
         <a href="index.html"><i class="fas fa-house-chimney"></i><span>總覽</span></a>
         <a href="culture.html" class="active"><i class="fas fa-compass"></i><span>行程</span></a>
         <a href="guide.html"><i class="fas fa-feather-pointed"></i><span>指南</span></a>
     </nav>
+
+    <script>
+        const itineraryData = {
+            1: {
+                title: "南下的白色前奏",
+                engTitle: "The White Prelude",
+                route: "Oslo ➟ Kristiansand",
+                dist: "320 km",
+                time: "3.5 hrs (E18 Highway)",
+                desc: "取車後沿著挪威南部大動脈 E18 公路行駛。這段路程相對平緩，是適應挪威限速 80km/h（以及隨處可見的測速照相）的最佳練習場。",
+                history: "Kristiansand 的 <b>Posebyen</b> 舊城區擁有北歐最大規模的一體化木屋群。1892 年的大火燒毀了大部分城區，現在看到的白色木屋是當時建築美學的巔峰。",
+                humor: "挪威人把房子漆成白色是因為以前白色油漆含鉛，最能防水且最貴。現在漆成白色則純粹是為了讓鄰居覺得你有品味且很有錢。",
+                map: "https://www.google.com/maps/search/Posebyen+Kristiansand"
+            },
+            8: {
+                title: "峽灣之王的加冕",
+                engTitle: "The Crowning of Fjord",
+                route: "Stryn ➟ Geiranger",
+                dist: "85 km",
+                time: "2.5 hrs (Incl. 11 Hairpin Bends)",
+                desc: "今日將挑戰著名的<b>老鷹之路 (Ørnevegen)</b>。這不是開車，這是在垂直的藝術品上爬行。",
+                history: "<b>蓋朗厄爾峽灣</b>於 2005 年列入聯合國教科文組織遺產。注意看峭壁上廢棄的農場（如 Skageflå），以前的農夫為了不繳稅，會把通往農場的長梯收起來，讓收稅員乾瞪眼。",
+                humor: "在 Dalsnibba 觀景台如果遇到大霧，別難過。那代表你省下了被壯觀景色震撼到暈倒的醫藥費。這很划算吧？",
+                map: "https://www.google.com/maps/search/Geirangerfjord"
+            },
+            14: {
+                title: "文明的屋頂與憤怒的拳頭",
+                engTitle: "Roofs & Fists",
+                route: "Oslo City Exploration",
+                dist: "15 km",
+                time: "Tram & Walk (Car Resting)",
+                desc: "今日車輛休息。利用奧斯陸發達的電車系統前往<b>維格蘭雕塑公園</b>。下午在歌劇院屋頂欣賞奧斯陸峽灣日落。",
+                history: "<b>奧斯陸歌劇院</b>於 2008 年完工，設計靈感來自冰山。它的坡道設計是為了落實挪威的『漫遊權』，確保這座建築的頂端屬於全體人民，而非精英階層。",
+                humor: "維格蘭公園裡那個『憤怒的小孩』雕像，其實是挪威所有家長在週日超市關門時的縮影。那是靈魂的共鳴。",
+                map: "https://www.google.com/maps/search/Vigeland+Park"
+            }
+            // ...其餘日期可依此結構擴充
+        };
+
+        function renderDay(d) {
+            const data = itineraryData[d] || { title: "深度行程準備中", engTitle: "Coming Soon", route: "Exploring...", dist: "???", time: "???", desc: "這天的行程太過神祕，連導航都還在思考。", history: "相傳這裡曾有巨魔出沒，但牠們現在都去開發觀光 App 了。", humor: "幽默感正在瑞典海關轉運中，請稍候。", map: "#" };
+            
+            const html = `
+                <div class="detail-header">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <span class="badge bg-white text-dark fw-bold">DAY ${d.toString().padStart(2, '0')}</span>
+                        <div class="text-end">
+                            <i class="fas fa-cloud-sun me-1"></i> <small>Check YR.no</small>
+                        </div>
+                    </div>
+                    <h3 class="fw-bold mb-1">${data.title}</h3>
+                    <p class="small opacity-75 mb-3">${data.engTitle}</p>
+                    <div class="d-flex flex-wrap">
+                        <span class="info-tag"><i class="fas fa-route me-1"></i> ${data.dist}</span>
+                        <span class="info-tag"><i class="fas fa-clock me-1"></i> ${data.time}</span>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <h6 class="fw-bold mb-2"><i class="fas fa-map-pin text-danger me-2"></i>當日路線：${data.route}</h6>
+                    <p class="content-text small">${data.desc}</p>
+                    <a href="${data.map}" target="_blank" class="map-link">
+                        <i class="fas fa-external-link-alt me-1"></i> 在 Google Maps 中查看座標
+                    </a>
+                </div>
+
+                <div class="history-box">
+                    <h6 class="fw-bold"><i class="fas fa-university me-2"></i>知性脈絡</h6>
+                    <p class="content-text small text-muted mb-0">${data.history}</p>
+                </div>
+
+                <div class="glass-card" style="border-top: 4px solid #F1C40F;">
+                    <h6 class="fw-bold"><i class="fas fa-comment-dots me-2"></i>北歐式幽默</h6>
+                    <p class="content-text small mb-0"><em>"${data.humor}"</em></p>
+                </div>
+            `;
+            document.getElementById('dayContent').innerHTML = html;
+        }
+
+        // 初始化日期選擇器
+        const picker = document.getElementById('dayPicker');
+        for (let i = 1; i <= 16; i++) {
+            const btn = document.createElement('div');
+            btn.className = `day-btn ${i === 1 ? 'active' : ''}`;
+            btn.innerText = i;
+            btn.onclick = function() {
+                document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                renderDay(i);
+            };
+            picker.appendChild(btn);
+        }
+
+        // 預設渲染第一天
+        renderDay(1);
+    </script>
 </body>
 </html>
