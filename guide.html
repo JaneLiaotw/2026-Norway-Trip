@@ -3,40 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survival Encyclopedia | Norway 2026</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-</head>
-<body class="p-3">
+    <style>
+        .guide-cat-container { display: flex; overflow-x: auto; gap: 10px; padding: 10px 0 20px; scrollbar-width: none; }
+        .cat-btn { 
+            min-width: 100px; padding: 12px; border-radius: 20px; background: white; 
+            border: 1.5px solid var(--nordic-pink); text-align: center; cursor: pointer;
+            transition: 0.3s; font-size: 0.85rem; font-weight: 700; color: var(--nordic-pink);
+        }
+        .cat-btn.active { background: var(--nordic-pink); color: white; box-shadow: 0 5px 15px rgba(232, 180, 184, 0.3); }
+        
+        .survival-card { animation: slideUp 0.4s ease-out; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-    <header class="mb-4">
-        <h2 class="fw-bold">Nordic Survival</h2>
-        <p class="text-soft">如何在全世界最貴的地方優雅活下來？</p>
+        .importance-high { border-left: 5px solid #E74C3C; }
+        .importance-med { border-left: 5px solid #F1C40F; }
+        .importance-low { border-left: 5px solid #3498DB; }
+        
+        .pro-tip { background: #f8f9fa; border-radius: 12px; padding: 15px; font-size: 0.85rem; border: 1px solid #eee; }
+        .humor-badge { font-size: 0.7rem; background: var(--nordic-pink); color: white; padding: 2px 8px; border-radius: 8px; margin-bottom: 5px; display: inline-block; }
+    </style>
+</head>
+<body class="p-3 bg-warm">
+
+    <header class="mb-4 mt-2 px-2">
+        <h2 class="fw-bold">Survival Encyclopedia</h2>
+        <p class="text-muted small">如何在全世界最貴的國家活得像個優雅的當地人。</p>
     </header>
 
-    <div class="glass-card">
-        <h6 class="fw-bold mb-3"><i class="fas fa-car-side me-2 text-danger"></i>自駕潛規則</h6>
-        <div class="small mb-2">● <strong>羊群優先：</strong> 牠們沒讀過交通規則，所以牠們是對的。</div>
-        <div class="small mb-2">● <strong>隧道馬拉松：</strong> 挪威隧道很多，請確認你有幽閉恐懼症的抗體。</div>
-        <div class="small text-soft">● 限速極嚴，罰金會讓你考慮留在挪威洗碗還債。</div>
+    <div class="guide-cat-container" id="catPicker">
+        <div class="cat-btn active" onclick="filterGuide('drive')">🚗 自駕規則</div>
+        <div class="cat-btn" onclick="filterGuide('life')">🛒 生活物資</div>
+        <div class="cat-btn" onclick="filterGuide('money')">💰 錢的問題</div>
+        <div class="cat-btn" onclick="filterGuide('safety')">🆘 安全緊急</div>
     </div>
 
-    <div class="glass-card">
-        <h6 class="fw-bold mb-3"><i class="fas fa-bottle-water me-2 text-primary"></i>生命之水</h6>
-        <div class="small mb-2">● 打開水龍頭（藍色標誌），那是冰河的味道。</div>
-        <div class="small text-danger fw-bold">● 千萬別喝紅色的熱水管，那是拿來洗澡的，不是用來泡茶的。</div>
-    </div>
+    <div id="guideContent"></div>
 
-    <div class="glass-card">
-        <h6 class="fw-bold mb-3"><i class="fas fa-clock me-2 text-warning"></i>超市的尊嚴</h6>
-        <div class="small mb-2">● <strong>週日公休：</strong> 挪威人週日不賣靈魂，也不賣吐司。請提前採買。</div>
-        <div class="small">● 空瓶別丟！餵給回收機（PANT），它會吐錢給你。</div>
-    </div>
-
-    <nav class="bottom-nav">
+    <nav class="footer-nav">
         <a href="index.html"><i class="fas fa-house-chimney"></i><span>總覽</span></a>
         <a href="culture.html"><i class="fas fa-compass"></i><span>行程</span></a>
         <a href="guide.html" class="active"><i class="fas fa-feather-pointed"></i><span>指南</span></a>
     </nav>
+
+    <script>
+        const guideData = {
+            drive: [
+                {
+                    title: "電力與充電的藝術",
+                    importance: "high",
+                    desc: "下載 <b>Elton</b> 與 <b>Tesla</b> App。挪威是電動車天堂，但山區充電樁會像你的薪水一樣，在你不注意時變得很稀有。",
+                    tip: "知性提醒：多數快速充電樁支援信用卡感應，但 App 註冊通常更便宜。",
+                    humor: "如果電量低於 20% 還找不到充電站，別擔心，這正是你練習挪威語『救命』的最佳時機。"
+                },
+                {
+                    title: "過路費與渡輪自動化",
+                    importance: "med",
+                    desc: "租車公司已內建 <b>AutoPass</b>。渡輪與過路費會自動掃描車牌，之後從信用卡扣款。不需停下來付費。",
+                    tip: "專業操作：可以下載 FerryPay 或 Autopass 官網確認帳單，但通常直接交給租車公司處理最省心。",
+                    humor: "在挪威，連羊都有可能被掃描（開玩笑的），總之，看到過路費閘門請帥氣地開過去，別試著找投幣孔。"
+                }
+            ],
+            life: [
+                {
+                    title: "週日超市的尊嚴",
+                    importance: "high",
+                    desc: "<b>週日全挪威超市公休</b>（除了少數極小型的 Joker 或加油站）。週六下午請務必備齊糧草。",
+                    tip: "知性歷史：這是源於挪威的聖日傳統，旨在保障零售業員工的休息權，體現了北歐的勞動平等。",
+                    humor: "如果你在週日餓肚子，那不是因為沒錢，是因為你對挪威的文化尊嚴缺乏預判。這叫『靈魂的斷食』。"
+                },
+                {
+                    title: "空瓶回收 (PANT)",
+                    importance: "low",
+                    desc: "所有標有『PANT』的瓶罐都含押金（2-3 克朗）。在任何超市門口都有回收機。",
+                    tip: "環保循環：回收後會拿到一張收據，可以直接在收銀台折抵消費現金。",
+                    humor: "這是我唯一能讓錢回流到錢包的方法。看著機器吞掉瓶子吐出錢，那種成就感僅次於登上聖壇岩。"
+                }
+            ],
+            money: [
+                {
+                    title: "無現金社會",
+                    importance: "med",
+                    desc: "99% 的地方接受信用卡/Apple Pay。你可能 16 天都看不到挪威實體紙幣。",
+                    tip: "重要備份：務必確認你的信用卡有設定『4 位數 PIN 碼』，在無人加油站或停車場是必備的。",
+                    humor: "如果你堅持使用紙幣，當地人可能會把你當成時空旅行者，或是一位剛搶完銀行的復古搶匪。"
+                },
+                {
+                    title: "退稅手續 (Tax Free)",
+                    importance: "high",
+                    desc: "在標有 Global Blue 的商店單筆消費超過門檻即可申請。離境前在奧斯陸機場辦理。",
+                    tip: "流程提醒：商品需保持未拆封狀態，退稅額度最高可達 19%。這是一筆不小的攝影器材補貼款。",
+                    humor: "退稅是挪威政府對你這 16 天大方貢獻的最後溫柔回饋。別忘了拿，那是你的免稅咖啡基金。"
+                }
+            ],
+            safety: [
+                {
+                    title: "飲水安全：冷熱有別",
+                    importance: "high",
+                    desc: "水龍頭的<b>冷水</b>是全世界最甜美的冰河水，可以直接飲用。但<b>熱水管的水絕對不能喝</b>。",
+                    tip: "知性細節：熱水通常儲存在老舊熱水器中，含有金屬沉澱，僅供洗澡或洗碗。煮開水請用冷水去燒。",
+                    humor: "喝冷水是北歐之神奧丁的恩賜；喝熱水是挑戰你胃黏膜的極限。請明智選擇。"
+                }
+            ]
+        };
+
+        function filterGuide(cat) {
+            // 切換按鈕樣式
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.getAttribute('onclick').includes(cat)) btn.classList.add('active');
+            });
+
+            // 渲染內容
+            const content = guideData[cat];
+            const html = content.map(item => `
+                <div class="glass-card survival-card importance-${item.importance}">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="fw-bold mb-0">${item.title}</h5>
+                        <i class="fas fa-circle-info opacity-25"></i>
+                    </div>
+                    <p class="small text-muted mb-3">${item.desc}</p>
+                    <div class="pro-tip mb-3">
+                        <i class="fas fa-lightbulb text-warning me-2"></i>${item.tip}
+                    </div>
+                    <div class="humor-note-container">
+                        <span class="humor-badge">幽默提醒</span>
+                        <p class="small mb-0 text-soft"><em>"${item.humor}"</em></p>
+                    </div>
+                </div>
+            `).join('');
+            
+            document.getElementById('guideContent').innerHTML = html;
+        }
+
+        // 預設載入自駕規則
+        filterGuide('drive');
+    </script>
 </body>
 </html>
