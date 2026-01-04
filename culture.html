@@ -40,39 +40,184 @@
 
     <script>
         const itineraryData = {
-            1: {
-                title: "南下的白色前奏",
-                engTitle: "The White Prelude",
-                route: "Oslo ➟ Kristiansand",
-                dist: "320 km",
-                time: "3.5 hrs (E18 Highway)",
-                desc: "取車後沿著挪威南部大動脈 E18 公路行駛。這段路程相對平緩，是適應挪威限速 80km/h（以及隨處可見的測速照相）的最佳練習場。",
-                history: "Kristiansand 的 <b>Posebyen</b> 舊城區擁有北歐最大規模的一體化木屋群。1892 年的大火燒毀了大部分城區，現在看到的白色木屋是當時建築美學的巔峰。",
-                humor: "挪威人把房子漆成白色是因為以前白色油漆含鉛，最能防水且最貴。現在漆成白色則純粹是為了讓鄰居覺得你有品味且很有錢。",
-                map: "https://www.google.com/maps/search/Posebyen+Kristiansand"
-            },
-            8: {
-                title: "峽灣之王的加冕",
-                engTitle: "The Crowning of Fjord",
-                route: "Stryn ➟ Geiranger",
-                dist: "85 km",
-                time: "2.5 hrs (Incl. 11 Hairpin Bends)",
-                desc: "今日將挑戰著名的<b>老鷹之路 (Ørnevegen)</b>。這不是開車，這是在垂直的藝術品上爬行。",
-                history: "<b>蓋朗厄爾峽灣</b>於 2005 年列入聯合國教科文組織遺產。注意看峭壁上廢棄的農場（如 Skageflå），以前的農夫為了不繳稅，會把通往農場的長梯收起來，讓收稅員乾瞪眼。",
-                humor: "在 Dalsnibba 觀景台如果遇到大霧，別難過。那代表你省下了被壯觀景色震撼到暈倒的醫藥費。這很划算吧？",
-                map: "https://www.google.com/maps/search/Geirangerfjord"
-            },
-            14: {
-                title: "文明的屋頂與憤怒的拳頭",
-                engTitle: "Roofs & Fists",
-                route: "Oslo City Exploration",
-                dist: "15 km",
-                time: "Tram & Walk (Car Resting)",
-                desc: "今日車輛休息。利用奧斯陸發達的電車系統前往<b>維格蘭雕塑公園</b>。下午在歌劇院屋頂欣賞奧斯陸峽灣日落。",
-                history: "<b>奧斯陸歌劇院</b>於 2008 年完工，設計靈感來自冰山。它的坡道設計是為了落實挪威的『漫遊權』，確保這座建築的頂端屬於全體人民，而非精英階層。",
-                humor: "維格蘭公園裡那個『憤怒的小孩』雕像，其實是挪威所有家長在週日超市關門時的縮影。那是靈魂的共鳴。",
-                map: "https://www.google.com/maps/search/Vigeland+Park"
-            }
+            const itineraryData = {
+    1: {
+        title: "南下的白色前奏",
+        engTitle: "The White Prelude",
+        route: "Oslo Airport ➟ Kristiansand",
+        dist: "325 km",
+        time: "3.5 - 4 hrs",
+        desc: "取車後沿著 E18 公路南下。這是挪威的『夏日里維耶拉』，路況極佳，適合練習如何在不超速的情況下控制你的右腳。",
+        history: "Kristiansand 舊城區 Posebyen 是北歐保存最完好的木屋區之一。19世紀中期，白色顏料是最昂貴的，漆成白色是財富的象徵。",
+        humor: "挪威的測速照相機會在你最帥的時候拍照，但照片很貴，一張可能要你台幣兩萬塊。請保持微笑，或乾脆別超速。",
+        map: "https://maps.google.com/?q=Kristiansand"
+    },
+    2: {
+        title: "最南端的孤獨守望",
+        engTitle: "The Southernmost Guardian",
+        route: "Kristiansand ➟ Mandal ➟ Lindesnes",
+        dist: "90 km",
+        time: "1.5 hrs",
+        desc: "前往挪威本土最南端 Lindesnes 燈塔。在 Mandal 體驗預約好的海鮮捕撈，與龍蝦進行深度對話。",
+        history: "Lindesnes 燈塔建於 1656 年，是挪威第一座燈塔。它標誌著北海與斯卡格拉克海峽的交界。",
+        humor: "在燈塔看日落很浪漫，但風大的時候，你的髮型會從『知性文青』變成『被雷打到』。請帶好帽子。",
+        map: "https://maps.google.com/?q=Lindesnes+Lighthouse"
+    },
+    3: {
+        title: "聖壇岩的朝聖之路",
+        engTitle: "Pulpit Rock Hike",
+        route: "Stavanger ➟ Preikestolen",
+        dist: "40 km + 8 km Hike",
+        time: "1 hr Drive + 4 hrs Hike",
+        desc: "攀登 604 公尺高的垂直懸崖。這是挪威最著名的自然景觀，也是考驗你是否有懼高症的終極測試。",
+        history: "聖壇岩（Preikestolen）是在一萬年前的冰河時期形成的，巨大的冰塊凍結在裂縫中，最後帶走了大塊岩石，留下了這個完美的平台。",
+        humor: "這裡沒有圍欄，因為挪威人認為如果你連懸崖邊不能亂跳都不知道，那政府也救不了你。請發揮你的生存本能。",
+        map: "https://maps.google.com/?q=Preikestolen"
+    },
+    4: {
+        title: "維京國王的誕生地",
+        engTitle: "Birthplace of Viking Kings",
+        route: "Stavanger ➟ Haugesund",
+        dist: "85 km",
+        time: "2 hrs (Incl. Ferry)",
+        desc: "穿越海底隧道並搭乘渡輪前往 Haugesund。這是挪威歷史的起點。",
+        history: "Haugesund 附近的 Haraldshaugen 是為了紀念哈拉爾國王統一挪威一千週年而建的。這裡被視為挪威國家的發源地。",
+        humor: "搭渡輪時記得去買個 Svele（鬆餅）。在挪威，沒有在渡輪上吃過鬆餅的自駕，只能算是在開車散步。",
+        map: "https://maps.google.com/?q=Haugesund"
+    },
+    5: {
+        title: "雨都卑爾根的時光機",
+        engTitle: "Bergen's Time Machine",
+        route: "Haugesund ➟ Bergen",
+        dist: "140 km",
+        time: "3 hrs",
+        desc: "抵達挪威第二大城。走在 Bryggen 的木地板上，感覺像回到了漢薩同盟時代。",
+        history: "Bryggen 漢薩碼頭在 1343 年建立。這些彩色房子雖然多次燒毀，但每次都原地重建，堅持了 700 年。",
+        humor: "卑爾根一年有 240 天在下雨。如果今天沒下雨，請立刻去買樂透，或者檢查你是不是在做夢。",
+        map: "https://maps.google.com/?q=Bryggen"
+    },
+    6: {
+        title: "穿過世界最長的隧道",
+        engTitle: "Through the Longest Tunnel",
+        route: "Bergen ➟ Flåm",
+        dist: "170 km",
+        time: "2.5 hrs",
+        desc: "行經 Lærdal 隧道（24.5公里）。這不是開車，這是地心歷險記。",
+        history: "Flåm 鐵路是世界最陡的標準軌距鐵路之一，在 20 公里的路程內爬升了 863 公尺。",
+        humor: "隧道裡有藍色的燈光區，那是為了怕你開到睡著。如果你看到藍光以為是外星人，別怕，那只是燈。",
+        map: "https://maps.google.com/?q=Flam"
+    },
+    7: {
+        title: "冰河與山脈的對話",
+        engTitle: "Glaciers & Heights",
+        route: "Flåm ➟ Stryn",
+        dist: "210 km",
+        time: "4 hrs",
+        desc: "沿著 5 號公路行駛，經過 Boyabreen 冰河。感受那種萬年不化的寒冷感。",
+        history: "Stryn 位於冰河湖畔，是挪威最頂尖的夏季滑雪勝地（夏日雪場是在 6、7 月才最熱門）。",
+        humor: "路邊如果有羊群擋路，請別按喇叭。在挪威，羊的地位比觀光客高，牠們享有合法的路權。",
+        map: "https://maps.google.com/?q=Stryn"
+    },
+    8: {
+        title: "老鷹之路與峽灣之王",
+        engTitle: "Eagle Road & The King",
+        route: "Stryn ➟ Geiranger",
+        dist: "85 km",
+        time: "2.5 hrs",
+        desc: "挑戰 11 個髮夾彎的老鷹之路。這段路能讓你的腎上腺素噴發，同時視神經飽受震撼。",
+        history: "Geiranger 峽灣是挪威最窄、最壯觀的峽灣，2005 年與松恩峽灣一同被列入世界遺產。",
+        humor: "開這段路時請副駕不要尖叫，那會干擾駕駛的穩定度。如果忍不住，請把窗戶關起來叫。",
+        map: "https://maps.google.com/?q=Geiranger"
+    },
+    9: {
+        title: "七姊妹與求婚者的宿怨",
+        engTitle: "Sisters & The Suitor",
+        route: "Geiranger Fjord Cruise",
+        dist: "0 km (Boat Day)",
+        time: "3 hrs Cruise",
+        desc: "搭船深度遊覽峽灣。看著峭壁上的瀑布，想像古人的生活。",
+        history: "求婚者瀑布（Friaren）對面就是七姊妹瀑布。傳說他求婚被拒絕後，從此借酒澆愁，這就是為什麼瀑布形狀像個瓶子。",
+        humor: "在峽灣搭船要小心海鷗，牠們不是在歡迎你，是在計畫搶走你手上的三明治。那是海上的土匪。",
+        map: "https://maps.google.com/?q=Geirangerfjord"
+    },
+    10: {
+        title: "浴火重生的新藝術之城",
+        engTitle: "Art Nouveau Revival",
+        route: "Geiranger ➟ Ålesund",
+        dist: "110 km",
+        time: "3 hrs (Incl. Ferry)",
+        desc: "離開峽灣前往海港城市 Ålesund。從 Aksla 觀景台俯視全城。",
+        history: "1904 年一場大火將全城木屋燒毀，隨後在全歐洲建築師幫助下，以當時最流行的 Art Nouveau 風格重建。",
+        humor: "這座城市美得像童話，但停車位貴得像惡夢。請小心尋找停車場，別讓罰單毀了美景。",
+        map: "https://maps.google.com/?q=Alesund"
+    },
+    11: {
+        title: "巨魔之路的驚心動魄",
+        engTitle: "Trollstigen Adventure",
+        route: "Ålesund ➟ Dombås",
+        dist: "160 km",
+        time: "3.5 hrs",
+        desc: "挑戰挪威自駕最高殿堂：Trollstigen。在巨魔的領地裡小心前行。",
+        history: "巨魔之路於 1936 年開通，是挪威工程技術的傑作。路邊的 Stigfossen 瀑布垂直高度達 320 公尺。",
+        humor: "如果你看到有人在路邊疊石頭，那是在蓋巨魔的小屋。請別踢倒它，除非你想被巨魔詛咒車子爆胎。",
+        map: "https://maps.google.com/?q=Trollstigen"
+    },
+    12: {
+        title: "寂靜荒原的脈動",
+        engTitle: "Pulse of the Wilderness",
+        route: "Dombås ➟ Rondane",
+        dist: "80 km",
+        time: "1.5 hrs",
+        desc: "進入挪威第一個國家公園。這裡有野生馴鹿和極具孤寂感的苔原地形。",
+        history: "Rondane 成立於 1962 年。這裡的地質非常古老，岩石上覆蓋著灰綠色的地衣，是馴鹿的主食。",
+        humor: "如果你看到馴鹿，請保持冷靜。牠們不負責送快遞，也不是魯道夫，牠們只是想安靜地吃午餐。",
+        map: "https://maps.google.com/?q=Rondane+National+Park"
+    },
+    13: {
+        title: "南下回歸文明",
+        engTitle: "Return to Civilization",
+        route: "Rondane ➟ Oslo",
+        dist: "290 km",
+        time: "4 hrs",
+        desc: "沿著 Mjøsa 湖（挪威最大湖）行駛。準備回歸現代都市的懷抱。",
+        history: "Hamar 附近的溜冰館（維京船外型）是 1994 年冬奧的遺產。當時挪威橫掃金牌，舉國瘋狂。",
+        humor: "開回奧斯陸時，請複習一下什麼叫『塞車』。這是在峽灣待太久後最難適應的現代文明。",
+        map: "https://maps.google.com/?q=Oslo"
+    },
+    14: {
+        title: "文化與藝術的饗宴",
+        engTitle: "Culture & Arts",
+        route: "Oslo Exploration",
+        dist: "10 km",
+        time: "By Tram",
+        desc: "今日不開車。搭電車造訪維格蘭公園和奧斯陸歌劇院。",
+        history: "維格蘭公園有 212 件青銅和花崗岩雕塑，呈現了人從出生到死亡的各種情感狀態。",
+        humor: "歌劇院的屋頂可以斜著走。如果你在這裡跌倒，這叫『沉浸式體驗藝術』，非常有層次感。",
+        map: "https://maps.google.com/?q=Oslo+Opera+House"
+    },
+    15: {
+        title: "維京魂的最後巡禮",
+        engTitle: "Last Viking Salute",
+        route: "Oslo ➟ Airport",
+        dist: "50 km",
+        time: "1 hr",
+        desc: "參觀 Bygdøy 半島的探險博物館。下午前往機場還車，揮別這台戰友。",
+        history: "Fram 博物館展示了世界上最強固的木造極地探險船，它曾載著挪威探險家抵達南極與北極。",
+        humor: "還車時請清理車內的空瓶和零食袋。如果你把挪威的垃圾帶回家，那不叫紀念品，那叫偷渡垃圾。",
+        map: "https://maps.google.com/?q=Oslo+Airport"
+    },
+    16: {
+        title: "賦歸：挪威的印記",
+        engTitle: "Homebound",
+        route: "Oslo Airport ➟ Home",
+        dist: "0 km",
+        time: "Flight Time",
+        desc: "帶著記憶、照片和稍微變輕的荷包離境。",
+        history: "挪威雖然不是歐盟成員，但屬於申根區。退稅記得在入關前辦理。",
+        humor: "回到家後，如果發現開水龍頭沒有冰河水，那很正常。這叫『旅遊戒斷症』，唯一的解藥是規劃下一次旅行。",
+        map: "#"
+    }
+};
             // ...其餘日期可依此結構擴充
         };
 
