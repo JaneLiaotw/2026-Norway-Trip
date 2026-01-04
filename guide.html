@@ -3,40 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Survival Encyclopedia | Professional Guide</title>
+    <title>Survival Encyclopedia | Norway 2026</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* 導覽分類動畫優化 */
+        /* 頁面專屬排版優化 */
         .guide-scroller { 
             display: flex; overflow-x: auto; gap: 10px; padding: 15px 5px; 
             scrollbar-width: none; -webkit-overflow-scrolling: touch;
         }
+        .guide-scroller::-webkit-scrollbar { display: none; }
+        
         .cat-tag { 
-            min-width: 100px; padding: 10px 15px; border-radius: 50px; 
+            min-width: 105px; padding: 10px 18px; border-radius: 50px; 
             background: white; border: 1.5px solid var(--nordic-pink);
             color: var(--nordic-pink); font-size: 0.8rem; font-weight: 700;
             text-align: center; cursor: pointer; white-space: nowrap; transition: 0.3s;
         }
         .cat-tag.active { background: var(--nordic-pink); color: white; box-shadow: 0 4px 15px rgba(232, 180, 184, 0.3); }
 
-        /* 戰術卡片設計 */
-        .tactical-card { animation: fadeInUp 0.5s ease-out forwards; opacity: 0; }
+        .tactical-card { animation: fadeInUp 0.5s ease-out forwards; opacity: 0; margin-bottom: 20px; }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        .importance-strip { width: 6px; border-radius: 10px; margin-right: 15px; }
+        .importance-strip { width: 6px; border-radius: 10px; margin-right: 15px; flex-shrink: 0; }
         .imp-high { background: #FF6B6B; }
         .imp-med { background: #FFD93D; }
         .imp-low { background: #6BCB77; }
 
-        .pro-tip-box { background: rgba(0,0,0,0.03); border-radius: 12px; padding: 12px; font-size: 0.85rem; border-left: 3px solid #434C5E; }
-        .humor-quote { font-size: 0.85rem; color: #8a6d6d; font-style: italic; margin-top: 10px; display: block; }
+        .pro-tip-box { background: rgba(0,0,0,0.04); border-radius: 12px; padding: 12px; font-size: 0.85rem; border-left: 3px solid #434C5E; margin-bottom: 10px; }
+        .humor-quote { font-size: 0.82rem; color: #8a6d6d; font-style: italic; display: block; }
+        .badge-app { font-size: 0.65rem; background: #434C5E; color: white; padding: 2px 8px; border-radius: 5px; margin-left: 8px; vertical-align: middle; }
     </style>
 </head>
 <body class="p-3 bg-warm">
 
-    <header class="mb-4 mt-2">
+    <header class="mb-4 mt-2 px-2">
         <h2 class="fw-bold">Survival Encyclopedia</h2>
         <p class="text-muted small">這不是指南，這是你在挪威優雅生存的戰術地圖。</p>
     </header>
@@ -44,7 +46,8 @@
     <div class="guide-scroller mb-3" id="catNav">
         <div class="cat-tag active" onclick="switchGuide('driving')">🚗 道路戰術</div>
         <div class="cat-tag" onclick="switchGuide('grocery')">🛒 超市生存</div>
-        <div class="cat-tag" onclick="switchGuide('weather')">🌦️ 天候穿衣</div>
+        <div class="cat-tag" onclick="switchGuide('apps')">📱 必備工具</div>
+        <div class="cat-tag" onclick="switchGuide('weather')">🌦️ 天候應對</div>
         <div class="cat-tag" onclick="switchGuide('money')">💰 金融防線</div>
         <div class="cat-tag" onclick="switchGuide('etiquette')">🇳🇴 文化地雷</div>
         <div class="cat-tag" onclick="switchGuide('emergency')">🆘 緊急救援</div>
@@ -62,96 +65,117 @@
         const fullGuideData = {
             driving: [
                 {
-                    title: "M-Plass：山路上的挪威禮儀",
+                    title: "M-Plass：山路禮讓美學",
                     imp: "high",
-                    desc: "在單線山道看到標有白色『M』的藍色標誌，那是避車彎。這不是停車位，是留給禮讓者的榮譽勳章。",
-                    tip: "當對向大車靠近時，離 M 最近的一方必須停靠。挪威司機通常會舉手致意，請微笑回禮。",
-                    humor: "如果你停在 M 拍風景，後面的司機可能不會按喇叭，但他會用北歐海盜的眼神穿透你的靈魂。"
+                    desc: "山區窄路看到藍底白字『M』標誌是避車彎。若你這側有 M 且對向有大車，請主動靠邊停下。",
+                    tip: "禮讓後對方若閃燈，那是他在跟你說 Takk (謝謝)。請舉手帥氣回禮。",
+                    humor: "這不是拍照點。停在 M 拍照會讓後方的巴士司機懷疑你是不是剛從外星降落。"
                 },
                 {
-                    title: "自動化收費系統 (AutoPass)",
+                    title: "自動化收費 (AutoPass)",
                     imp: "med",
-                    desc: "全挪威公路與多數渡輪都是自動感應。租車已內建晶片，費用會由租車公司在還車後從信用卡扣除。",
-                    tip: "下載『FerryPay』App 可預先查詢行程中可能的渡輪開銷，但不註冊也能直接開過去。",
-                    humor: "看到感應門不要驚慌尋找投幣孔，那是 20 世紀的遺物。現在你只需要優雅地飛馳而過，然後等信用卡簡訊。"
-                },
-                {
-                    title: "電動車充電App：Elton",
-                    imp: "high",
-                    desc: "挪威充電樁品牌極多，Elton App 能一鍵整合地圖、規格與支付，是自駕者的電力生命線。",
-                    tip: "注意：山區有些快充樁需排隊，充電時建議去隔壁超市買杯咖啡。",
-                    humor: "電量低於 15% 時，你的副駕會比你更緊張，這時候請保持冷靜，因為焦慮並不會增加里程。"
+                    desc: "全挪威公路與多數渡輪皆自動感應車牌。租車已內建晶片，費用將於還車後由信用卡扣除。",
+                    tip: "不需在收費站停車找零錢，那是 20 世紀的事。直接開過去即可。",
+                    humor: "在挪威，連羊都有可能被掃描（開玩笑的）。總之，請相信科技並保持行駛。"
                 }
             ],
             grocery: [
                 {
-                    title: "週日超市的絕對公休",
+                    title: "週日超市公休制",
                     imp: "high",
-                    desc: "絕大多數超市週日不營業。週六晚上請務必囤積物資。週日唯一的救星是加油站或極小的 Brus-Bua。",
-                    tip: "知性：這受挪威法律保護，旨在保障勞動者的『休閒主權』。週日是挪威人的戶外活動日。",
-                    humor: "週日沒麵包吃不是因為窮，是因為你試圖在挪威挑戰延續一千年的聖日傳統。"
+                    desc: "絕大多數超市週日公休。週六下午請務必買齊糧草。週日唯一救星是加油站或極小的 Brus-Bua。",
+                    tip: "這是為了保障員工休假權的法律傳統。週日是挪威人的『戶外運動日』。",
+                    humor: "週日沒麵包吃不是因為窮，是因為你試圖挑戰北歐延續千年的聖日休息傳統。"
                 },
                 {
-                    title: "棕起司 (Brunost) 解碼",
-                    imp: "med",
-                    desc: "這是挪威國寶級起司，帶有焦糖味。請搭配華夫餅（Waffle）或平脆餅食用。",
-                    tip: "歷史：它是將乳清煮沸結晶而成。最經典的品牌是紅盒裝的 TINE Gudbrandsdalsost。",
-                    humor: "它長得像一塊肥皂，吃起來像焦糖，這就是挪威式的『鹹甜衝擊』，第一口很疑惑，第十口會上癮。"
-                },
-                {
-                    title: "瓶罐回收系統 (Pant)",
+                    title: "瓶罐回收系統 (PANT)",
                     imp: "low",
-                    desc: "所有瓶罐都含有 2-3 克朗押金。去超市門口的機器回收，拿到的收據可以直接在收銀台當現金抵用。",
-                    tip: "只要標有『PANT』字樣的瓶罐都能回收，不限在哪家超市購買。",
-                    humor: "這是在挪威賺錢最快的方法，雖然一次只有幾塊錢，但那種回本的感覺非常踏實。"
+                    desc: "瓶罐含 2-3 克朗押金。去超市門口機器回收，領取的收據可直接折抵消費現金。",
+                    tip: "只要標有『PANT』字樣皆可回收。這是挪威全民環保的核心。",
+                    humor: "這是你在挪威唯一能感受到『錢回來了』的感人時刻。每一罐都是資產。"
+                }
+            ],
+            apps: [
+                {
+                    title: "Yr.no <span class='badge-app'>氣象</span>",
+                    imp: "high",
+                    desc: "挪威氣象局官方 App。動畫地圖能精確顯示每小時降雨趨勢與風速。",
+                    tip: "在挪威，氣象預報是用來保命的。登山前必看『Cloud Cover』雲層圖。",
+                    humor: "如果 Yr 說會下雨，你最好連襪子都換成防水的。它的準確率高到像是在控制天氣。"
+                },
+                {
+                    title: "EasyPark <span class='badge-app'>停車</span>",
+                    imp: "high",
+                    desc: "全挪威最通用停車 App。點擊開始，回程結束，按分鐘計費。",
+                    tip: "最狂功能是『遠端延長時間』，在咖啡廳多待一會也不怕被開單。",
+                    humor: "圖標是粉紅圓圈。它能預防你收到顏色更醜、價格更高的粉紅罰單。"
+                },
+                {
+                    title: "Elton <span class='badge-app'>充電</span>",
+                    imp: "high",
+                    desc: "電動車救星。整合 Tesla、Recharge、Mer 等品牌，一鍵支付。",
+                    tip: "請在台灣就先綁定信用卡。山區收不到簡訊碼會讓你哭笑不得。",
+                    humor: "這款 App 能有效治療『里程焦慮症』。看著地圖你會覺得自己是雷神索爾。"
+                },
+                {
+                    title: "UT.no <span class='badge-app'>健行</span>",
+                    imp: "med",
+                    desc: "登山者聖經。內建 2 萬條步道地圖，包含離線導航與山屋資訊。",
+                    tip: "GPS 功能在沒信號的荒野也能運作。記得下載離線地圖。",
+                    humor: "難度標註很誠實。如果寫『中等』，請預設你的大腿隔天會很有存在感。"
+                },
+                {
+                    title: "Hjelp 113 <span class='badge-app'>救援</span>",
+                    imp: "high",
+                    desc: "報案時會自動傳送精確座標給救援中心，對荒野救援至關重要。",
+                    tip: "座標即生命。請務必在行前完成手機號碼驗證註冊。",
+                    humor: "下載它就像買保險，最好的慶祝方式就是直到還車那天你都沒點開過它。"
                 }
             ],
             weather: [
                 {
-                    title: "三層式穿衣法 (Layering)",
+                    title: "洋蔥式三層穿法",
                     imp: "high",
-                    desc: "挪威天氣變幻莫測，標配是：內層排汗衫、中層羊毛/抓絨、外層防風防水 (Gore-Tex)。",
-                    tip: "峽灣頂端與平地的溫差可達 10 度。隨身攜帶輕便雨衣是基本常識。",
-                    humor: "在挪威，一天經歷四季是正常的，如果現在天氣很爛，等十分鐘，它可能會變更爛（或者變超美）。"
+                    desc: "挪威夏日溫差極大。內層排汗、中層保暖、外層防風防水 (Gore-Tex)。",
+                    tip: "沒有壞天氣，只有穿錯衣。這是一句挪威人刻在靈魂裡的座右銘。",
+                    humor: "在挪威一天經歷四季是日常。如果不喜歡現在的天氣，請等十分鐘——它可能變更糟。"
                 }
             ],
             money: [
                 {
-                    title: "無現金社會防線",
+                    title: "無現金防線與 PIN 碼",
                     imp: "med",
-                    desc: "挪威幾乎不使用現金。Apple Pay 或信用卡通行無阻，甚至廁所都要感應卡片。",
-                    tip: "必備：確認你的信用卡有設定『4 位數 PIN 碼』。有些自動加油站或停車場會要求輸入。",
-                    humor: "如果你掏出一疊大鈔，當地人會用一種看著古物收藏家的好奇眼神看著你。"
+                    desc: "挪威幾乎不使用現金。請確認信用卡已設定『4 位數 PIN 碼』以便自動加油或停車。",
+                    tip: "Apple Pay 覆蓋率極高，但實體卡片仍建議備一份放在車內。",
+                    humor: "如果你堅持掏出一疊大鈔，當地人會用看時空旅行者的眼神好奇地看著你。"
                 }
             ],
             etiquette: [
                 {
-                    title: "挪威人的社交距離",
+                    title: "挪威式社交距離",
                     imp: "low",
-                    desc: "挪威人非常友好但重視隱私。在公車上，如果還有別的空位，請不要坐在當地人旁邊。",
-                    tip: "打招呼用簡潔的『Hei!』，謝謝用『Takk』。簡單有力是北歐風格。",
-                    humor: "挪威人的個人空間大約是一座小島那麼大，保持適當距離是最高級的禮貌。"
+                    desc: "挪威人重視隱私。公車若有空位，請避免坐在陌生人旁邊。打招呼用簡短的 Hei! 即可。",
+                    tip: "尊重個人空間是最高級的禮貌。不需要過多的寒暄。",
+                    humor: "挪威人的個人空間大約是一座小島那麼大。保持距離，你就是最有禮貌的維京人。"
                 }
             ],
             emergency: [
                 {
                     title: "救援三碼：112 / 113",
                     imp: "high",
-                    desc: "110 消防、112 警察、113 醫療急救。若是車輛故障，請聯繫 NAA (+47 2323 2323)。",
-                    tip: "建議在手機中安裝『Hjelp 113』App，它能自動發送你的精確座標給救援單位。",
-                    humor: "我們希望這張卡片你 16 天都用不到。這叫『必要的備而不用』。"
+                    desc: "110 消防、112 警察、113 醫療急救。道路救援 NAA (+47 2323 2323)。",
+                    tip: "手機安裝 Hjelp 113 App 可在報案時自動同步座標。",
+                    humor: "我們希望這張卡片是你這輩子看過最沒用的資訊。祝你一路順風。"
                 }
             ]
         };
 
         function switchGuide(category) {
-            // 切換按鈕激活狀態
             document.querySelectorAll('.cat-tag').forEach(tag => {
                 tag.classList.remove('active');
                 if(tag.getAttribute('onclick').includes(category)) tag.classList.add('active');
             });
 
-            // 獲取並渲染內容
             const sectionData = fullGuideData[category];
             const html = sectionData.map((item, index) => `
                 <div class="glass-card tactical-card d-flex p-3" style="animation-delay: ${index * 0.1}s">
@@ -160,9 +184,9 @@
                         <h5 class="fw-bold mb-1">${item.title}</h5>
                         <p class="small text-muted mb-3">${item.desc}</p>
                         <div class="pro-tip-box">
-                            <i class="fas fa-brain text-info me-2"></i><strong>戰術點：</strong>${item.tip}
+                            <i class="fas fa-lightbulb text-info me-2"></i><strong>戰術點：</strong>${item.tip}
                         </div>
-                        <span class="humor-quote"><i class="fas fa-face-laugh-beam me-2"></i>"${item.humor}"</span>
+                        <span class="humor-quote"><i class="fas fa-face-smile-wink me-2"></i>"${item.humor}"</span>
                     </div>
                 </div>
             `).join('');
@@ -170,7 +194,7 @@
             document.getElementById('guideDisplay').innerHTML = html;
         }
 
-        // 預設啟動道路戰術
+        // 預設渲染
         switchGuide('driving');
     </script>
 </body>
