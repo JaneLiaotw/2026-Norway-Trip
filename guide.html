@@ -3,41 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Norway | Guide</title>
+    <title>Survival Guide | Norway 2026</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        .cat-tag { min-width: 90px; padding: 8px; border-radius: 50px; background: white; border: 1px solid var(--nordic-pink); text-align: center; font-size: 0.8rem; font-weight: bold; }
-        .cat-tag.active { background: var(--nordic-pink); color: white; }
-        .pro-tip { background: rgba(168,218,220,0.3); padding: 10px; border-radius: 12px; font-size: 0.85rem; border-left: 4px solid var(--text-deep); }
+        /* 與全站一致的流動背景 */
+        body {
+            background: linear-gradient(-45deg, #FAF5F5, #EED6D3, #FDFBFB, #E8B4B8);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            margin: 0; 
+            padding-bottom: calc(130px + env(safe-area-inset-bottom));
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 搜尋框設計 */
+        .search-box {
+            background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(10px);
+            border: 1px solid rgba(232, 180, 184, 0.3); border-radius: 18px;
+            padding: 12px 18px; margin-bottom: 20px;
+        }
+
+        /* 分類標籤優化 */
+        .guide-scroller { display: flex; overflow-x: auto; gap: 10px; padding: 5px; scrollbar-width: none; }
+        .guide-scroller::-webkit-scrollbar { display: none; }
+        .cat-tag { 
+            min-width: 100px; padding: 10px 18px; border-radius: 50px; background: white; 
+            border: 1px solid rgba(232, 180, 184, 0.4); color: var(--nordic-pink); 
+            font-size: 0.8rem; font-weight: 700; text-align: center; white-space: nowrap; cursor: pointer;
+            transition: 0.3s;
+        }
+        .cat-tag.active { background: var(--nordic-pink); color: white; box-shadow: 0 5px 15px rgba(232, 180, 184, 0.3); }
+
+        /* 重要性指示 */
+        .importance-strip { width: 5px; border-radius: 10px; margin-right: 15px; flex-shrink: 0; }
+        .imp-high { background: #FF6B6B; }
+        .imp-med { background: #FFD93D; }
+
+        /* 戰術提示盒 */
+        .pro-tip-box { 
+            background: linear-gradient(135deg, rgba(168, 218, 220, 0.3) 0%, rgba(238, 214, 211, 0.3) 100%);
+            border-radius: 12px; padding: 12px; font-size: 0.85rem; border-left: 3px solid #434C5E; margin-top: 10px; 
+        }
+        
+        /* 檢查清單風格 */
+        .check-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px dashed rgba(0,0,0,0.05); }
+        .check-item input[type="checkbox"] { width: 22px; height: 22px; accent-color: var(--nordic-pink); }
+
+        /* 緊急救援按鈕 */
+        .emergency-btn {
+            background: #FF6B6B; color: white !important; border-radius: 16px; padding: 18px;
+            text-decoration: none; display: flex; align-items: center; justify-content: center;
+            font-weight: 800; margin-bottom: 12px; gap: 12px; box-shadow: 0 4px 15px rgba(255,107,107,0.3);
+        }
+
+        .animate-fadeInUp { animation: fadeInUp 0.5s ease-out forwards; opacity: 0; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="p-3">
-    <div class="d-flex overflow-auto gap-2 mb-4 py-2" style="scrollbar-width:none;" id="catNav">
-        <div class="cat-tag active" onclick="switchG('driving', this)">🚗 駕駛</div>
-        <div class="cat-tag" onclick="switchG('apps', this)">📱 App</div>
-        <div class="cat-tag" onclick="switchG('money', this)">💰 金融</div>
-        <div class="cat-tag" onclick="switchG('checklist', this)">✅ 檢查</div>
+
+    <header class="mb-3 mt-2 px-2 animate-fadeInUp">
+        <h2 class="fw-bold" style="letter-spacing: -1.5px;">Survival Guide</h2>
+        <p class="text-soft small"><i class="fas fa-shield-halved me-2"></i>Norway Tactics 2026</p>
+    </header>
+
+    <div class="search-box d-flex align-items-center mb-3 animate-fadeInUp">
+        <i class="fas fa-search text-soft me-2"></i>
+        <input type="text" id="guideSearch" class="form-control border-0 bg-transparent p-0 small" placeholder="輸入關鍵字 (如：PIN, 停車...)" oninput="filterGuide()">
     </div>
-    <div id="guideContent"></div>
-    <nav class="bottom-nav">
+
+    <div class="guide-scroller mb-4" id="catNav">
+        <div class="cat-tag active" onclick="switchGuide('driving', this)">🚗 道路</div>
+        <div class="cat-tag" onclick="switchGuide('grocery', this)">🛒 超市</div>
+        <div class="cat-tag" onclick="switchGuide('apps', this)">📱 工具</div>
+        <div class="cat-tag" onclick="switchGuide('checklist', this)">✅ 檢查</div>
+        <div class="cat-tag" onclick="switchGuide('money', this)">💰 金融</div>
+        <div class="cat-tag" onclick="switchGuide('emergency', this)">🆘 緊急</div>
+    </div>
+
+    <div id="guideDisplay"></div>
+
+    <nav class="bottom-nav" style="z-index: 9999;">
         <a href="index.html"><i class="fas fa-house-chimney"></i><span>總覽</span></a>
         <a href="culture.html"><i class="fas fa-compass"></i><span>行程</span></a>
         <a href="guide.html" class="active"><i class="fas fa-feather-pointed"></i><span>指南</span></a>
     </nav>
+
     <script>
-        const gData = {
-            driving: [{ t: "M-Plass", d: "看到 M 標誌請主動靠邊讓對向大車。", p: "讓路後對方閃燈是說 Takk。" }],
-            apps: [{ t: "Yr.no", d: "最強氣象 App，登山前必看每小時雲圖。", p: "挪威沒壞天氣，只有穿錯衣。" }],
-            money: [{ t: "4位數PIN碼", d: "自助加油與停車需輸入預借現金密碼。", p: "請在台灣先跟銀行申請。" }],
-            checklist: [{ t: "還車清單", d: "油電加滿、拍外觀、歸還感應卡。", p: "檢查後座與手套箱。" }]
+        const fullGuideData = {
+            driving: [
+                { title: "M-Plass：窄路禮讓", imp: "high", desc: "看到藍底白字『M』是避車彎。若你在這側，請主動靠邊讓對方先行。", tip: "禮讓後對方閃燈是說 Takk，請帥氣舉手回禮。" },
+                { title: "EasyPark：停車神器", imp: "high", desc: "挪威最通用 App。按分鐘計費，隨時可遠端延長時間。", tip: "離開前記得在 App 手動停止計費，省下不必要的開銷。" },
+                { title: "AutoPass：自動收費", imp: "med", desc: "過渡輪或隧道會自動感應。租車公司會從押金扣除。", tip: "不需停車找零錢，直接開過去即可。" }
+            ],
+            grocery: [
+                { title: "週日超市全線休息", imp: "high", desc: "挪威超市週日依法不營業。週六下午請務必備齊物資。", tip: "週日唯一救星是加油站的小超市，但價格通常翻倍。" },
+                { title: "PANT 瓶罐回收", imp: "med", desc: "所有寶特瓶含押金。去超市機器回收可領取抵用券。", tip: "每一罐都是 2-3 克朗，是你在挪威最有感的「回饋」。" }
+            ],
+            apps: [
+                { title: "Yr.no 氣象權威", imp: "high", desc: "挪威官方氣象 App。動畫地圖顯示精確到小時的降雨趨勢。", tip: "氣溫不重要，最重要的指標是『風速』與『降雨機率』。" },
+                { title: "Elton 充電導航", imp: "high", desc: "電動車必備。一站式整合所有品牌的充電站與支付。", tip: "山區訊號差，請務必在台灣先完成信用卡綁定。" }
+            ],
+            checklist: [
+                { title: "自駕還車確認", imp: "high", desc: "還車前的最後檢查清單。", isChecklist: true, items: ["電量補滿 (建議 80% 以上)", "手套箱與扶手箱清空", "拍下里程數與外觀照片", "確認渡輪感應器歸還"] },
+                { title: "登山裝備確認", imp: "med", desc: "攀登聖壇岩前檢查。", isChecklist: true, items: ["防水防風外套", "行動電源", "離線地圖下載", "高熱量補給品"] }
+            ],
+            money: [
+                { title: "4 位數 PIN 碼", imp: "high", desc: "自助加油或超市刷卡常需輸入 4 位 PIN 碼。", tip: "請務必向銀行申請『預借現金密碼』，這就是 PIN 碼。" },
+                { title: "無現金社會", imp: "med", desc: "即使是路邊攤也支援卡片支付。", tip: "完全不需要換克朗現金，一支 iPhone (Apple Pay) 走天下。" }
+            ],
+            emergency: [
+                { title: "緊急救援", imp: "high", desc: "112 警察 / 113 救護車。報案時保持冷靜。", isEmergency: true }
+            ]
         };
-        function switchG(c, e) {
-            document.querySelectorAll('.cat-tag').forEach(t => t.classList.remove('active')); e.classList.add('active');
-            document.getElementById('guideContent').innerHTML = gData[c].map(i => `<div class="glass-card"><h5>${i.t}</h5><p class="small text-muted">${i.d}</p><div class="pro-tip">💡 ${i.p}</div></div>`).join('');
+
+        function switchGuide(cat, element) {
+            document.querySelectorAll('.cat-tag').forEach(t => t.classList.remove('active'));
+            element.classList.add('active');
+            renderContent(fullGuideData[cat]);
         }
-        switchG('driving', document.querySelector('.cat-tag'));
+
+        function renderContent(data) {
+            const html = data.map((item, idx) => {
+                if(item.isEmergency) return `<div class="animate-fadeInUp"><a href="tel:112" class="emergency-btn"><i class="fas fa-shield-halved"></i> 撥打警察 (112)</a><a href="tel:113" class="emergency-btn" style="background:#434C5E"><i class="fas fa-ambulance"></i> 撥打救護車 (113)</a><div class="glass-card mt-3"><h6 class="fw-bold small mb-2">道路救援 (NAA)</h6><a href="tel:+4723232323" class="text-decoration-none fw-bold" style="color:var(--nordic-pink)">+47 2323 2323</a></div></div>`;
+                if(item.isChecklist) {
+                    const checks = item.items.map(i => `<div class="check-item"><input type="checkbox" id="${i}" onchange="saveCheck('${i}')" ${localStorage.getItem(i) === 'true' ? 'checked' : ''}><label for="${i}" class="small">${i}</label></div>`).join('');
+                    return `<div class="glass-card animate-fadeInUp" style="animation-delay:${idx*0.1}s"><h5 class="fw-bold mb-3">${item.title}</h5>${checks}</div>`;
+                }
+                return `<div class="glass-card d-flex p-3 animate-fadeInUp guide-item" style="animation-delay:${idx*0.1}s"><div class="importance-strip imp-${item.imp}"></div><div class="flex-grow-1"><h5 class="fw-bold mb-1">${item.title}</h5><p class="small text-muted mb-2">${item.desc}</p><div class="pro-tip-box"><i class="fas fa-lightbulb text-warning me-2"></i><strong>戰術點：</strong>${item.tip}</div></div></div>`;
+            }).join('');
+            document.getElementById('guideDisplay').innerHTML = html;
+        }
+
+        function saveCheck(id) { localStorage.setItem(id, document.getElementById(id).checked); }
+        function filterGuide() {
+            const term = document.getElementById('guideSearch').value.toLowerCase();
+            document.querySelectorAll('.guide-item').forEach(el => el.style.display = el.innerText.toLowerCase().includes(term) ? 'flex' : 'none');
+        }
+
+        renderContent(fullGuideData['driving']);
     </script>
 </body>
 </html>
