@@ -8,13 +8,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* 與全站一致的流動背景 */
         body {
             background: linear-gradient(-45deg, #FAF5F5, #EED6D3, #FDFBFB, #E8B4B8);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
             margin: 0; 
-            padding-bottom: calc(130px + env(safe-area-inset-bottom));
+            /* 1. 增加 body 的底部內距 */
+            padding-bottom: 150px; 
+            min-height: 100vh;
         }
         @keyframes gradientBG {
             0% { background-position: 0% 50%; }
@@ -22,14 +23,12 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* 搜尋框設計 */
         .search-box {
             background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(10px);
             border: 1px solid rgba(232, 180, 184, 0.3); border-radius: 18px;
             padding: 12px 18px; margin-bottom: 20px;
         }
 
-        /* 分類標籤優化 */
         .guide-scroller { display: flex; overflow-x: auto; gap: 10px; padding: 5px; scrollbar-width: none; }
         .guide-scroller::-webkit-scrollbar { display: none; }
         .cat-tag { 
@@ -40,26 +39,29 @@
         }
         .cat-tag.active { background: var(--nordic-pink); color: white; box-shadow: 0 5px 15px rgba(232, 180, 184, 0.3); }
 
-        /* 重要性指示 */
         .importance-strip { width: 5px; border-radius: 10px; margin-right: 15px; flex-shrink: 0; }
         .imp-high { background: #FF6B6B; }
         .imp-med { background: #FFD93D; }
 
-        /* 戰術提示盒 */
         .pro-tip-box { 
             background: linear-gradient(135deg, rgba(168, 218, 220, 0.3) 0%, rgba(238, 214, 211, 0.3) 100%);
             border-radius: 12px; padding: 12px; font-size: 0.85rem; border-left: 3px solid #434C5E; margin-top: 10px; 
         }
         
-        /* 檢查清單風格 */
         .check-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px dashed rgba(0,0,0,0.05); }
         .check-item input[type="checkbox"] { width: 22px; height: 22px; accent-color: var(--nordic-pink); }
 
-        /* 緊急救援按鈕 */
         .emergency-btn {
             background: #FF6B6B; color: white !important; border-radius: 16px; padding: 18px;
             text-decoration: none; display: flex; align-items: center; justify-content: center;
             font-weight: 800; margin-bottom: 12px; gap: 12px; box-shadow: 0 4px 15px rgba(255,107,107,0.3);
+        }
+
+        /* 2. 核心修復：強制佔位塊，確保內容推離導覽列 */
+        .safe-area-spacer {
+            height: 140px; 
+            width: 100%;
+            pointer-events: none;
         }
 
         .animate-fadeInUp { animation: fadeInUp 0.5s ease-out forwards; opacity: 0; }
@@ -75,7 +77,7 @@
 
     <div class="search-box d-flex align-items-center mb-3 animate-fadeInUp">
         <i class="fas fa-search text-soft me-2"></i>
-        <input type="text" id="guideSearch" class="form-control border-0 bg-transparent p-0 small" placeholder="輸入關鍵字 (如：PIN, 停車...)" oninput="filterGuide()">
+        <input type="text" id="guideSearch" class="form-control border-0 bg-transparent p-0 small" placeholder="輸入關鍵字..." oninput="filterGuide()">
     </div>
 
     <div class="guide-scroller mb-4" id="catNav">
@@ -88,6 +90,8 @@
     </div>
 
     <div id="guideDisplay"></div>
+
+    <div class="safe-area-spacer"></div>
 
     <nav class="bottom-nav" style="z-index: 9999;">
         <a href="index.html"><i class="fas fa-house-chimney"></i><span>總覽</span></a>
@@ -131,12 +135,12 @@
 
         function renderContent(data) {
             const html = data.map((item, idx) => {
-                if(item.isEmergency) return `<div class="animate-fadeInUp"><a href="tel:112" class="emergency-btn"><i class="fas fa-shield-halved"></i> 撥打警察 (112)</a><a href="tel:113" class="emergency-btn" style="background:#434C5E"><i class="fas fa-ambulance"></i> 撥打救護車 (113)</a><div class="glass-card mt-3"><h6 class="fw-bold small mb-2">道路救援 (NAA)</h6><a href="tel:+4723232323" class="text-decoration-none fw-bold" style="color:var(--nordic-pink)">+47 2323 2323</a></div></div>`;
+                if(item.isEmergency) return `<div class="animate-fadeInUp"><a href="tel:112" class="emergency-btn"><i class="fas fa-shield-halved"></i> 撥打警察 (112)</a><a href="tel:113" class="emergency-btn" style="background:#434C5E"><i class="fas fa-ambulance"></i> 撥打救護車 (113)</a></div>`;
                 if(item.isChecklist) {
                     const checks = item.items.map(i => `<div class="check-item"><input type="checkbox" id="${i}" onchange="saveCheck('${i}')" ${localStorage.getItem(i) === 'true' ? 'checked' : ''}><label for="${i}" class="small">${i}</label></div>`).join('');
                     return `<div class="glass-card animate-fadeInUp" style="animation-delay:${idx*0.1}s"><h5 class="fw-bold mb-3">${item.title}</h5>${checks}</div>`;
                 }
-                return `<div class="glass-card d-flex p-3 animate-fadeInUp guide-item" style="animation-delay:${idx*0.1}s"><div class="importance-strip imp-${item.imp}"></div><div class="flex-grow-1"><h5 class="fw-bold mb-1">${item.title}</h5><p class="small text-muted mb-2">${item.desc}</p><div class="pro-tip-box"><i class="fas fa-lightbulb text-warning me-2"></i><strong>戰術點：</strong>${item.tip}</div></div></div>`;
+                return `<div class="glass-card d-flex p-3 animate-fadeInUp guide-item" style="animation-delay:${idx*0.1}s"><div class="importance-strip imp-${item.imp}"></div><div class="flex-grow-1"><h5 class="fw-bold mb-1">${item.title}</h5><p class="small text-muted mb-2">${item.desc}</p><div class="pro-tip-box"><strong>戰術點：</strong>${item.tip}</div></div></div>`;
             }).join('');
             document.getElementById('guideDisplay').innerHTML = html;
         }
