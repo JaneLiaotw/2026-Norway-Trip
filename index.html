@@ -7,18 +7,37 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <style>
+        .map-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 12px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.85rem;
+            margin-top: 10px;
+        }
+        .map-btn:hover { background: white; color: var(--nordic-pink); }
+        .charge-section {
+            background: linear-gradient(135deg, #636E72 0%, #2D3436 100%);
+            color: white;
+        }
+    </style>
 </head>
 <body class="p-3">
 
     <header class="mb-4 mt-3 px-2">
         <h2 class="fw-bold">Velkommen! 🌍</h2>
-        <p class="text-soft small">挪威自駕 2026：如果我們迷路了，那是故意的。</p>
+        <p class="text-soft small">挪威自駕 2026：探索峽灣的電力旅程。</p>
     </header>
 
     <div class="glass-card">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <span class="fw-bold"><i class="fas fa-coins text-warning me-2"></i>匯率即時換算</span>
-            <span class="badge rounded-pill bg-light text-dark">1 NOK ≈ 3.05 TWD</span>
+            <span class="fw-bold"><i class="fas fa-coins text-warning me-2"></i>匯率換算 (NOK ➟ TWD)</span>
+            <span class="badge rounded-pill bg-light text-dark">固定匯率 3.05</span>
         </div>
         <div class="row g-2 align-items-center">
             <div class="col-5">
@@ -31,29 +50,30 @@
         </div>
     </div>
 
-    <div class="row g-3 mb-4">
-        <div class="col-6">
-            <div class="glass-card p-3 text-center h-100">
-                <i class="fas fa-temperature-half text-info h4"></i>
-                <div class="fw-bold small">當前體感</div>
-                <div class="text-soft x-small">「還活著」的涼爽</div>
-            </div>
+    <div class="glass-card charge-section">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="fw-bold mb-0"><i class="fas fa-bolt text-warning me-2"></i>補給戰術提醒</h6>
+            <span class="small opacity-75">Range Anxiety Fix</span>
         </div>
-        <div class="col-6">
-            <div class="glass-card p-3 text-center h-100">
-                <i class="fas fa-coffee text-secondary h4"></i>
-                <div class="fw-bold small">咖啡因水平</div>
-                <div class="text-soft x-small">尚未達標 ☕</div>
-            </div>
+        <p class="x-small opacity-75 mb-3">挪威隧道多、山路陡，建議電量/油量低於 30% 即尋找下一個補給點。</p>
+        
+        <div class="d-flex gap-2">
+            <a href="https://www.google.com/maps/search/?api=1&query=Gas+Station" target="_blank" class="map-btn flex-fill">
+                <i class="fas fa-gas-pump me-2"></i>找加油站
+            </a>
+            <a href="https://www.google.com/maps/search/?api=1&query=EV+Charging+Station" target="_blank" class="map-btn flex-fill">
+                <i class="fas fa-charging-station me-2"></i>找充電站
+            </a>
         </div>
     </div>
 
-    <div class="glass-card py-4" style="background: linear-gradient(135deg, #E8B4B8 0%, #EED6D3 100%); color: white; border: none;">
-        <h6 class="fw-bold small opacity-75">NEXT DESTINATION</h6>
-        <div class="h3 fw-bold mb-2">蓋朗厄爾峽灣</div>
-        <div class="d-flex align-items-center">
-            <i class="fas fa-route me-2"></i><span class="small">準備好迎接那 11 個髮夾彎了嗎？</span>
-        </div>
+    <div class="glass-card" style="background: linear-gradient(135deg, #E8B4B8 0%, #EED6D3 100%); color: white; border: none;">
+        <h6 class="fw-bold small opacity-75">CURRENT NAVIGATION</h6>
+        <div class="h4 fw-bold mb-2" id="targetName">準備啟航</div>
+        <p class="x-small mb-3">點擊下方按鈕開啟今日目的地導航</p>
+        <a id="navLink" href="https://www.google.com/maps/dir/?api=1&destination=Oslo" target="_blank" class="map-btn" style="background: white; color: var(--nordic-pink);">
+            <i class="fas fa-location-arrow me-2"></i>開始 Google Maps 導航
+        </a>
     </div>
 
     <nav class="bottom-nav">
@@ -63,6 +83,7 @@
     </nav>
 
     <script>
+        // 匯率換算邏輯
         function convert(val, type) {
             const rate = 3.05;
             if(type === 'nok') {
@@ -71,6 +92,21 @@
                 document.getElementById('nok').value = val ? (val / rate).toFixed(1) : '';
             }
         }
+
+        // 自動抓取 culture.html 儲存的進度來更新導航目標
+        window.onload = function() {
+            const savedDay = localStorage.getItem('norway_last_day') || 1;
+            const itinerary = {
+                1: "Kristiansand", 2: "Lindesnes Lighthouse", 3: "Preikestolen", 4: "Haugesund",
+                5: "Bergen", 6: "Flåm", 7: "Stryn", 8: "Geiranger", 9: "Geiranger Fjord",
+                10: "Ålesund", 11: "Trollstigen", 12: "Rondane National Park",
+                13: "Oslo", 14: "Vigeland Park", 15: "Oslo Airport", 16: "Home"
+            };
+            
+            const target = itinerary[savedDay];
+            document.getElementById('targetName').innerText = "Day " + savedDay + ": " + target;
+            document.getElementById('navLink').href = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(target + ", Norway")}`;
+        };
     </script>
 </body>
 </html>
