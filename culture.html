@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* 與首頁一致的動態流動背景 */
         body {
             background: linear-gradient(-45deg, #FAF5F5, #EED6D3, #FDFBFB, #E8B4B8);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
             margin: 0; 
-            /* 關鍵修復：增加底部安全間距 */
-            padding-bottom: calc(130px + env(safe-area-inset-bottom));
+            /* 1. 基礎間距加強 */
+            padding-bottom: 150px; 
+            min-height: 100vh;
         }
         @keyframes gradientBG {
             0% { background-position: 0% 50%; }
@@ -23,7 +23,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* 日期選擇器：毛玻璃質感 */
         .day-scroller { 
             display: flex; overflow-x: auto; padding: 20px 10px; gap: 12px; 
             scrollbar-width: none; position: sticky; top: 0; z-index: 1000;
@@ -43,7 +42,6 @@
             transform: scale(1.15); box-shadow: 0 10px 20px rgba(232, 180, 184, 0.3); 
         }
 
-        /* 內容卡片優化 */
         .hero-info { 
             background: linear-gradient(135deg, rgba(67, 76, 94, 0.95) 0%, rgba(45, 52, 70, 0.95) 100%); 
             color: white; border-radius: 28px; padding: 28px; margin-bottom: 20px; 
@@ -60,6 +58,13 @@
             border: 1px dashed var(--nordic-pink); border-radius: 22px; padding: 20px; 
         }
         
+        /* 2. 物理墊片：確保內容推離導覽列 */
+        .safe-area-spacer {
+            height: 160px; /* 因為行程內容較長，這裡墊更高一點 */
+            width: 100%;
+            pointer-events: none;
+        }
+
         .animate-fadeInUp { animation: fadeInUp 0.6s ease-out forwards; opacity: 0; }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(25px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -74,6 +79,8 @@
     <div class="day-scroller mb-4" id="dayPicker"></div>
 
     <div id="dayContent"></div>
+
+    <div class="safe-area-spacer"></div>
 
     <nav class="bottom-nav" style="z-index: 9999;">
         <a href="index.html"><i class="fas fa-house-chimney"></i><span>總覽</span></a>
@@ -126,13 +133,12 @@
                         <h6 class="fw-bold small text-soft"><i class="fas fa-landmark-dome me-2"></i>知性歷史</h6>
                         <p class="small text-soft mb-0" style="line-height:1.6">${data.history}</p>
                     </div>
-                    <div class="humor-card mb-5">
+                    <div class="humor-card">
                         <h6 class="fw-bold small" style="color:var(--nordic-pink)"><i class="fas fa-quote-left me-2"></i>挪威幽默</h6>
                         <p class="small mb-0"><em>"${data.humor}"</em></p>
                     </div>
                 </div>
             `;
-            // 同步最後查看天數到 LocalStorage，讓首頁進度條自動跟隨
             localStorage.setItem('norway_last_day', d);
         }
 
@@ -154,7 +160,6 @@
         renderDay(savedDay);
         document.querySelector(`.day-id-${savedDay}`).classList.add('active');
         
-        // 初始自動捲動到當前按鈕
         setTimeout(() => {
             document.querySelector(`.day-id-${savedDay}`).scrollIntoView({ behavior: 'smooth', inline: 'center' });
         }, 300);
