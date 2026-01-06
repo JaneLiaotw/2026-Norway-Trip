@@ -3,166 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Norway 2026 | The Great Saga</title>
+    <title>Norway 2026 | Itinerary</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
         body {
-            background: linear-gradient(-45deg, #FAF5F5, #EED6D3, #FDFBFB, #E8B4B8);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            margin: 0; 
-            /* 1. 基礎間距加強 */
-            padding-bottom: 150px; 
-            min-height: 100vh;
+            background: #FAF5F5;
+            padding-bottom: 140px;
         }
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        .day-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-left: 5px solid #E8B4B8;
         }
-
-        .day-scroller { 
-            display: flex; overflow-x: auto; padding: 20px 10px; gap: 12px; 
-            scrollbar-width: none; position: sticky; top: 0; z-index: 1000;
-            background: rgba(250, 245, 245, 0.85); backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(232, 180, 184, 0.2);
+        .nav-link-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: #F8E8E9;
+            color: #E8B4B8;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-top: 10px;
+            transition: 0.2s;
         }
-        .day-scroller::-webkit-scrollbar { display: none; }
-        
-        .day-btn { 
-            min-width: 52px; height: 52px; border-radius: 16px; background: white; 
-            border: 1.5px solid rgba(232, 180, 184, 0.3); display: flex; align-items: center; 
-            justify-content: center; font-weight: 800; color: var(--nordic-pink); 
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        .nav-link-btn:active { transform: scale(0.95); }
+        .gps-active-bar {
+            position: fixed;
+            bottom: 90px;
+            left: 20px;
+            right: 20px;
+            background: rgba(67, 76, 94, 0.9);
+            color: white;
+            padding: 12px;
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            text-decoration: none;
+            font-weight: 800;
+            letter-spacing: 1px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
-        .day-btn.active { 
-            background: var(--nordic-pink); color: white; 
-            transform: scale(1.15); box-shadow: 0 10px 20px rgba(232, 180, 184, 0.3); 
+        .gps-dot {
+            width: 8px;
+            height: 8px;
+            background: #50fa7b;
+            border-radius: 50%;
+            margin-right: 10px;
+            animation: blink 1.5s infinite;
         }
-
-        .hero-info { 
-            background: linear-gradient(135deg, rgba(67, 76, 94, 0.95) 0%, rgba(45, 52, 70, 0.95) 100%); 
-            color: white; border-radius: 28px; padding: 28px; margin-bottom: 20px; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
-        }
-        .meta-badge { 
-            background: rgba(255, 255, 255, 0.15); padding: 6px 14px; 
-            border-radius: 12px; font-size: 0.75rem; margin-right: 8px; backdrop-filter: blur(5px);
-        }
-
-        .history-section { border-left: 4px solid var(--nordic-pink); padding-left: 20px; margin: 25px 0; }
-        .humor-card { 
-            background: linear-gradient(135deg, rgba(168, 218, 220, 0.3) 0%, rgba(238, 214, 211, 0.3) 100%);
-            border: 1px dashed var(--nordic-pink); border-radius: 22px; padding: 20px; 
-        }
-        
-        /* 2. 物理墊片：確保內容推離導覽列 */
-        .safe-area-spacer {
-            height: 160px; /* 因為行程內容較長，這裡墊更高一點 */
-            width: 100%;
-            pointer-events: none;
-        }
-
-        .animate-fadeInUp { animation: fadeInUp 0.6s ease-out forwards; opacity: 0; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(25px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes blink { 0% { opacity: 0.2; } 50% { opacity: 1; } 100% { opacity: 0.2; } }
     </style>
 </head>
 <body class="p-3">
 
-    <header class="mb-2 mt-2 px-2 animate-fadeInUp">
-        <h2 class="fw-bold" style="letter-spacing: -1.5px;">The Great Saga</h2>
-        <p class="text-soft small"><i class="fas fa-feather-pointed me-2"></i>16 Days Across Fjords & Tundra</p>
+    <header class="mb-4 mt-3">
+        <h2 class="fw-bold">Itinerary</h2>
+        <p class="text-muted">Explore the fjords of Norway</p>
     </header>
 
-    <div class="day-scroller mb-4" id="dayPicker"></div>
+    <a href="https://www.google.com/maps/search/?api=1&query=MY_LOCATION" target="_blank" class="gps-active-bar">
+        <div class="gps-dot"></div>
+        <i class="fas fa-crosshairs me-2"></i>GPS ACTIVE: LIVE LOCATION
+    </a>
 
-    <div id="dayContent"></div>
+    <div id="itinerary-list">
+        </div>
 
-    <div class="safe-area-spacer"></div>
-
-    <nav class="bottom-nav" style="z-index: 9999;">
+    <nav class="bottom-nav">
         <a href="index.html"><i class="fas fa-house-chimney"></i><span>總覽</span></a>
         <a href="culture.html" class="active"><i class="fas fa-compass"></i><span>行程</span></a>
         <a href="guide.html"><i class="fas fa-feather-pointed"></i><span>指南</span></a>
     </nav>
 
     <script>
-        const itineraryData = {
-            1: { title: "南下的白色序曲", eng: "The White Prelude", route: "Oslo Airport ➟ Kristiansand", dist: "325 km", time: "4 hrs", desc: "取車後沿著 E18 公路南下。欣賞窗外波光粼粼的斯卡格拉克海峽。", history: "Kristiansand 的白色木屋群曾是 19 世紀財富的標誌。", humor: "挪威測速相機拍的照片是全球最貴的，別讓政府幫你拍照。" },
-            2: { title: "本土最南端的孤獨", eng: "Southernmost Solitude", route: "Kristiansand ➟ Lindesnes", dist: "90 km", time: "1.5 hrs", desc: "前往挪威本土最南端燈塔 Lindesnes。隨後在 Mandal 展開海鮮行程。", history: "Lindesnes 燈塔建於 1656 年，是挪威第一座燈塔。", humor: "海邊吃小龍蝦時請保持敬意，牠們剛為你的味蕾放棄了游泳權。" },
-            3: { title: "諸神的聖壇", eng: "Pulpit of the Gods", route: "Stavanger ➟ Preikestolen", dist: "40km + 8km Hike", time: "1 hr Drive + 4 hrs Hike", desc: "攀登 604 公尺高的聖壇岩（Preikestolen）。俯視呂瑟峽灣的壯麗。", history: "這塊巨岩形成於一萬年前冰河時期，受冰凍應力切出完美平面。", humor: "這裡沒有圍欄，因為政府相信你的生存本能。重力在這裡很慷慨。" },
-            4: { title: "維京國王的發源地", eng: "Cradle of Viking Kings", route: "Stavanger ➟ Haugesund", dist: "85 km", time: "2 hrs (Ferry)", desc: "北上前往 Haugesund。這是維京歷史的核心重鎮。", history: "Haraldshaugen 紀念碑標誌著哈拉爾一世統一挪威的地點。", humor: "搭渡輪時一定要買 Svele (鬆餅)，不吃會被當地人投以疑惑目光。" },
-            5: { title: "卑爾根的時光長廊", eng: "Bergen's Timeless Wharf", route: "Haugesund ➟ Bergen", dist: "140 km", time: "3 hrs", desc: "抵達雨都卑爾根。漫步 Bryggen 彩色木屋間。", history: "Bryggen 曾是漢薩同盟的中心，木製結構維持中世紀風格。", humor: "卑爾根一年下雨 240 天。下雨是正常發揮，享受專業的濕潤感。" },
-            6: { title: "跨越地心的隧道", eng: "Into the Heart of Earth", route: "Bergen ➟ Flåm", dist: "170 km", time: "2.5 hrs", desc: "穿過世界最長的 Lærdal 隧道。抵達 Flåm 搭乘高山鐵路。", history: "Flåm 鐵路是世界最美也最險峻的鐵路之一。", humor: "隧道長 24.5 公里，藍色燈光是為了不讓你以為開往另一個星球。" },
-            7: { title: "冰河與山脈的史詩", eng: "Epic of Glaciers", route: "Flåm ➟ Stryn", dist: "210 km", time: "4 hrs", desc: "行經景觀公路，近距離觀察 Boyabreen 冰河。", history: "Stryn 湖區因含有冰河粉末而呈現出迷幻的翡翠綠。", humor: "路邊羊群如果擋路請耐心等待，牠們正在開社群會議，你只是路客。" },
-            8: { title: "挑戰老鷹之路", eng: "Conquering Eagle Road", route: "Stryn ➟ Geiranger", dist: "85 km", time: "2.5 hrs", desc: "挑戰 Ørnevegen 的 11 個髮夾彎。副駕屏息、駕駛流汗的路線。", history: "蓋朗厄爾峽灣是世界遺產，展示冰河切割花崗岩的極致。", humor: "開完這段路沒暈車代表有拉力賽車手潛力。記得拍張鎮定的照片。" },
-            9: { title: "峽灣深處的秘密", eng: "Secrets of the Fjord", route: "Geiranger Cruise", dist: "0 km (Boat)", time: "3 hrs", desc: "搭船深度遊覽峽灣。看著峭壁上的瀑布群。", history: "Skageflå 農場居民曾為了躲收稅員而收起唯一的木梯。", humor: "七姊妹瀑布對面是求婚者瀑布，傳說他求婚失敗後從此酗酒。" },
-            10: { title: "新藝術風格之美", eng: "Art Nouveau Elegance", route: "Geiranger ➟ Ålesund", dist: "110 km", time: "3 hrs", desc: "前往挪威最美城市奧勒松。這裡的建築風格優雅統一。", history: "1904 年一場大火將全城燒毀，隨後以石造新藝術風格重建。", humor: "爬上 Aksla 觀景台要 418 階，每一階都在燃燒你的甜點。" },
-            11: { title: "走進巨魔的領地", eng: "The Troll's Path", route: "Ålesund ➟ Dombås", dist: "160 km", time: "3.5 hrs", desc: "征服 Trollstigen (巨魔之路)。被高聳山脈包圍的秘境。", history: "這條路於 1936 年開通，是人類與自然搏鬥的產物。", humor: "若覺得石頭像人臉，那是被曬乾的巨魔。別挑釁，免得導航壞掉。" },
-            12: { title: "苔原上的生命力", eng: "Life on the Tundra", route: "Dombås ➟ Rondane", dist: "80 km", time: "1.5 hrs", desc: "進入 Rondane 國家公園。地景蒼茫壯麗。", history: "這是挪威第一個國家公園，是野生馴鹿的最後堡壘。", humor: "馴鹿很害羞，不會幫你送禮物，請與牠們保持社交距離。" },
-            13: { title: "重返繁華之路", eng: "Road to Modernity", route: "Rondane ➟ Oslo", dist: "290 km", time: "4 hrs", desc: "沿著 E6 南返。經過最大湖泊 Mjøsa，享受最後的公路寧靜。", history: "Hamar 的維京船滑冰館是 1994 冬奧代表作。", humor: "開回奧斯陸發現紅綠燈變多，提醒你假期結束，現實正在等候。" },
-            14: { title: "屋頂與靈魂的散步", eng: "Roofwalks & Soul Searching", route: "Oslo City Day", dist: "15 km (Tram)", time: "All Day", desc: "利用電車造訪維格蘭雕塑公園與歌劇院。", history: "維格蘭雕塑呈現生老病死；歌劇院展現現代挪威價值。", humor: "憤怒的小孩雕像表情是說：『拍夠沒？我想下班喝咖啡。』" },
-            15: { title: "維京魂的告別", eng: "Farewell Viking Soul", route: "Oslo ➟ Airport", dist: "50 km", time: "1 hr", desc: "參觀 Fram 探險博物館。下午前往機場還車。", history: "Fram 號曾載著探險家抵達南極，象徵挪威的探索基因。", humor: "還車前檢查後座。如果有剩下的魚罐頭，請送給租車公司。" },
-            16: { title: "挪威的戒斷症狀", eng: "Norway Withdrawal", route: "Oslo Airport ➟ Home", dist: "0 km", time: "Sky High", desc: "帶著飽滿的記憶卡與變輕的荷包回家。", history: "挪威的自然保育是全球標竿。這是一場心靈奢華旅行。", humor: "回到家發現水龍頭沒冰河水別驚慌。這叫戒斷症，解藥是再出國。" }
-        };
+        const itineraryData = [
+            { day: 1, target: "Kristiansand", detail: "抵達挪威南部，準備開始公路旅行。" },
+            { day: 2, target: "Lindesnes Lighthouse", detail: "挪威最南端燈塔，壯闊海景。" },
+            { day: 3, target: "Preikestolen", detail: "聖壇岩徒步挑戰，俯瞰呂瑟峽灣。" },
+            { day: 4, target: "Haugesund", detail: "維京文化的發源地。" },
+            { day: 5, target: "Bergen", detail: "卑爾根魚市場與布呂根彩色木屋。" },
+            { day: 6, target: "Flåm", detail: "搭乘高山鐵路，欣賞壯麗瀑布。" },
+            { day: 7, target: "Stryn", detail: "碧綠湖泊與壯觀冰河。" },
+            { day: 8, target: "Geiranger", detail: "蓋朗厄爾峽灣，世界遺產景觀。" },
+            { day: 9, target: "Seven Sisters Waterfall", detail: "七姊妹瀑布，搭船遊覽。" },
+            { day: 10, target: "Ålesund", detail: "新藝術風格城市，登高俯瞰全景。" },
+            { day: 11, target: "Trollstigen", detail: "老鷹之路與精靈之路，驚險髮夾彎。" },
+            { day: 12, target: "Rondane National Park", detail: "挪威第一個國家公園。" },
+            { day: 13, target: "Oslo", detail: "首都奧斯陸，文化與藝術中心。" },
+            { day: 14, target: "Vigeland Park", detail: "維格蘭雕塑公園。" },
+            { day: 15, target: "Oslo Airport", detail: "準備前往機場，完成旅程。" }
+        ];
 
-        function renderDay(d) {
-            const data = itineraryData[d];
-            const content = document.getElementById('dayContent');
-            content.innerHTML = `
-                <div class="animate-fadeInUp">
-                    <div class="hero-info shadow">
-                        <div class="d-flex justify-content-between mb-3">
-                            <span class="badge bg-white text-dark px-3 py-2">DAY ${d.toString().padStart(2, '0')}</span>
-                            <div class="small opacity-50"><i class="fas fa-satellite-dish"></i> GPS Active</div>
-                        </div>
-                        <h3 class="fw-bold mb-1">${data.title}</h3>
-                        <p class="small opacity-75 mb-3">${data.eng}</p>
-                        <div class="d-flex">
-                            <span class="meta-badge"><i class="fas fa-route me-1"></i> ${data.dist}</span>
-                            <span class="meta-badge"><i class="fas fa-clock me-1"></i> ${data.time}</span>
-                        </div>
-                    </div>
-                    <div class="glass-card mb-3">
-                        <h6 class="fw-bold" style="color:var(--text-deep)"><i class="fas fa-location-arrow me-2 text-primary"></i>${data.route}</h6>
-                        <p class="small text-muted mb-0" style="line-height:1.6">${data.desc}</p>
-                    </div>
-                    <div class="history-section">
-                        <h6 class="fw-bold small text-soft"><i class="fas fa-landmark-dome me-2"></i>知性歷史</h6>
-                        <p class="small text-soft mb-0" style="line-height:1.6">${data.history}</p>
-                    </div>
-                    <div class="humor-card">
-                        <h6 class="fw-bold small" style="color:var(--nordic-pink)"><i class="fas fa-quote-left me-2"></i>挪威幽默</h6>
-                        <p class="small mb-0"><em>"${data.humor}"</em></p>
+        const listContainer = document.getElementById('itinerary-list');
+
+        itineraryData.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'day-card';
+            
+            // 生成 Google Maps 導航連結
+            const navUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(item.target + ", Norway")}`;
+            
+            card.innerHTML = `
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <span class="badge mb-2" style="background: #E8B4B8;">Day ${item.day}</span>
+                        <h5 class="fw-bold">${item.target}</h5>
+                        <p class="small text-muted mb-1">${item.detail}</p>
                     </div>
                 </div>
+                <a href="${navUrl}" target="_blank" class="nav-link-btn">
+                    <i class="fas fa-location-arrow me-2"></i>導航至此
+                </a>
             `;
-            localStorage.setItem('norway_last_day', d);
-        }
-
-        const picker = document.getElementById('dayPicker');
-        for (let i = 1; i <= 16; i++) {
-            const btn = document.createElement('div');
-            btn.className = `day-btn day-id-${i}`;
-            btn.innerText = i;
-            btn.onclick = function() {
-                document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                renderDay(i);
-                this.scrollIntoView({ behavior: 'smooth', inline: 'center' });
-            };
-            picker.appendChild(btn);
-        }
-
-        const savedDay = parseInt(localStorage.getItem('norway_last_day')) || 1;
-        renderDay(savedDay);
-        document.querySelector(`.day-id-${savedDay}`).classList.add('active');
-        
-        setTimeout(() => {
-            document.querySelector(`.day-id-${savedDay}`).scrollIntoView({ behavior: 'smooth', inline: 'center' });
-        }, 300);
+            listContainer.appendChild(card);
+        });
     </script>
 </body>
 </html>
