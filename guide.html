@@ -3,130 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Survival Encyclopedia | Norway 2026</title>
+    <title>Norway | Guide</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        body {
-            background: linear-gradient(-45deg, #FAF5F5, #EED6D3, #FDFBFB, #E8B4B8);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            margin: 0; padding-bottom: 100px;
-        }
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .search-box {
-            background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(10px);
-            border: 1px solid rgba(232, 180, 184, 0.3); border-radius: 18px;
-            padding: 12px 18px; margin-bottom: 20px;
-        }
-
-        .guide-scroller { display: flex; overflow-x: auto; gap: 10px; padding: 5px; scrollbar-width: none; }
-        .cat-tag { 
-            min-width: 105px; padding: 10px 18px; border-radius: 50px; background: white; 
-            border: 1px solid rgba(232, 180, 184, 0.4); color: var(--nordic-pink); 
-            font-size: 0.8rem; font-weight: 700; text-align: center; white-space: nowrap; cursor: pointer;
-        }
-        .cat-tag.active { background: var(--nordic-pink); color: white; box-shadow: 0 5px 15px rgba(232, 180, 184, 0.3); }
-
-        .importance-strip { width: 5px; border-radius: 10px; margin-right: 15px; flex-shrink: 0; }
-        .imp-high { background: #FF6B6B; }
-        .imp-med { background: #FFD93D; }
-
-        .pro-tip-box { background: rgba(168, 218, 220, 0.2); border-radius: 12px; padding: 12px; font-size: 0.85rem; border-left: 3px solid #434C5E; margin-top: 10px; }
-        
-        .check-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px dashed rgba(0,0,0,0.05); }
-        .check-item input[type="checkbox"] { width: 22px; height: 22px; accent-color: var(--nordic-pink); }
-
-        .emergency-btn {
-            background: #FF6B6B; color: white !important; border-radius: 16px; padding: 18px;
-            text-decoration: none; display: flex; align-items: center; justify-content: center;
-            font-weight: 800; margin-bottom: 12px; gap: 12px; box-shadow: 0 4px 15px rgba(255,107,107,0.3);
-        }
-        .animate-fadeInUp { animation: fadeInUp 0.5s ease-out forwards; opacity: 0; }
+        .cat-tag { min-width: 90px; padding: 8px; border-radius: 50px; background: white; border: 1px solid var(--nordic-pink); text-align: center; font-size: 0.8rem; font-weight: bold; }
+        .cat-tag.active { background: var(--nordic-pink); color: white; }
+        .pro-tip { background: rgba(168,218,220,0.3); padding: 10px; border-radius: 12px; font-size: 0.85rem; border-left: 4px solid var(--text-deep); }
     </style>
 </head>
 <body class="p-3">
-
-    <header class="mb-3 mt-2 px-2 animate-fadeInUp">
-        <h2 class="fw-bold" style="letter-spacing: -1px;">Survival Guide</h2>
-        <p class="text-soft small">Tactical tips for your Norway journey.</p>
-    </header>
-
-    <div class="search-box d-flex align-items-center mb-3 animate-fadeInUp">
-        <i class="fas fa-search text-soft me-2"></i>
-        <input type="text" id="guideSearch" class="form-control border-0 bg-transparent p-0 small" placeholder="搜尋關鍵字 (如：PIN, 公休...)" oninput="filterGuide()">
+    <div class="d-flex overflow-auto gap-2 mb-4 py-2" style="scrollbar-width:none;" id="catNav">
+        <div class="cat-tag active" onclick="switchG('driving', this)">🚗 駕駛</div>
+        <div class="cat-tag" onclick="switchG('apps', this)">📱 App</div>
+        <div class="cat-tag" onclick="switchG('money', this)">💰 金融</div>
+        <div class="cat-tag" onclick="switchG('checklist', this)">✅ 檢查</div>
     </div>
-
-    <div class="guide-scroller mb-4" id="catNav">
-        <div class="cat-tag active" onclick="switchGuide('driving', this)">🚗 道路</div>
-        <div class="cat-tag" onclick="switchGuide('grocery', this)">🛒 超市</div>
-        <div class="cat-tag" onclick="switchGuide('apps', this)">📱 工具</div>
-        <div class="cat-tag" onclick="switchGuide('checklist', this)">✅ 檢查</div>
-        <div class="cat-tag" onclick="switchGuide('money', this)">💰 金融</div>
-        <div class="cat-tag" onclick="switchGuide('emergency', this)">🆘 緊急</div>
-    </div>
-
-    <div id="guideDisplay"></div>
-
+    <div id="guideContent"></div>
     <nav class="bottom-nav">
         <a href="index.html"><i class="fas fa-house-chimney"></i><span>總覽</span></a>
         <a href="culture.html"><i class="fas fa-compass"></i><span>行程</span></a>
         <a href="guide.html" class="active"><i class="fas fa-feather-pointed"></i><span>指南</span></a>
     </nav>
-
     <script>
-        const fullGuideData = {
-            driving: [
-                { title: "M-Plass：讓路美學", imp: "high", desc: "看到藍底白字『M』是避車彎。請主動靠邊停下讓對向通過。", tip: "禮讓後對方閃燈是說 Takk，請舉手回禮。" },
-                { title: "EasyPark", imp: "high", desc: "全挪威通用停車 App。按分鐘計費。", tip: "設定時選對車牌，預防粉紅罰單。" }
-            ],
-            apps: [
-                { title: "Yr.no 氣象局", imp: "high", desc: "官方氣象 App，精確顯示每小時降雨。", tip: "氣象預報是用來保命的，登山前必看。" },
-                { title: "Elton 充電", imp: "high", desc: "電動車救星。整合各品牌充電樁。", tip: "請行前先綁定信用卡，避免訊號差無法註冊。" }
-            ],
-            checklist: [
-                { title: "還車檢查", imp: "med", desc: "圓滿結束旅程。", isChecklist: true, items: ["電量>30%/油加滿", "檢查手套箱", "拍外觀照", "歸還鑰匙"] }
-            ],
-            money: [
-                { title: "4 位數 PIN 碼", imp: "high", desc: "自助加油常需輸入信用卡 4 位 PIN 碼。", tip: "請務必向銀行申請「預借現金密碼」。" }
-            ],
-            emergency: [
-                { title: "緊急救援", imp: "high", desc: "112 警察 / 113 救護車。", isEmergency: true }
-            ]
-            // ... (其餘分類資料)
+        const gData = {
+            driving: [{ t: "M-Plass", d: "看到 M 標誌請主動靠邊讓對向大車。", p: "讓路後對方閃燈是說 Takk。" }],
+            apps: [{ t: "Yr.no", d: "最強氣象 App，登山前必看每小時雲圖。", p: "挪威沒壞天氣，只有穿錯衣。" }],
+            money: [{ t: "4位數PIN碼", d: "自助加油與停車需輸入預借現金密碼。", p: "請在台灣先跟銀行申請。" }],
+            checklist: [{ t: "還車清單", d: "油電加滿、拍外觀、歸還感應卡。", p: "檢查後座與手套箱。" }]
         };
-
-        function switchGuide(cat, element) {
-            document.querySelectorAll('.cat-tag').forEach(t => t.classList.remove('active'));
-            element.classList.add('active');
-            renderContent(fullGuideData[cat]);
+        function switchG(c, e) {
+            document.querySelectorAll('.cat-tag').forEach(t => t.classList.remove('active')); e.classList.add('active');
+            document.getElementById('guideContent').innerHTML = gData[c].map(i => `<div class="glass-card"><h5>${i.t}</h5><p class="small text-muted">${i.d}</p><div class="pro-tip">💡 ${i.p}</div></div>`).join('');
         }
-
-        function renderContent(data) {
-            const html = data.map((item, idx) => {
-                if(item.isEmergency) return `<div class="animate-fadeInUp"><a href="tel:112" class="emergency-btn">撥打警察 (112)</a><a href="tel:113" class="emergency-btn" style="background:#434C5E">撥打救護車 (113)</a></div>`;
-                if(item.isChecklist) {
-                    const checks = item.items.map(i => `<div class="check-item"><input type="checkbox" id="${i}" onchange="saveCheck('${i}')" ${localStorage.getItem(i) === 'true' ? 'checked' : ''}><label for="${i}" class="small">${i}</label></div>`).join('');
-                    return `<div class="glass-card animate-fadeInUp" style="animation-delay:${idx*0.1}s"><h5 class="fw-bold mb-3">${item.title}</h5>${checks}</div>`;
-                }
-                return `<div class="glass-card d-flex p-3 animate-fadeInUp guide-item" style="animation-delay:${idx*0.1}s"><div class="importance-strip imp-${item.imp}"></div><div class="flex-grow-1"><h5 class="fw-bold mb-1">${item.title}</h5><p class="small text-muted mb-2">${item.desc}</p><div class="pro-tip-box"><strong>戰術點：</strong>${item.tip}</div></div></div>`;
-            }).join('');
-            document.getElementById('guideDisplay').innerHTML = html;
-        }
-
-        function saveCheck(id) { localStorage.setItem(id, document.getElementById(id).checked); }
-        function filterGuide() {
-            const term = document.getElementById('guideSearch').value.toLowerCase();
-            document.querySelectorAll('.guide-item').forEach(el => el.style.display = el.innerText.toLowerCase().includes(term) ? 'flex' : 'none');
-        }
-
-        renderContent(fullGuideData['driving']);
+        switchG('driving', document.querySelector('.cat-tag'));
     </script>
 </body>
 </html>
