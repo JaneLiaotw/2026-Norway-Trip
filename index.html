@@ -8,156 +8,54 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* 1. 全域動態流動背景 */
         body {
             background: linear-gradient(-45deg, #FAF5F5, #EED6D3, #FDFBFB, #E8B4B8);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
-            margin: 0;
-            padding-bottom: 120px;
         }
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* 2. 入場動畫 */
-        .stagger-in { 
-            animation: fadeInUp 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards; 
-            opacity: 0; 
-        }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(25px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* 3. 進度環狀圖 */
+        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .stagger-in { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .progress-container { position: relative; width: 75px; height: 75px; }
-        .progress-svg { transform: rotate(-90deg); width: 100%; height: 100%; }
+        .progress-svg { transform: rotate(-90deg); }
         .progress-circle-back { fill: none; stroke: rgba(255,255,255,0.4); stroke-width: 3.5; }
-        .progress-circle-front {
-            fill: none; stroke: white; stroke-width: 3.5;
-            stroke-dasharray: 100; stroke-dashoffset: 100;
-            transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* 4. 補給戰術區：色彩優化 (極光藍綠與粉灰交織) */
-        .charge-section-optimized {
-            background: linear-gradient(135deg, rgba(168, 218, 220, 0.5) 0%, rgba(238, 214, 211, 0.5) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(15px);
-            position: relative;
-            overflow: hidden;
-        }
-        .icon-box-pulse {
-            background: white; width: 48px; height: 48px; border-radius: 15px;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 8px 20px rgba(232, 180, 184, 0.3);
-            color: var(--nordic-pink); font-size: 1.25rem;
-        }
-
-        /* 5. 按鈕軟化質感 */
-        .map-btn-soft {
-            background: rgba(255, 255, 255, 0.7);
-            border: 1px solid rgba(232, 180, 184, 0.15);
-            color: var(--text-deep);
-            font-weight: 700;
-            border-radius: 14px;
-            padding: 12px;
-            display: flex; align-items: center; justify-content: center;
-            text-decoration: none; transition: 0.3s;
-            font-size: 0.9rem;
-        }
-        .map-btn-soft:hover {
-            background: var(--nordic-pink);
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(232, 180, 184, 0.2);
-        }
-
-        /* 6. 導覽目標區 */
-        .nav-target-card {
-            background: linear-gradient(135deg, var(--nordic-pink) 0%, #DB9A9F 100%);
-            color: white; border: none; box-shadow: 0 15px 35px rgba(232, 180, 184, 0.3);
-        }
-
-        /* 7. 互動小特效 */
-        .fa-beat-low { animation: fa-beat 3s infinite linear; --fa-beat-scale: 1.05; }
+        .progress-circle-front { fill: none; stroke: white; stroke-width: 3.5; stroke-dasharray: 100; stroke-dashoffset: 100; transition: 1.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .charge-section-optimized { background: linear-gradient(135deg, rgba(168, 218, 220, 0.5) 0%, rgba(238, 214, 211, 0.5) 100%); }
+        .map-btn-soft { background: white; border-radius: 12px; padding: 10px; text-decoration: none; color: var(--text-deep); font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body class="p-3">
-
     <header class="mb-4 mt-3 px-2 stagger-in" style="animation-delay: 0.1s">
         <div class="d-flex justify-content-between align-items-center">
-            <div>
-                <h2 class="fw-bold mb-0" style="letter-spacing: -1px;">Strategy Center</h2>
-                <p class="text-soft small mb-0"><i class="fas fa-calendar-check me-1"></i> Norway Roadtrip 2026</p>
-            </div>
+            <div><h2 class="fw-bold mb-0">Strategy Center</h2><p class="text-soft small mb-0">Norway Roadtrip 2026</p></div>
             <div class="progress-container">
-                <svg class="progress-svg" viewBox="0 0 36 36">
-                    <path class="progress-circle-back" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                    <path id="progressCircle" class="progress-circle-front" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                </svg>
-                <div id="progressText" style="position: absolute; top:50%; left:50%; transform:translate(-50%, -50%); font-size: 0.75rem; font-weight: 800; color: var(--text-deep);">0%</div>
+                <svg class="progress-svg" viewBox="0 0 36 36"><path class="progress-circle-back" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" /><path id="progressCircle" class="progress-circle-front" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" /></svg>
+                <div id="progressText" style="position: absolute; top:50%; left:50%; transform:translate(-50%, -50%); font-size: 0.75rem; font-weight: 800;">0%</div>
             </div>
         </div>
     </header>
 
-    <div class="glass-card stagger-in shadow-sm" style="animation-delay: 0.2s">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <span class="fw-bold"><i class="fas fa-coins text-warning me-2"></i>匯率計算 (1:3.05)</span>
-            <span class="badge rounded-pill bg-white text-soft border shadow-sm px-3">Live Mode</span>
-        </div>
-        <div class="row g-2 align-items-center">
-            <div class="col-5">
-                <label class="x-small text-muted ms-1 mb-1">NOK</label>
-                <input type="number" id="nok" class="form-control border-0 bg-light py-2 fw-bold" placeholder="0.0" oninput="convert(this.value, 'nok')">
-            </div>
-            <div class="col-2 text-center mt-4">
-                <div class="bg-white rounded-circle shadow-sm d-inline-block p-1">
-                    <i class="fas fa-exchange-alt text-muted small"></i>
-                </div>
-            </div>
-            <div class="col-5">
-                <label class="x-small text-muted ms-1 mb-1">TWD</label>
-                <input type="number" id="twd" class="form-control border-0 bg-light py-2 fw-bold" placeholder="0" oninput="convert(this.value, 'twd')">
-            </div>
+    <div class="glass-card stagger-in" style="animation-delay: 0.2s">
+        <h6 class="fw-bold mb-3"><i class="fas fa-coins text-warning me-2"></i>匯率計算 (1:3.05)</h6>
+        <div class="row g-2">
+            <div class="col-5"><input type="number" id="nok" class="form-control border-0 bg-light fw-bold" placeholder="NOK" oninput="convert(this.value, 'nok')"></div>
+            <div class="col-2 text-center mt-2"><i class="fas fa-exchange-alt text-muted"></i></div>
+            <div class="col-5"><input type="number" id="twd" class="form-control border-0 bg-light fw-bold" placeholder="TWD" oninput="convert(this.value, 'twd')"></div>
         </div>
     </div>
 
     <div class="glass-card charge-section-optimized stagger-in" style="animation-delay: 0.3s">
-        <div class="d-flex align-items-center mb-3">
-            <div class="icon-box-pulse me-3">
-                <i class="fas fa-charging-station fa-beat-low"></i>
-            </div>
-            <div>
-                <h6 class="fw-bold mb-0">補給戰術中心</h6>
-                <p class="x-small text-soft mb-0">自動搜尋所在地附近支援點</p>
-            </div>
-        </div>
+        <h6 class="fw-bold mb-3"><i class="fas fa-charging-station me-2"></i>補給戰術中心</h6>
         <div class="d-flex gap-2">
-            <a href="https://www.google.com/maps/search/Gas+Station/" target="_blank" class="map-btn-soft flex-fill">
-                <i class="fas fa-gas-pump me-2 text-secondary"></i>加油站
-            </a>
-            <a href="https://www.google.com/maps/search/EV+Charging+Station/" target="_blank" class="map-btn-soft flex-fill">
-                <i class="fas fa-bolt-lightning me-2 text-warning"></i>充電站
-            </a>
+            <a href="https://www.google.com/maps/dir/Stavanger/Haugesund1" target="_blank" class="map-btn-soft flex-fill"><i class="fas fa-gas-pump me-2"></i>加油站</a>
+            <a href="https://www.google.com/maps/dir/Stavanger/Haugesund2" target="_blank" class="map-btn-soft flex-fill"><i class="fas fa-bolt text-warning me-2"></i>充電站</a>
         </div>
     </div>
 
-    <div class="glass-card nav-target-card stagger-in" style="animation-delay: 0.4s">
-        <div class="d-flex justify-content-between align-items-start mb-2">
-            <div>
-                <h6 class="fw-bold small opacity-75 mb-1">CURRENT TARGET</h6>
-                <div class="h4 fw-bold mb-0" id="targetName">讀取行程中...</div>
-            </div>
-            <i class="fas fa-paper-plane fa-bounce"></i>
-        </div>
-        <p class="x-small opacity-75 mb-3">同步自 culture.html 的最新查看進度</p>
-        <a id="navLink" href="#" target="_blank" class="map-btn-soft w-100 border-0 shadow-lg" style="background: white; color: var(--nordic-pink);">
-            <i class="fas fa-location-arrow me-2"></i>開始導航
-        </a>
+    <div class="glass-card stagger-in" style="background: var(--nordic-pink); color: white; animation-delay: 0.4s">
+        <h6 class="fw-bold x-small opacity-75 mb-1">NEXT TARGET</h6>
+        <div class="h4 fw-bold mb-3" id="targetName">Loading...</div>
+        <a id="navLink" href="#" target="_blank" class="map-btn-soft w-100" style="color: var(--nordic-pink);">開始導航</a>
     </div>
 
     <nav class="bottom-nav">
@@ -167,39 +65,22 @@
     </nav>
 
     <script>
-        // 匯率邏輯
         function convert(val, type) {
             const rate = 3.05;
-            if(type === 'nok') {
-                document.getElementById('twd').value = val ? Math.round(val * rate) : '';
-            } else {
-                document.getElementById('nok').value = val ? (val / rate).toFixed(1) : '';
-            }
+            if(type === 'nok') document.getElementById('twd').value = val ? Math.round(val * rate) : '';
+            else document.getElementById('nok').value = val ? (val / rate).toFixed(1) : '';
         }
-
-        // 初始化頁面數據
         window.onload = function() {
-            // 1. 更新進度環
             const savedDay = parseInt(localStorage.getItem('norway_last_day')) || 1;
             const progress = Math.round((savedDay / 16) * 100);
-            
-            // 延遲一點執行，讓使用者看到動畫
             setTimeout(() => {
                 document.getElementById('progressCircle').style.strokeDashoffset = 100 - progress;
                 document.getElementById('progressText').innerText = progress + "%";
             }, 500);
-
-            // 2. 更新導航目標
-            const itinerary = {
-                1: "Kristiansand", 2: "Lindesnes Lighthouse", 3: "Preikestolen", 4: "Haugesund",
-                5: "Bergen", 6: "Flåm", 7: "Stryn", 8: "Geiranger", 9: "Geiranger Fjord",
-                10: "Ålesund", 11: "Trollstigen", 12: "Rondane National Park",
-                13: "Oslo", 14: "Vigeland Park", 15: "Oslo Airport", 16: "Home"
-            };
-            
-            const target = itinerary[savedDay] || "Oslo";
+            const itinerary = { 1: "Kristiansand", 2: "Lindesnes", 3: "Preikestolen", 4: "Haugesund", 5: "Bergen", 6: "Flåm", 7: "Stryn", 8: "Geiranger", 9: "Geiranger", 10: "Ålesund", 11: "Trollstigen", 12: "Rondane", 13: "Oslo", 14: "Oslo", 15: "Airport", 16: "Home" };
+            const target = itinerary[savedDay];
             document.getElementById('targetName').innerText = "Day " + savedDay + ": " + target;
-            document.getElementById('navLink').href = `https://www.google.com/maps/search/${encodeURIComponent(target + ", Norway")}`;
+            document.getElementById('navLink').href = `https://www.google.com/maps/dir/Stavanger/Haugesund3{encodeURIComponent(target + ", Norway")}`;
         };
     </script>
 </body>
