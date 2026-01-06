@@ -12,7 +12,7 @@
             background: linear-gradient(-45deg, #FAF5F5, #EED6D3, #FDFBFB, #E8B4B8);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
-            padding-bottom: 120px; /* 預留底部空間 */
+            padding-bottom: 120px; 
         }
         @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         .stagger-in { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; }
@@ -22,7 +22,7 @@
         .progress-circle-back { fill: none; stroke: rgba(255,255,255,0.4); stroke-width: 3.5; }
         .progress-circle-front { fill: none; stroke: white; stroke-width: 3.5; stroke-dasharray: 100; stroke-dashoffset: 100; transition: 1.5s cubic-bezier(0.4, 0, 0.2, 1); }
         .charge-section-optimized { background: linear-gradient(135deg, rgba(168, 218, 220, 0.5) 0%, rgba(238, 214, 211, 0.5) 100%); }
-        .map-btn-soft { background: white; border-radius: 12px; padding: 10px; text-decoration: none; color: var(--text-deep); font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .map-btn-soft { background: white; border-radius: 12px; padding: 10px; text-decoration: none; color: #434C5E; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; transition: 0.2s; border: none; }
         .map-btn-soft:active { transform: scale(0.95); opacity: 0.8; }
     </style>
 </head>
@@ -52,10 +52,10 @@
     <div class="glass-card charge-section-optimized stagger-in mb-3" style="animation-delay: 0.3s">
         <h6 class="fw-bold mb-3"><i class="fas fa-charging-station me-2"></i>補給戰術中心</h6>
         <div class="d-flex gap-2">
-            <a href="https://www.google.com/maps/search/gas+station/" target="_blank" class="map-btn-soft flex-fill">
+            <a href="https://www.google.com/maps/search/?api=1&query=Gas+Station" target="_blank" class="map-btn-soft flex-fill">
                 <i class="fas fa-gas-pump me-2 text-danger"></i>加油站
             </a>
-            <a href="https://www.google.com/maps/search/ev+charging+station/" target="_blank" class="map-btn-soft flex-fill">
+            <a href="https://www.google.com/maps/search/?api=1&query=EV+Charging+Station" target="_blank" class="map-btn-soft flex-fill">
                 <i class="fas fa-bolt text-warning me-2"></i>充電站
             </a>
         </div>
@@ -83,17 +83,14 @@
         }
 
         window.onload = function() {
-            // 取得當前行程天數
             const savedDay = parseInt(localStorage.getItem('norway_last_day')) || 1;
-            
-            // 更新進度條
             const progress = Math.round((savedDay / 16) * 100);
+            
             setTimeout(() => {
                 document.getElementById('progressCircle').style.strokeDashoffset = 100 - progress;
                 document.getElementById('progressText').innerText = progress + "%";
             }, 500);
 
-            // 行程目標清單
             const itinerary = { 
                 1: "Kristiansand", 2: "Lindesnes Lighthouse", 3: "Preikestolen", 4: "Haugesund", 
                 5: "Bergen", 6: "Flåm", 7: "Stryn", 8: "Geiranger", 9: "Seven Sisters Waterfall", 
@@ -104,8 +101,7 @@
             const target = itinerary[savedDay] || "Oslo";
             document.getElementById('targetName').innerText = "Day " + savedDay + ": " + target;
             
-            // 修正：標準 Google Maps 導航 URL 格式
-            // 格式為: https://www.google.com/maps/dir/?api=1&destination=目的地名稱,Norway
+            // 重要修復：正確的 Google Maps Directions API 格式
             const googleMapsUrl = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(target + ", Norway");
             document.getElementById('navLink').href = googleMapsUrl;
         };
