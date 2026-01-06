@@ -3,76 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Norway 2026 | Dashboard</title>
+    <title>Norway 2026 | Strategy Center</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        .map-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 12px;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            font-size: 0.85rem;
-            margin-top: 10px;
+        /* 1. 動態流動背景 */
+        body {
+            background: linear-gradient(-45deg, #FAF5F5, #EED6D3, #fdfbfb, #ebedee);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
         }
-        .map-btn:hover { background: white; color: var(--nordic-pink); }
-        .charge-section {
-            background: linear-gradient(135deg, #636E72 0%, #2D3436 100%);
-            color: white;
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 2. 數字輸入框焦點動畫 */
+        .form-control:focus {
+            background: white !important;
+            box-shadow: 0 0 0 0.25rem rgba(232, 180, 184, 0.25);
+            transform: scale(1.02);
+        }
+
+        /* 3. 進度條容器 */
+        .progress-container {
+            position: relative;
+            width: 70px;
+            height: 70px;
+        }
+        .progress-svg { transform: rotate(-90deg); }
+        .progress-circle-back { fill: none; stroke: rgba(255,255,255,0.3); stroke-width: 4; }
+        .progress-circle-front {
+            fill: none; stroke: white; stroke-width: 4;
+            stroke-dasharray: 100; stroke-dashoffset: 100;
+            transition: stroke-dashoffset 1s ease-out;
+        }
+
+        /* 4. 加油站按鈕懸浮特效 */
+        .map-btn-pulse {
+            animation: pulse-red 2s infinite;
+        }
+        @keyframes pulse-red {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+        }
+
+        /* 5. 頁面入場動畫 */
+        .stagger-in { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body class="p-3">
 
-    <header class="mb-4 mt-3 px-2">
-        <h2 class="fw-bold">Velkommen! 🌍</h2>
-        <p class="text-soft small">挪威自駕 2026：探索峽灣的電力旅程。</p>
+    <header class="mb-4 mt-3 px-2 stagger-in" style="animation-delay: 0.1s">
+        <div class="d-flex justify-content-between align-items-end">
+            <div>
+                <h2 class="fw-bold mb-0">Strategy Center</h2>
+                <p class="text-soft small mb-0">Norway Roadtrip 2026</p>
+            </div>
+            <div class="progress-container">
+                <svg class="progress-svg" viewBox="0 0 36 36">
+                    <path class="progress-circle-back" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    <path id="progressCircle" class="progress-circle-front" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                </svg>
+                <div id="progressText" style="position: absolute; top:50%; left:50%; transform:translate(-50%, -50%); font-size: 0.7rem; font-weight: 800; color: white;">0%</div>
+            </div>
+        </div>
     </header>
 
-    <div class="glass-card">
+    <div class="glass-card stagger-in" style="animation-delay: 0.2s">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <span class="fw-bold"><i class="fas fa-coins text-warning me-2"></i>匯率換算 (NOK ➟ TWD)</span>
-            <span class="badge rounded-pill bg-light text-dark">固定匯率 3.05</span>
+            <span class="fw-bold"><i class="fas fa-coins text-warning fa-spin-hover me-2"></i>NOK / TWD</span>
+            <span class="badge rounded-pill bg-light text-dark shadow-sm">Live Rate 3.05</span>
         </div>
-        <div class="row g-2 align-items-center">
+        <div class="row g-2">
             <div class="col-5">
-                <input type="number" id="nok" class="form-control border-0 bg-light py-2" placeholder="NOK" oninput="convert(this.value, 'nok')">
+                <label class="x-small text-muted ms-2">克朗</label>
+                <input type="number" id="nok" class="form-control border-0 bg-light py-2 fw-bold" placeholder="0.0" oninput="convert(this.value, 'nok')">
             </div>
-            <div class="col-2 text-center text-muted"><i class="fas fa-arrows-left-right"></i></div>
+            <div class="col-2 text-center mt-4">
+                <i class="fas fa-right-left text-muted opacity-50"></i>
+            </div>
             <div class="col-5">
-                <input type="number" id="twd" class="form-control border-0 bg-light py-2" placeholder="TWD" oninput="convert(this.value, 'twd')">
+                <label class="x-small text-muted ms-2">台幣</label>
+                <input type="number" id="twd" class="form-control border-0 bg-light py-2 fw-bold" placeholder="0" oninput="convert(this.value, 'twd')">
             </div>
         </div>
     </div>
 
-    <div class="glass-card charge-section">
-        <div class="d-flex justify-content-between align-items-center mb-2">
-            <h6 class="fw-bold mb-0"><i class="fas fa-bolt text-warning me-2"></i>補給戰術提醒</h6>
-            <span class="small opacity-75">Range Anxiety Fix</span>
+    <div class="glass-card stagger-in shadow-lg" style="background: linear-gradient(135deg, #2D3436 0%, #434C5E 100%); color: white; animation-delay: 0.3s">
+        <div class="d-flex align-items-center mb-3">
+            <div class="bg-warning rounded-circle p-2 me-3 shadow">
+                <i class="fas fa-bolt text-dark"></i>
+            </div>
+            <div>
+                <h6 class="fw-bold mb-0">補給戰術提醒</h6>
+                <p class="x-small opacity-75 mb-0">搜尋附近支援點</p>
+            </div>
         </div>
-        <p class="x-small opacity-75 mb-3">挪威隧道多、山路陡，建議電量/油量低於 30% 即尋找下一個補給點。</p>
-        
-        <div class="d-flex gap-2">
-            <a href="https://www.google.com/maps/search/?api=1&query=Gas+Station" target="_blank" class="map-btn flex-fill">
-                <i class="fas fa-gas-pump me-2"></i>找加油站
+        <div class="d-flex gap-2 mt-2">
+            <a href="https://www.google.com/maps/search/gas+station" target="_blank" class="map-btn flex-fill justify-content-center">
+                <i class="fas fa-gas-pump me-2"></i>加油站
             </a>
-            <a href="https://www.google.com/maps/search/?api=1&query=EV+Charging+Station" target="_blank" class="map-btn flex-fill">
-                <i class="fas fa-charging-station me-2"></i>找充電站
+            <a href="https://www.google.com/maps/search/ev+charging+station" target="_blank" class="map-btn flex-fill justify-content-center map-btn-pulse">
+                <i class="fas fa-charging-station me-2"></i>充電站
             </a>
         </div>
     </div>
 
-    <div class="glass-card" style="background: linear-gradient(135deg, #E8B4B8 0%, #EED6D3 100%); color: white; border: none;">
-        <h6 class="fw-bold small opacity-75">CURRENT NAVIGATION</h6>
-        <div class="h4 fw-bold mb-2" id="targetName">準備啟航</div>
-        <p class="x-small mb-3">點擊下方按鈕開啟今日目的地導航</p>
-        <a id="navLink" href="https://www.google.com/maps/dir/?api=1&destination=Oslo" target="_blank" class="map-btn" style="background: white; color: var(--nordic-pink);">
-            <i class="fas fa-location-arrow me-2"></i>開始 Google Maps 導航
+    <div class="glass-card stagger-in" style="background: linear-gradient(135deg, #E8B4B8 0%, #EED6D3 100%); color: white; border: none; animation-delay: 0.4s">
+        <div class="d-flex justify-content-between">
+            <h6 class="fw-bold small opacity-75">GO TO NEXT</h6>
+            <i class="fas fa-location-dot fa-bounce"></i>
+        </div>
+        <div class="h4 fw-bold mb-2" id="targetName">讀取中...</div>
+        <a id="navLink" href="#" target="_blank" class="map-btn w-100 justify-content-center shadow-sm" style="background: white; color: var(--nordic-pink); border:none;">
+            <i class="fas fa-compass me-2"></i>開啟 Google Maps 導航
         </a>
     </div>
 
@@ -83,26 +135,29 @@
     </nav>
 
     <script>
-        // 匯率換算邏輯
         function convert(val, type) {
             const rate = 3.05;
             if(type === 'nok') {
-                document.getElementById('twd').value = val ? (val * rate).toFixed(0) : '';
+                document.getElementById('twd').value = val ? Math.round(val * rate) : '';
             } else {
                 document.getElementById('nok').value = val ? (val / rate).toFixed(1) : '';
             }
         }
 
-        // 自動抓取 culture.html 儲存的進度來更新導航目標
         window.onload = function() {
-            const savedDay = localStorage.getItem('norway_last_day') || 1;
+            // 更新進度條
+            const savedDay = parseInt(localStorage.getItem('norway_last_day')) || 1;
+            const progress = Math.round((savedDay / 16) * 100);
+            document.getElementById('progressCircle').style.strokeDashoffset = 100 - progress;
+            document.getElementById('progressText').innerText = progress + "%";
+
+            // 更新導航目標
             const itinerary = {
-                1: "Kristiansand", 2: "Lindesnes Lighthouse", 3: "Preikestolen", 4: "Haugesund",
+                1: "Kristiansand", 2: "Lindesnes", 3: "Preikestolen", 4: "Haugesund",
                 5: "Bergen", 6: "Flåm", 7: "Stryn", 8: "Geiranger", 9: "Geiranger Fjord",
-                10: "Ålesund", 11: "Trollstigen", 12: "Rondane National Park",
-                13: "Oslo", 14: "Vigeland Park", 15: "Oslo Airport", 16: "Home"
+                10: "Ålesund", 11: "Trollstigen", 12: "Rondane", 13: "Oslo",
+                14: "Vigeland Park", 15: "Oslo Airport", 16: "Home"
             };
-            
             const target = itinerary[savedDay];
             document.getElementById('targetName').innerText = "Day " + savedDay + ": " + target;
             document.getElementById('navLink').href = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(target + ", Norway")}`;
