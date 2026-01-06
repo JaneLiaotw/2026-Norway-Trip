@@ -82,19 +82,45 @@
         const fullGuideData = {
             driving: [
                 { title: "M-Plass：山路禮讓", imp: "high", desc: "看到藍底白字『M』是避車彎。若你在這側，請主動靠邊停下讓對向大車通過。", tip: "禮讓後對方閃燈是說 Takk，請帥氣舉手回禮。" },
-                { title: "EasyPark：停車救星", imp: "high", desc: "全挪威最通用 App。按分鐘計費，可隨時遠端延長時間。", tip: "設定時記得選對車牌號碼，避免粉紅罰單。" }
+                { title: "EasyPark：停車救星", imp: "high", desc: "全挪威最通用 App。按分鐘計費，可隨時遠端延長時間。", tip: "設定時記得選對車牌號碼，避免粉紅罰單。" },
+                { title: "AutoPass 自動收費", imp: "med", desc: "全挪威自動感應車牌，費用於還車後扣除。", tip: "直接開過去，不需停車找錢。" }
             ],
             grocery: [
                 { title: "週日公休律法", imp: "high", desc: "超市週日不營業。週六下午請務必備齊兩天的食材。", tip: "週日唯一救星是加油站的小超市。" },
                 { title: "PANT 瓶罐回收", imp: "low", desc: "瓶罐含押金。去超市機器回收可換現金抵用券。", tip: "這是你在挪威唯一能感覺到錢回來的時刻。" }
             ],
+            apps: [
+                { title: "Yr.no 氣象局", imp: "high", desc: "挪威官方氣象 App，動畫地圖能精確顯示每小時降雨趨勢。", tip: "氣象預報在挪威是用來保命的，登山前必看。" },
+                { title: "Elton 充電導航", imp: "high", desc: "電動車救星。整合各品牌充電樁，一鍵支付並導航。", tip: "建議行前先綁定信用卡，山區訊號差難註冊。" },
+                { title: "UT.no 健行聖經", imp: "med", desc: "內建 2 萬條步道地圖，包含離線導航與山屋資訊。", tip: "記得下載離線地圖，荒野中 GPS 依然運作。" },
+                { title: "Hjelp 113 救援", imp: "high", desc: "報案時自動傳送座標給救援中心，荒野救援關鍵。", tip: "下載後請務必完成手機號碼註冊驗證。" }
+            ],
+            weather: [
+                { title: "洋蔥式穿法", imp: "high", desc: "挪威溫差大。內層排汗、中層保暖、外層防水防風。", tip: "『沒有壞天氣，只有穿錯衣』是挪威人的座右銘。" }
+            ],
+            money: [
+                { title: "4 位數 PIN 碼", imp: "high", desc: "挪威幾乎不收現金。自助加油、停車常需輸入 4 位 PIN 碼。", tip: "出發前請向銀行確認「預借現金密碼」。" }
+            ],
             checklist: [
-                { title: "還車前最後檢查", imp: "med", desc: "確保油箱加滿/電量充足，檢查後座與手套箱。", isChecklist: true, items: ["油電補滿", "檢查後座行李", "清理垃圾", "拍車身照片留存"] }
+                { 
+                    title: "還車前最後檢查", 
+                    imp: "med", 
+                    desc: "確保旅程圓滿結束，不留下任何遺憾或罰金。", 
+                    isChecklist: true, 
+                    items: ["油電補滿 (30%以上/加滿)", "檢查後座與後車箱", "清理車內垃圾", "拍下外觀與里程表", "歸還鑰匙/感應卡"] 
+                },
+                {
+                    title: "登山出發檢查",
+                    imp: "high",
+                    desc: "聖壇岩或長距離健行前必看。",
+                    isChecklist: true,
+                    items: ["確認 Yr.no 天氣", "充足的水與零食", "行動電源", "離線地圖下載", "哨子或急救包"]
+                }
             ],
             emergency: [
                 { title: "緊急聯繫電話", imp: "high", desc: "112 警察 / 113 救護車。點擊下方按鈕可直接撥打。", isEmergency: true }
             ]
-        };
+        };;
 
         let currentCat = 'driving';
 
