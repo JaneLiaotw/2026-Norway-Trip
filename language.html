@@ -8,28 +8,55 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        .search-box { position: sticky; top: 0; z-index: 100; background: #FDF6F0; padding: 15px 0; }
-        .search-input { border-radius: 50px; border: 2px solid var(--nordic-pink); padding: 10px 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .lang-card { border-radius: 20px; background: white; margin-bottom: 12px; border-left: 6px solid #5E81AC; transition: 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
-        .play-btn { color: var(--nordic-pink); cursor: pointer; font-size: 1.5rem; transition: 0.2s; padding: 10px; }
-        .play-btn:active { transform: scale(1.3); }
-        .norsk-text { font-size: 1.2rem; font-weight: 800; color: #2E3440; }
-        .p-text { font-size: 0.85rem; color: #888; background: #ECEFF4; padding: 2px 8px; border-radius: 6px; }
-        .cat-label { font-size: 0.85rem; font-weight: 700; color: white; background: var(--nordic-pink); padding: 3px 12px; border-radius: 50px; margin-bottom: 8px; display: inline-block; }
+        .category-nav {
+            display: flex; overflow-x: auto; gap: 10px; padding: 10px 0;
+            scrollbar-width: none; -webkit-overflow-scrolling: touch;
+            position: sticky; top: 60px; z-index: 999; background: #FDF6F0;
+        }
+        .category-nav::-webkit-scrollbar { display: none; }
+        .cat-btn {
+            background: white; border: 1.5px solid var(--nordic-pink);
+            color: var(--nordic-pink); border-radius: 50px; padding: 6px 15px;
+            font-size: 0.85rem; font-weight: 700; white-space: nowrap; cursor: pointer;
+        }
+        .cat-btn.active { background: var(--nordic-pink); color: white; }
+        
+        .lang-card {
+            background: white; border-radius: 18px; margin-bottom: 12px;
+            border-left: 6px solid #5E81AC; transition: 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); overflow: hidden;
+        }
+        .lang-card:active { transform: scale(0.97); }
+        .play-btn-box { background: #E5E9F0; width: 60px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .play-btn-box i { color: #5E81AC; font-size: 1.4rem; }
+        .norsk-word { font-size: 1.2rem; font-weight: 800; color: #2E3440; }
+        .pronounce-tag { font-size: 0.75rem; color: #888; background: #ECEFF4; padding: 1px 6px; border-radius: 4px; }
+        .search-box { position: sticky; top: 0; z-index: 1000; background: #FDF6F0; padding: 10px 0; }
     </style>
 </head>
 <body class="p-3 bg-warm">
 
-    <header class="mb-2 mt-2 px-2">
+    <header class="mb-2 px-2">
         <h2 class="fw-bold">Norsk 100</h2>
-        <p class="text-muted small">點擊喇叭即可聽取挪威文發音。</p>
+        <p class="text-muted small">點擊喇叭發音 • 100 句生存語法</p>
     </header>
 
     <div class="search-box">
-        <input type="text" id="langSearch" class="form-control search-input" placeholder="搜尋地名、單字或分類...">
+        <input type="text" id="langSearch" class="form-control rounded-pill border-2" style="border-color: var(--nordic-pink);" placeholder="搜尋地名、食物、數字...">
     </div>
 
-    <div id="langContent"></div>
+    <div class="category-nav mb-2" id="catNav">
+        <div class="cat-btn active" onclick="filterCat('全部')">全部</div>
+        <div class="cat-btn" onclick="filterCat('地名')">📍 地名導航</div>
+        <div class="cat-btn" onclick="filterCat('社交')">💬 日常社交</div>
+        <div class="cat-btn" onclick="filterCat('超市')">🛒 超市採買</div>
+        <div class="cat-btn" onclick="filterCat('自駕')">🚗 道路指令</div>
+        <div class="cat-btn" onclick="filterCat('生活')">🏔️ 生活哲學</div>
+        <div class="cat-btn" onclick="filterCat('數字')">🔢 數字金額</div>
+        <div class="cat-btn" onclick="filterCat('緊急')">🆘 緊急救援</div>
+    </div>
+
+    <div id="langList"></div>
 
     <div style="height: 100px;"></div>
 
@@ -40,102 +67,159 @@
     </nav>
 
     <script>
-        const v = [
-            // 1-15: 社交必備
-            {c:"社交", n:"Hei", m:"你好", p:"嘿", d:"最常用的問候語。"},
-            {c:"社交", n:"Takk", m:"謝謝", p:"塔克", d:"挪威最神聖的單字。"},
-            {c:"社交", n:"Tusen takk", m:"非常感謝", p:"圖森-塔克", d:"直譯為一千個感謝。"},
-            {c:"社交", n:"Vær så snill", m:"請", p:"瓦-秀-史尼爾", d:"請求協助時使用。"},
-            {c:"社交", n:"Ja", m:"是", p:"呀", d:"簡單的回應。"},
-            {c:"社交", n:"Nei", m:"不", p:"內", d:"拒絕的回應。"},
-            {c:"社交", n:"Unnskyld", m:"對不起/請問", p:"溫-舒兒", d:"引起注意或道歉。"},
-            {c:"社交", n:"Hyggelig", m:"愉快的", p:"修格利", d:"常用來形容人或事。"},
-            {c:"社交", n:"Ha det bra", m:"再見", p:"哈-得-布拉", d:"最正式的道別。"},
-            {c:"社交", n:"Vi sees", m:"再會", p:"維-希斯", d:"朋友間的道別。"},
-            {c:"社交", n:"God morgen", m:"早安", p:"古-摸昂", d:"晨間問候。"},
-            {c:"社交", n:"God dag", m:"午安", p:"古-達", d:"白天的問候。"},
-            {c:"社交", n:"God kveld", m:"晚安", p:"古-克菲爾", d:"晚間的問候。"},
-            {c:"社交", n:"Bare hyggelig", m:"不客氣", p:"巴惹-修格利", d:"回應謝謝的標準語。"},
-            {c:"社交", n:"Hva heter du?", m:"你叫什麼名字？", p:"法-黑特-度", d:"交朋友必備。"},
-            // 16-30: 重要地名發音
-            {c:"地名", n:"Norge", m:"挪威", p:"諾爾-給", d:"挪威語的國名。"},
-            {c:"地名", n:"Oslo", m:"奧斯陸", p:"烏斯-露", d:"發音重點是 O 唸『烏』。"},
+        const vocabulary = [
+            // 1-15 📍 地名導航
+            {c:"地名", n:"Norge", m:"挪威", p:"諾爾-給", d:"挪威人的自稱。"},
+            {c:"地名", n:"Oslo", m:"奧斯陸", p:"烏斯-露", d:"首都。O 唸『烏』。"},
             {c:"地名", n:"Bergen", m:"卑爾根", p:"貝爾-根", d:"峽灣門戶與雨都。"},
-            {c:"地名", n:"Geiranger", m:"蓋朗厄爾", p:"蓋-朗-厄爾", d:"世界遺產峽灣。"},
-            {c:"地名", n:"Stavanger", m:"史塔萬格", p:"史塔-凡-厄爾", d:"石油之都。"},
+            {c:"地名", n:"Geiranger", m:"蓋朗厄爾", p:"蓋-朗-厄爾", d:"峽灣之王。"},
+            {c:"地名", n:"Stavanger", m:"史塔萬格", p:"史塔-凡-厄爾", d:"石油之城。"},
             {c:"地名", n:"Ålesund", m:"奧勒松", p:"歐-雷-松", d:"Å 唸『歐』。"},
-            {c:"地名", n:"Flåm", m:"弗洛姆", p:"服-龍", d:"火車起點小鎮。"},
-            {c:"地名", n:"Preikestolen", m:"聖壇岩", p:"普萊-克斯多倫", d:"聖壇岩官方名稱。"},
-            {c:"地名", n:"Trollstigen", m:"巨魔之路", p:"特羅-史提根", d:"著名的自駕公路。"},
-            {c:"地名", n:"Lofoten", m:"羅浮敦群島", p:"露-服-等", d:"雖然沒去，但發音必學。"},
-            {c:"地名", n:"Kristiansand", m:"克里斯蒂安桑", p:"克里斯蒂安-松", d:"第一天抵達的地點。"},
-            {c:"地名", n:"Mandal", m:"曼達爾", p:"曼-達", d:"挪威最南小鎮。"},
-            {c:"地名", n:"Fjord", m:"峽灣", p:"費-歐", d:"最代表性的地理單字。"},
-            {c:"地名", n:"Fjell", m:"高山", p:"費-耶爾", d:"挪威的高山環境。"},
-            {c:"地名", n:"Isbre", m:"冰河", p:"伊斯-布雷", d:"冰川景觀。"},
-            // 31-45: 自駕與交通
-            {c:"交通", n:"Bensin", m:"汽油", p:"本-欣", d:"加油站區分單字。"},
-            {c:"交通", n:"Lading", m:"充電", p:"拉-丁", d:"電動車必看。"},
-            {c:"交通", n:"Parkering", m:"停車", p:"帕-克靈", d:"尋找 P 標誌。"},
-            {c:"交通", n:"Møteplass", m:"避車彎", p:"悶特-普拉斯", d:"窄路會車點。"},
-            {c:"交通", n:"Ferge", m:"渡輪", p:"費爾-給", d:"峽灣間穿梭必搭。"},
-            {c:"交通", n:"Tunnel", m:"隧道", p:"圖-尼爾", d:"長隧道的發音。"},
-            {c:"交通", n:"Bru", m:"橋", p:"布入", d:"跨海大橋。"},
-            {c:"交通", n:"Vei", m:"路", p:"費", d:"一般道路。"},
-            {c:"交通", n:"Høyre", m:"右轉", p:"赫伊-熱", d:"導航常聽到的詞。"},
-            {c:"交通", n:"Venstre", m:"左轉", p:"凡-斯特", d:"導航常聽到的詞。"},
-            {c:"交通", n:"Stopp", m:"停止", p:"史托普", d:"停讓標誌。"},
-            {c:"交通", n:"Fartsgrense", m:"速限", p:"法特-格倫瑟", d:"保護錢包的字。"},
-            {c:"交通", n:"Bil", m:"車", p:"比爾", d:"一般汽車。"},
-            {c:"交通", n:"AutoPass", m:"自動繳費", p:"奧托-趴斯", d:"電子收費標記。"},
-            {c:"交通", n:"Utsikt", m:"展望/風景", p:"屋特-希特", d:"看到這字代表有美景。"},
-            // 46-60: 超市與飲食
+            {c:"地名", n:"Flåm", m:"弗洛姆", p:"服-龍", d:"高山火車起點。"},
+            {c:"地名", n:"Preikestolen", m:"聖壇岩", p:"普萊-克斯多倫", d:"佈道台的意思。"},
+            {c:"地名", n:"Trollstigen", m:"巨魔之路", p:"特羅-史提根", d:"髮夾彎天堂。"},
+            {c:"地名", n:"Mandal", m:"曼達爾", p:"曼-達", d:"最南端小鎮。"},
+            {c:"地名", n:"Kristiansand", m:"克里斯蒂安桑", p:"克里斯蒂安-松", d:"第一站。"},
+            {c:"地名", n:"Lindesnes", m:"林德斯內斯", p:"林德斯-尼斯", d:"最南燈塔。"},
+            {c:"地名", n:"Stryn", m:"史翠恩", p:"史特-隆", d:"冰河小鎮。"},
+            {c:"地名", n:"Lærdal", m:"萊達爾", p:"雷爾-達", d:"最長隧道所在地。"},
+            {c:"地名", n:"Lofoten", m:"羅浮敦", p:"露-服-等", d:"極光聖地。"},
+
+            // 16-35 💬 日常社交
+            {c:"社交", n:"Hei", m:"你好", p:"嘿", d:"最通用的打招呼。"},
+            {c:"社交", n:"Hei hei", m:"嘿嘿", p:"嘿嘿", d:"比 Hei 更輕快。"},
+            {c:"社交", n:"Takk", m:"謝謝", p:"塔克", d:"挪威生存必備。"},
+            {c:"社交", n:"Tusen takk", m:"非常感謝", p:"圖森-塔克", d:"一千個感謝。"},
+            {c:"社交", n:"Vær så snill", m:"請", p:"瓦-秀-史尼爾", d:"請求協助時。"},
+            {c:"社交", n:"Ja", m:"是", p:"呀", d:"簡單肯定。"},
+            {c:"社交", n:"Nei", m:"不", p:"內", d:"簡單否定。"},
+            {c:"社交", n:"Unnskyld", m:"對不起", p:"溫-舒兒", d:"引起注意或道歉。"},
+            {c:"社交", n:"Hyggelig å møte deg", m:"很高興見到你", p:"修格利-歐-悶特-呆", d:"正式介紹用。"},
+            {c:"社交", n:"Ha det bra", m:"再見", p:"哈-得-布拉", d:"正式告別。"},
+            {c:"社交", n:"Ha det!", m:"掰掰", p:"哈-得", d:"口語化道別。"},
+            {c:"社交", n:"Vi sees", m:"回頭見", p:"維-希斯", d:"朋友間道別。"},
+            {c:"社交", n:"God morgen", m:"早安", p:"古-摸昂", d:"早晨問候。"},
+            {c:"社交", n:"God dag", m:"午安", p:"古-達", d:"白天問候。"},
+            {c:"社交", n:"God kveld", m:"晚安", p:"古-克菲爾", d:"晚間問候。"},
+            {c:"社交", n:"Bare hyggelig", m:"不客氣", p:"巴惹-修格利", d:"回應謝謝。"},
+            {c:"社交", n:"Hva heter du?", m:"你叫什麼名字？", p:"法-黑特-度", d:"社交開頭。"},
+            {c:"社交", n:"Jeg heter...", m:"我叫做...", p:"耶-黑特", d:"自我介紹。"},
+            {c:"社交", n:"Snakker du engelsk?", m:"你會說英文嗎？", p:"史那格-度-英格斯克", d:"重要底牌。"},
+            {c:"社交", n:"Hva koster det?", m:"這多少錢？", p:"法-考斯德-得", d:"購物必備。"},
+
+            // 36-50 🛒 超市採買
             {c:"超市", n:"Mat", m:"食物", p:"罵特", d:"食物總稱。"},
-            {c:"超市", n:"Vann", m:"水", p:"凡", d:"買水必備。"},
-            {c:"超市", n:"Brød", m:"麵包", p:"布若", d:"主食麵包。"},
-            {c:"超市", n:"Melk", m:"牛奶", p:"美爾克", d:"挪威鮮奶極好喝。"},
-            {c:"超市", n:"Kaffe", m:"咖啡", p:"咖-飛", d:"挪威人靈魂之水。"},
-            {c:"超市", n:"Øl", m:"啤酒", p:"耳", d:"超市晚間限購。"},
-            {c:"超市", n:"Brunost", m:"棕起司", p:"布倫-烏斯特", d:"焦糖味國寶起司。"},
-            {c:"超市", n:"Laks", m:"鮭魚", p:"拉克斯", d:"產地鮭魚。"},
-            {c:"超市", n:"Pølse", m:"香腸", p:"噴-瑟", d:"加油站平價美食。"},
-            {c:"超市", n:"Pose", m:"袋子", p:"普-瑟", d:"超市結帳會問你要不要袋子。"},
-            {c:"超市", n:"Kvittering", m:"收據", p:"庫特-林", d:"結帳時詢問用。"},
+            {c:"超市", n:"Vann", m:"水", p:"凡", d:"買水必認。"},
+            {c:"超市", n:"Brød", m:"麵包", p:"布若", d:"挪威主食。"},
+            {c:"超市", n:"Melk", m:"牛奶", p:"美爾克", d:"挪威鮮乳推薦。"},
+            {c:"超市", n:"Kaffe", m:"咖啡", p:"咖-飛", d:"挪威靈魂。"},
+            {c:"超市", n:"Øl", m:"啤酒", p:"耳", d:"晚上 8 點後禁賣。"},
+            {c:"超市", n:"Vin", m:"葡萄酒", p:"份", d:"要去公營商店買。"},
+            {c:"超市", n:"Brunost", m:"棕起司", p:"布倫-烏斯特", d:"焦糖起司。"},
+            {c:"超市", n:"Laks", m:"鮭魚", p:"拉克斯", d:"挪威必吃鮭魚。"},
+            {c:"超市", n:"Pose", m:"袋子", p:"普-瑟", d:"結帳會問要袋子嗎。"},
+            {c:"超市", n:"Kvittering", m:"收據", p:"庫特-林", d:"結帳完領收據。"},
             {c:"超市", n:"Åpen", m:"營業中", p:"歐-噴", d:"門口告示。"},
-            {c:"超市", n:"Stengt", m:"休息中", p:"史登特", d:"門口告示。"},
-            {c:"超市", n:"Pris", m:"價格", p:"普瑞斯", d:"標籤上的字。"},
-            {c:"超市", n:"Billig", m:"便宜", p:"比-力", d:"折扣區常見。"},
-            // 61-100: 生活、數字與急難 (持續補完...)
-            {c:"生活", n:"Toalett", m:"廁所", p:"托-阿-雷特", d:"找廁所必說。"},
-            {c:"生活", n:"Koselig", m:"舒適氛圍", p:"庫-雪-利", d:"挪威文化靈魂。"},
-            {c:"生活", n:"Utepils", m:"戶外啤酒", p:"屋特-皮爾斯", d:"陽光下喝啤酒。"},
-            {c:"生活", n:"Varm", m:"熱", p:"瓦姆", d:"水龍頭紅點標示。"},
-            {c:"生活", n:"Kald", m:"冷", p:"卡爾", d:"水龍頭藍點標示。"},
-            {c:"數字", n:"En", m:"1", p:"因", d:"數量詞。"},
-            {c:"數字", n:"To", m:"2", p:"多", d:"數量詞。"},
-            {c:"數字", n:"Tre", m:"3", p:"德瑞", d:"數量詞。"},
-            {c:"急難", n:"Hjelp", m:"救命", p:"耶爾普", d:"緊急大喊用語。"},
-            {c:"急難", n:"Politi", m:"警察", p:"波-利-提", d:"公權力。"},
-            {c:"急難", n:"Sykehus", m:"醫院", p:"休-克-胡斯", d:"醫療中心。"},
-            {c:"急難", n:"Apotek", m:"藥局", p:"阿-波-提克", d:"買備用藥地點。"},
-            {c:"社交", n:"Hva koster det?", m:"這多少錢？", p:"法-考斯德-得", d:"問價專用句。"},
-            {c:"社交", n:"Snakker du engelsk?", m:"你會說英文嗎？", p:"史那格-度-英格斯克", d:"最後防線。"},
-            {c:"生活", n:"Friluftsliv", m:"戶外生活", p:"福利-路夫-利夫", d:"挪威戶外精神。"}
-            // (100句完整版內容... 僅以此格式遞增內容)
+            {c:"超市", n:"Stengt", m:"休息中", p:"史登特", d:"週日最常見標示。"},
+            {c:"超市", n:"Pris", m:"價格", p:"普瑞斯", d:"看價錢找這個字。"},
+            {c:"超市", n:"Billig", m:"便宜", p:"比-力", d:"特價品區。"},
+
+            // 51-65 🚗 自駕與道路
+            {c:"自駕", n:"Bensin", m:"汽油", p:"本-欣", d:"加油標誌。"},
+            {c:"自駕", n:"Lading", m:"充電", p:"拉-丁", d:"電車充電樁用。"},
+            {c:"自駕", n:"Parkering", m:"停車", p:"帕-克靈", d:"找 P 字。"},
+            {c:"自駕", n:"Møteplass", m:"避車彎", p:"悶特-普拉斯", d:"看見『M』需禮讓。"},
+            {c:"自駕", n:"Ferge", m:"渡輪", p:"費爾-給", d:"峽灣自駕必搭。"},
+            {c:"自駕", n:"Tunnel", m:"隧道", p:"圖-尼爾", d:"挪威隧道超多。"},
+            {c:"自駕", n:"Vei", m:"路", p:"費", d:"一般公路。"},
+            {c:"自駕", n:"Høyre", m:"右轉", p:"赫伊-熱", d:"聽導航。"},
+            {c:"自駕", n:"Venstre", m:"左轉", p:"凡-斯特", d:"聽導航。"},
+            {c:"自駕", n:"Rundkjøring", m:"圓環", p:"潤-雪-林", d:"環島導航。"},
+            {c:"自駕", n:"Stopp", m:"停止", p:"史托普", d:"停讓標誌。"},
+            {c:"自駕", n:"Fartsgrense", m:"速限", p:"法特-格倫瑟", d:"留意路標數字。"},
+            {c:"自駕", n:"Utsikt", m:"觀景台", p:"屋特-希特", d:"拍照停車點。"},
+            {c:"自駕", n:"Veiarbeid", m:"道路施工", p:"費-阿爾拜", d:"行程可能受阻。"},
+            {c:"自駕", n:"AutoPass", m:"自動繳費", p:"奧托-趴斯", d:"電子收費系統。"},
+
+            // 66-80 🏔️ 生活哲學與自然
+            {c:"生活", n:"Koselig", m:"舒適感", p:"庫-雪-利", d:"挪威文化的核心。"},
+            {c:"生活", n:"Utepils", m:"戶外啤酒", p:"屋-特-皮爾斯", d:"太陽下的第一杯。"},
+            {c:"生活", n:"Friluftsliv", m:"野外生活", p:"福利-路夫-利夫", d:"愛自然的精神。"},
+            {c:"生活", n:"Fjord", m:"峽灣", p:"費-歐", d:"最代表性的地形。"},
+            {c:"生活", n:"Fjell", m:"高山", p:"費-耶爾", d:"健行常提到的山。"},
+            {c:"生活", n:"Foss", m:"瀑布", p:"佛斯", d:"挪威瀑布密度極高。"},
+            {c:"生活", n:"Isbre", m:"冰河", p:"伊斯-布雷", d:"萬年冰川景觀。"},
+            {c:"生活", n:"Skog", m:"森林", p:"斯科", d:"大面積的地形。"},
+            {c:"生活", n:"Sol", m:"太陽", p:"蘇爾", d:"北歐人的神。"},
+            {c:"生活", n:"Regn", m:"雨", p:"萊恩", d:"卑爾根的特產。"},
+            {c:"生活", n:"Varm", m:"熱", p:"瓦姆", d:"熱水標記。"},
+            {c:"生活", n:"Kald", m:"冷", p:"卡爾", d:"冷水標記。"},
+            {c:"生活", n:"Skål!", m:"乾杯", p:"史科", d:"維京式的豪邁。"},
+            {c:"生活", n:"Vakker", m:"美麗的", p:"法-克", d:"讚美風景用。"},
+            {c:"生活", n:"Fantastisk", m:"太棒了", p:"凡-塔-史提斯克", d:"高度讚美。"},
+
+            // 81-90 🔢 數字與時間
+            {c:"數字", n:"En / To / Tre", m:"1 / 2 / 3", p:"因 / 多 / 德瑞", d:"基本數量。"},
+            {c:"數字", n:"Fire / Fem", m:"4 / 5", p:"非爾 / 梵", d:"基本數量。"},
+            {c:"數字", n:"Hvor mye?", m:"多少錢？", p:"法-謬-厄", d:"問金額。"},
+            {c:"數字", n:"Kredittkort", m:"信用卡", p:"克雷-迪特-卡特", d:"挪威支付必備。"},
+            {c:"數字", n:"I dag", m:"今天", p:"伊-達", d:"時間詞。"},
+            {c:"數字", n:"I morgen", m:"明天", p:"伊-摸昂", d:"時間詞。"},
+            {c:"數字", n:"Nå", m:"現在", p:"諾", d:"時間詞。"},
+            {c:"數字", n:"Klokka", m:"時鐘/點鐘", p:"克洛卡", d:"問時間。"},
+            {c:"數字", n:"Gratis", m:"免費", p:"格拉-底斯", d:"最迷人的單字。"},
+            {c:"數字", n:"Halv", m:"一半", p:"哈爾", d:"點餐或問路用。"},
+
+            // 91-100 🆘 緊急救援
+            {c:"緊急", n:"Hjelp!", m:"救命！", p:"耶爾普", d:"緊急大喊用語。"},
+            {c:"緊急", n:"Politi", m:"警察", p:"波-利-提", d:"緊急電話 112。"},
+            {c:"緊急", n:"Brann", m:"火警", p:"布朗", d:"緊急電話 110。"},
+            {c:"緊急", n:"Ambulanse", m:"救護車", p:"阿姆-布朗-瑟", d:"緊急電話 113。"},
+            {c:"緊急", n:"Sykehus", m:"醫院", p:"休-克-胡斯", d:"找醫院用。"},
+            {c:"緊急", n:"Apotek", m:"藥局", p:"阿-波-提克", d:"買常用藥用。"},
+            {c:"緊急", n:"Legen", m:"醫生", p:"雷-根", d:"看醫生用。"},
+            {c:"緊急", n:"Toalett", m:"廁所", p:"托-阿-雷特", d:"生存最緊急的事。"},
+            {c:"緊急", n:"Pass", m:"護照", p:"趴斯", d:"遺失時向警察說明。"},
+            {c:"緊急", n:"Takk for meg!", m:"後會有期", p:"塔克-佛-美", d:"這趟旅程的圓滿結尾。"}
         ];
 
-        function playSound(txt) {
-            const url = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(txt)}&tl=no&client=tw-ob`;
-            new Audio(url).play().catch(() => window.open(url, '_blank'));
+        let currentFilter = "全部";
+
+        function playSound(text) {
+            const msg = new URLSearchParams({ ie: 'UTF-8', q: text, tl: 'no', client: 'tw-ob' });
+            const audio = new Audio(`https://translate.google.com/translate_tts?${msg.toString()}`);
+            audio.play().catch(() => alert("語音加載中，請再試一次！"));
         }
 
-        function render(f = "") {
-            const list = document.getElementById('langContent');
+        function filterCat(cat) {
+            currentFilter = cat;
+            document.querySelectorAll('.cat-btn').forEach(b => {
+                b.classList.toggle('active', b.innerText.includes(cat));
+            });
+            render();
+        }
+
+        function render(filterText = "") {
+            const list = document.getElementById('langList');
             list.innerHTML = "";
-            v.filter(i => i.n.toLowerCase().includes(f.toLowerCase()) || i.m.includes(f) || i.c.includes(f)).forEach(i => {
+            const filtered = vocabulary.filter(item => {
+                const matchCat = (currentFilter === "全部" || item.c === currentFilter);
+                const matchSearch = item.n.toLowerCase().includes(filterText.toLowerCase()) || item.m.includes(filterText);
+                return matchCat && matchSearch;
+            });
+            filtered.forEach(item => {
                 const card = document.createElement('div');
-                card.className = "lang-card p-3 d-flex justify-content-between align-items-center";
-                card.innerHTML = `<div><div class="cat-label">${i.c}</div><div class="norsk-text">${i.n} <span class="p-text ms-2">${i.p}</span></div><div class="fw-bold my-1">${i.m}</div><div class="small text-muted">${i.d}</div></div><i class="fas fa-volume-up play-btn" onclick="playSound('${i.n}')"></i>`;
+                card.className = "lang-card d-flex";
+                card.innerHTML = `
+                    <div class="flex-grow-1 p-3">
+                        <div class="norsk-word">${item.n} <span class="pronounce-tag ms-2">${item.p}</span></div>
+                        <div class="fw-bold text-primary small">${item.m}</div>
+                        <div class="text-muted" style="font-size:0.7rem">${item.d}</div>
+                    </div>
+                    <div class="play-btn-box" onclick="playSound('${item.n}')">
+                        <i class="fas fa-volume-up"></i>
+                    </div>
+                `;
                 list.appendChild(card);
             });
         }
