@@ -3,65 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Survival & Norsk Pro | Norway 2026</title>
+    <title>Survival Guide | Norway 2026</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        .guide-scroller { 
-            display: flex; overflow-x: auto; gap: 10px; padding: 15px 5px; 
-            scrollbar-width: none; -webkit-overflow-scrolling: touch;
-        }
+        .guide-scroller { display: flex; overflow-x: auto; gap: 10px; padding: 15px 5px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
         .guide-scroller::-webkit-scrollbar { display: none; }
-        
-        .cat-tag { 
-            min-width: 105px; padding: 10px 18px; border-radius: 50px; 
-            background: white; border: 1.5px solid var(--nordic-pink);
-            color: var(--nordic-pink); font-size: 0.8rem; font-weight: 700;
-            text-align: center; cursor: pointer; white-space: nowrap; transition: 0.3s;
-        }
+        .cat-tag { min-width: 105px; padding: 10px 18px; border-radius: 50px; background: white; border: 1.5px solid var(--nordic-pink); color: var(--nordic-pink); font-size: 0.8rem; font-weight: 700; text-align: center; cursor: pointer; white-space: nowrap; transition: 0.3s; text-decoration: none; }
         .cat-tag.active { background: var(--nordic-pink); color: white; box-shadow: 0 4px 15px rgba(232, 180, 184, 0.3); }
-
-        .tactical-card { animation: fadeInUp 0.5s ease-out forwards; opacity: 0; margin-bottom: 15px; }
+        .tactical-card { animation: fadeInUp 0.5s ease-out forwards; opacity: 0; margin-bottom: 15px; border-radius: 20px; border: 1px solid rgba(0,0,0,0.05); }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
         .importance-strip { width: 6px; border-radius: 10px; margin-right: 15px; flex-shrink: 0; }
-        .imp-high { background: #FF6B6B; }
-        .imp-med { background: #FFD93D; }
-        .imp-low { background: #6BCB77; }
-        .imp-lang { background: var(--nordic-pink); }
-
+        .imp-high { background: #FF6B6B; } .imp-med { background: #FFD93D; } .imp-low { background: #6BCB77; }
         .pro-tip-box { background: rgba(0,0,0,0.04); border-radius: 12px; padding: 12px; font-size: 0.85rem; border-left: 3px solid #434C5E; margin-bottom: 8px; }
         .humor-quote { font-size: 0.82rem; color: #8a6d6d; font-style: italic; display: block; }
-        
-        /* 搜尋框樣式 */
-        #searchContainer { display: none; margin-bottom: 20px; }
-        .search-input { border-radius: 50px; border: 2px solid var(--nordic-pink); padding: 10px 20px; font-size: 0.9rem; }
     </style>
 </head>
 <body class="p-3 bg-warm">
 
     <header class="mb-4 mt-2 px-2">
         <h2 class="fw-bold">Tactical Guide</h2>
-        <p class="text-muted small">生存指南與 100 句挪威語百科全書。</p>
+        <p class="text-muted small">這不是指南，這是你在挪威優雅生存的戰術地圖。</p>
     </header>
 
-    <div class="guide-scroller mb-3" id="catNav">
+    <div class="guide-scroller mb-4" id="catNav">
         <div class="cat-tag active" onclick="switchGuide('driving')">🚗 道路戰術</div>
         <div class="cat-tag" onclick="switchGuide('apps')">📱 必備工具</div>
-        <div class="cat-tag" onclick="switchGuide('grocery')">🛒 超市生存</div>
-        <div class="cat-tag" onclick="switchGuide('language')">🇳🇴 挪威語</div>
+        <a href="language.html" class="cat-tag">🇳🇴 語言百科</a> <div class="cat-tag" onclick="switchGuide('grocery')">🛒 超市生存</div>
         <div class="cat-tag" onclick="switchGuide('weather')">🌦️ 天候應對</div>
         <div class="cat-tag" onclick="switchGuide('emergency')">🆘 緊急救援</div>
     </div>
 
-    <div id="searchContainer" class="px-2">
-        <input type="text" id="langSearch" class="form-control search-input" placeholder="搜尋地名或單字（如：謝謝、蓋朗厄爾）...">
-    </div>
-
     <div id="guideDisplay"></div>
 
-    <div style="height: 80px;"></div>
+    <div style="height: 100px;"></div>
 
     <nav class="footer-nav">
         <a href="index.html"><i class="fas fa-house-chimney"></i><span>總覽</span></a>
@@ -72,79 +48,50 @@
     <script>
         const fullGuideData = {
             driving: [
-                { title: "M-Plass：山路禮讓", imp: "high", desc: "看到藍底白字『M』是避車彎。若你這側有 M 且對向有大車，請主動靠邊停下。", tip: "對方閃燈是說 Takk (謝謝)。請舉手回禮。", humor: "停在 M 拍照會讓後方大客車司機用眼神把你送回台灣。" },
-                { title: "AutoPass 收費", imp: "med", desc: "全挪威公路與渡輪皆自動感應車牌。還車後由租車公司扣除。", tip: "不需找零錢，直接開過去即可。", humor: "請相信科技，看著感應門帥氣通過即可。" }
+                { title: "M-Plass：山路禮讓", imp: "high", desc: "看到藍底白字『M』是避車彎。若你這側有 M 且對向有大車，請停下。", tip: "對方閃燈是說 Takk (謝謝)。請舉手回禮。", humor: "停在 M 拍照會讓後方大客車司機用眼神把你送回家。" },
+                { title: "AutoPass 收費", imp: "med", desc: "全挪威公路與渡輪皆自動感應車牌。", tip: "不需找零錢，直接開過去即可。", humor: "還車後，租車公司會直接從信用卡扣除，不用擔心。" }
             ],
             apps: [
-                { title: "Yr.no 氣象", imp: "high", desc: "挪威氣象局 App。動畫地圖能精確顯示每小時降雨。", tip: "登山前必看『Cloud Cover』雲層圖。", humor: "它的準確率高到像是在控制天氣。" },
-                { title: "EasyPark 停車", imp: "high", desc: "全挪威通用停車 App。按分鐘計費，可遠端延時。", tip: "請在台灣就先綁定信用卡並完成驗證。", humor: "它能預防你收到價格驚人的粉紅罰單。" },
-                { title: "Hjelp 113 救援", imp: "high", desc: "報案時會自動傳送精確座標，荒野救援必備。", tip: "請務必在行前完成手機號碼註冊。", humor: "最好的慶祝方式就是直到還車那天都沒點開過它。" }
+                { title: "Yr.no 氣象", imp: "high", desc: "挪威氣象局官方數據，極度精準。", tip: "登山前必看每小時的風速與降雨預報。", humor: "在挪威，Yr 的話就是真理。" },
+                { title: "EasyPark 停車", imp: "high", desc: "全挪威最通用的停車 App。", tip: "在台灣先綁好信用卡並完成手機號碼註冊。", humor: "粉紅圓圈圖示，看到它就是救星。" }
             ],
             grocery: [
-                { title: "週日超市公休", imp: "high", desc: "絕大多數超市週日不營業。週六請務必買齊物資。", tip: "週日是挪威人的『戶外運動日』。", humor: "週日沒東西吃是因為你挑戰了北歐千年的休假傳統。" },
-                { title: "PANT 瓶罐回收", imp: "low", desc: "瓶罐含押金。去超市門口機器回收可換現金抵用券。", tip: "標有『PANT』字樣皆可回收。", humor: "這是你在挪威唯一能感受到『錢回來了』的瞬間。" }
+                { title: "週日超市公休", imp: "high", desc: "絕大多數超市週日不營業，務必提前囤貨。", tip: "週六下午 6 點後連啤酒都會禁賣，請提早。", humor: "週日餓肚子是自找的，這叫北歐式震撼教育。" }
             ],
             weather: [
-                { title: "三層穿衣法", imp: "high", desc: "內層排汗、中層保暖、外層防風防水 (Gore-Tex)。", tip: "沒有壞天氣，只有穿錯衣。", humor: "如果不喜歡現在的天氣，請等十分鐘——它可能變更糟。" }
+                { title: "洋蔥式穿衣", imp: "high", desc: "內層排汗、中層保暖、外層防風防水。", tip: "夏天也會有 5 度的山區，薄羽絨必備。", humor: "沒有壞天氣，只有穿錯衣服的觀光客。" }
             ],
             emergency: [
-                { title: "救援：112 / 113", imp: "high", desc: "112 警察、113 醫療急救。NAA 救援 (+47 2323 2323)。", tip: "手機安裝 Hjelp 113 App 自動同步座標。", humor: "祝你一路平安，這張卡片永遠用不到。" }
-            ],
-            // 這裡整合了 100 句語言百科中的精選內容
-            language: [
-                { title: "Hei (嘿)", imp: "lang", desc: "你好 / Hello", tip: "發音：嘿！最通用的打招呼方式。", humor: "進店或遇到山友都請大聲說出這句。" },
-                { title: "Takk (塔克)", imp: "lang", desc: "謝謝 / Thanks", tip: "發音：塔克！挪威人的口頭禪。", humor: "如果你只學一個字，就學這個，它是萬能鑰匙。" },
-                { title: "Oslo (烏斯露)", imp: "lang", desc: "奧斯陸 (首都)", tip: "注意 O 發「烏」的音，不是「歐」。", humor: "唸對地名，當地人會覺得你是個知性的維京專家。" },
-                { title: "Geiranger (蓋朗厄爾)", imp: "lang", desc: "最美峽灣地名", tip: "發音：蓋-朗-厄爾。最後的 er 要輕發。", humor: "唸對這個字，你的旅遊質感立刻提升 50%。" },
-                { title: "Koselig (庫雪利)", imp: "lang", desc: "極致舒適的氛圍", tip: "挪威生活靈魂。壁爐、咖啡、好友的結合體。", humor: "這是挪威人的精神信仰，就像台灣人的『小確幸』。" },
-                { title: "Utepils (屋特皮爾斯)", imp: "lang", desc: "陽光下的啤酒", tip: "專門指在戶外享受的啤酒時刻。", humor: "在卑爾根看到太陽時，趕快點一杯 Utepils 吧！" },
-                { title: "Lykke til (隆克提爾)", imp: "lang", desc: "祝好運 / Good Luck", tip: "互道珍重時使用。", humor: "登聖壇岩前，跟路人互道一聲 Lykke til 吧！" }
-                // ... 其他 100 句邏輯可透過搜尋擴展
+                { title: "救援：112 / 113", imp: "high", desc: "112 警察、113 醫療急救。", tip: "手機安裝 Hjelp 113 App 自動同步座標。", humor: "祝這張卡片直到你回國前都是裝飾品。" }
             ]
         };
 
         function switchGuide(category) {
             document.querySelectorAll('.cat-tag').forEach(tag => {
                 tag.classList.remove('active');
-                if(tag.getAttribute('onclick').includes(category)) tag.classList.add('active');
+                if(tag.getAttribute('onclick') && tag.getAttribute('onclick').includes(category)) tag.classList.add('active');
             });
-
-            // 如果是語言，顯示搜尋框
-            document.getElementById('searchContainer').style.display = (category === 'language') ? 'block' : 'none';
-
             renderList(category);
         }
 
-        function renderList(category, filter = "") {
+        function renderList(category) {
             const sectionData = fullGuideData[category];
-            const filtered = sectionData.filter(item => 
-                item.title.toLowerCase().includes(filter.toLowerCase()) || 
-                item.desc.toLowerCase().includes(filter.toLowerCase())
-            );
-
-            const html = filtered.map((item, index) => `
-                <div class="glass-card tactical-card d-flex p-3" style="animation-delay: ${index * 0.05}s">
+            const html = sectionData.map((item, index) => `
+                <div class="glass-card tactical-card d-flex p-3" style="animation-delay: ${index * 0.1}s">
                     <div class="importance-strip imp-${item.imp}"></div>
                     <div class="flex-grow-1">
                         <h5 class="fw-bold mb-1">${item.title}</h5>
                         <p class="small text-muted mb-2">${item.desc}</p>
                         <div class="pro-tip-box">
-                            <i class="fas fa-lightbulb text-info me-2"></i><strong>戰術：</strong>${item.tip}
+                            <i class="fas fa-lightbulb text-info me-2"></i><strong>戰術：</strong> ${item.tip}
                         </div>
                         <span class="humor-quote">"${item.humor}"</span>
                     </div>
                 </div>
             `).join('');
-
-            document.getElementById('guideDisplay').innerHTML = html || '<p class="text-center mt-5 text-muted">找不到相關內容...</p>';
+            document.getElementById('guideDisplay').innerHTML = html;
         }
 
-        // 監聽搜尋
-        document.getElementById('langSearch').addEventListener('input', (e) => {
-            renderList('language', e.target.value);
-        });
-
-        // 預設渲染
         switchGuide('driving');
     </script>
 </body>
