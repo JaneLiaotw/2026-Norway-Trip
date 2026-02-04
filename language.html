@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Norsk Pro | 100 挪威語戰術板</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root { --nordic-blue: #434C5E; }
+        .category-header { 
+            background: var(--nordic-blue); color: white; padding: 12px 20px; 
+            border-radius: 15px; margin: 20px 0 10px; font-weight: 700;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .phrase-card { 
+            background: white; border-radius: 15px; padding: 15px; margin-bottom: 10px;
+            border-left: 5px solid var(--nordic-pink); box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .norsk { font-size: 1.2rem; font-weight: 800; color: var(--nordic-pink); }
+        .pronounce { font-size: 0.85rem; color: #666; background: #eee; padding: 2px 6px; border-radius: 4px; }
+        .meaning { font-weight: 600; margin-top: 5px; font-size: 0.95rem; }
+        .desc { font-size: 0.8rem; color: #888; margin-top: 3px; }
+        .search-box { 
+            position: sticky; top: 10px; z-index: 100; background: white; 
+            border-radius: 12px; padding: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="p-3 bg-warm">
+
+    <header class="mb-4 mt-2">
+        <h2 class="fw-bold">Norsk 100</h2>
+        <p class="text-muted small">從地名到生存，100 句挪威語深度指南。</p>
+    </header>
+
+    <div class="search-box mb-4">
+        <input type="text" id="phraseSearch" class="form-control" placeholder="搜尋關鍵字（如：謝謝、奧斯陸）...">
+    </div>
+
+    <div id="languageContent">
+        </div>
+
+    <div style="height: 80px;"></div>
+
+    <nav class="footer-nav">
+        <a href="index.html"><i class="fas fa-house-chimney"></i><span>總覽</span></a>
+        <a href="culture.html"><i class="fas fa-compass"></i><span>行程</span></a>
+        <a href="guide.html"><i class="fas fa-feather-pointed"></i><span>指南</span></a>
+        <a href="language.html" class="active"><i class="fas fa-language"></i><span>語法</span></a>
+    </nav>
+
+    <script>
+        const vocabulary = [
+            // 分類：社交基本功 (15句)
+            { cat: "社交基本功", n: "Hei", p: "嘿", m: "你好", d: "最通用的打招呼。" },
+            { cat: "社交基本功", n: "Takk", p: "塔克", m: "謝謝", d: "挪威人的口頭禪。" },
+            { cat: "社交基本功", n: "Tusen takk", p: "圖森-塔克", m: "非常感謝", d: "直譯是「一千個感謝」。" },
+            { cat: "社交基本功", n: "Vær så snill", p: "瓦-秀-史尼爾", m: "請", d: "用於請求，放在句尾。" },
+            { cat: "社交基本功", n: "Ja", p: "呀", m: "是", d: "簡單有力。" },
+            { cat: "社交基本功", n: "Nei", p: "內", m: "不", d: "拒絕時使用。" },
+            { cat: "社交基本功", n: "Unnskyld", p: "溫-舒兒", m: "對不起/請問", d: "引起注意或道歉。" },
+            { cat: "社交基本功", n: "Hyggelig å møte deg", p: "修格利-歐-悶特-呆", m: "很高興見到你", d: "正式自我介紹後使用。" },
+            { cat: "社交基本功", n: "Ha det bra", p: "哈-得-布拉", m: "再見", d: "最常用的道別。" },
+            { cat: "社交基本功", n: "Vi sees", p: "維-希斯", m: "回頭見", d: "跟剛認識的朋友道別。" },
+            { cat: "社交基本功", n: "God morgen", p: "古-摸昂", m: "早安", d: "早晨見面語。" },
+            { cat: "社交基本功", n: "God dag", p: "古-達", m: "午安", d: "白天的問候。" },
+            { cat: "社交基本功", n: "God kveld", p: "古-克菲爾", m: "晚安", d: "傍晚時分使用。" },
+            { cat: "社交基本功", n: "Bare hyggelig", p: "巴惹-修格利", m: "不客氣", d: "回應 Takk 的標準說法。" },
+            { cat: "社交基本功", n: "Hva heter du?", p: "法-黑特-度", m: "你叫什麼名字？", d: "交朋友的第一步。" },
+
+            // 分類：地名發音解碼 (15句)
+            { cat: "地名發音解碼", n: "Norge", p: "諾爾-給", m: "挪威", d: "挪威人稱呼自己國家的方式。" },
+            { cat: "地名發音解碼", n: "Oslo", p: "烏斯-露", m: "奧斯陸", d: "注意 O 發烏的音。" },
+            { cat: "地名發音解碼", n: "Bergen", p: "貝爾-根", m: "卑爾根", d: "雨都，也是文化之都。" },
+            { cat: "地名發音解碼", n: "Stavanger", p: "史塔-凡-厄爾", m: "史塔萬格", d: "聖壇岩的門戶。" },
+            { cat: "地名發音解碼", n: "Geiranger", p: "蓋-朗-厄爾", m: "蓋朗厄爾", d: "最窄、最美的峽灣地名。" },
+            { cat: "地名發音解碼", n: "Ålesund", p: "歐-雷-松", m: "奧勒松", d: "Å 發「歐」音，不是「阿」。" },
+            { cat: "地名發音解碼", n: "Kristiansand", p: "克里斯蒂安-松", m: "克里斯蒂安桑", d: "第一天租車的地點。" },
+            { cat: "地名發音解碼", n: "Flåm", p: "服-龍", m: "弗洛姆", d: "高山火車的起點。" },
+            { cat: "地名發音解碼", n: "Stryn", p: "史特-隆", m: "史翠恩", d: "冰河湖畔的美麗小鎮。" },
+            { cat: "地名發音解碼", n: "Lærdal", p: "雷爾-達", m: "萊達爾", d: "長隧道的所在城鎮。" },
+            { cat: "地名發音解碼", n: "Mandal", p: "曼-達", m: "曼達爾", d: "最南端的海味小鎮。" },
+            { cat: "地名發音解碼", n: "Lindesnes", p: "林德斯-尼斯", m: "林德斯內斯", d: "最南端燈塔所在地。" },
+            { cat: "地名發音解碼", n: "Dombås", p: "多姆-歐斯", m: "多姆博斯", d: "巨魔之路附近的交通樞紐。" },
+            { cat: "地名發音解碼", n: "Preikestolen", p: "普萊-克斯多倫", m: "聖壇岩", d: "直譯是「佈道台」。" },
+            { cat: "地名發音解碼", n: "Trollstigen", p: "特羅-史提根", m: "巨魔之路", d: "自駕行程的最高殿堂。" },
+
+            // 分類：自駕與交通 (15句)
+            { cat: "自駕與交通", n: "Bensin", p: "本-欣", m: "汽油", d: "加油站必看字眼。" },
+            { cat: "自駕與交通", n: "Lading", p: "拉-丁", m: "充電", d: "電動車自駕最關鍵單字。" },
+            { cat: "自駕與交通", n: "Møteplass", p: "悶特-普拉斯", m: "避車彎", d: "看到 M 標誌時的專業名稱。" },
+            { cat: "自駕與交通", n: "Ferge", p: "費爾-給", m: "渡輪", d: "峽灣間穿梭的必經手段。" },
+            { cat: "自駕與交通", n: "Bomstasjon", p: "布姆-史塔兄", m: "收費站", d: "雖然全自動，但看到字別怕。" },
+            { cat: "自駕與交通", n: "Parkering", p: "帕-克靈", m: "停車場", d: "尋找粉紅圓圈圖示。" },
+            { cat: "自駕與交通", n: "Tunnel", p: "圖-尼爾", m: "隧道", d: "挪威自駕最常進出的地方。" },
+            { cat: "自駕與交通", n: "Fartsgrense", p: "法特-格倫瑟", m: "速限", d: "保護你錢包的單字。" },
+            { cat: "自駕與交通", n: "Veiarbeid", p: "費-阿爾拜", m: "道路施工", d: "若行程延誤通常是因為它。" },
+            { cat: "自駕與交通", n: "Garasje", p: "加-拉-雪", m: "車庫", d: "找室內停車位時搜尋。" },
+            { cat: "自駕與交通", n: "Vei", p: "費", m: "道路", d: "通常接在數字後面，如 E18 Vei。" },
+            { cat: "自駕與交通", n: "Høyre", p: "赫伊-熱", m: "右轉", d: "導航發音重點。" },
+            { cat: "自駕與交通", n: "Venstre", p: "凡-斯特", m: "左轉", d: "導航發音重點。" },
+            { cat: "自駕與交通", n: "Rundkjøring", p: "潤-雪-林", m: "圓環", d: "挪威公路的精髓。" },
+            { cat: "自駕與交通", n: "Utgang", p: "屋特-剛", m: "出口", d: "機場或商場常用。" },
+
+            // 分類：超市與用餐 (15句)
+            { cat: "超市與用餐", n: "Mat", p: "罵特", m: "食物", d: "生活的一切基準。" },
+            { cat: "超市與用餐", n: "Brød", p: "布若", m: "麵包", d: "超市裡的主食。" },
+            { cat: "超市與用餐", n: "Vann", p: "凡", m: "水", d: "記得喝冷水就好。" },
+            { cat: "超市與用餐", n: "Kaffe", p: "咖-飛", m: "咖啡", d: "挪威人的生命之水。" },
+            { cat: "超市與用餐", n: "Melk", p: "美爾克", m: "牛奶", d: "非常純淨香甜。" },
+            { cat: "超市與用餐", n: "Øl", p: "耳", m: "啤酒", d: "超市晚上 8 點前限購。" },
+            { cat: "超市與用餐", n: "Vin", p: "份", m: "葡萄酒", d: "要去 Vinmonopolet 買。" },
+            { cat: "超市與用餐", n: "Brunost", p: "布倫-烏斯特", m: "棕起司", d: "必吃的焦糖味起司。" },
+            { cat: "超市與用餐", n: "Laks", p: "拉克斯", m: "鮭魚", d: "來到產地當然要吃。" },
+            { cat: "超市與用餐", n: "Sjømat", p: "雪-罵特", m: "海鮮", d: "Mandal 和 Bergen 的主角。" },
+            { cat: "超市與用餐", n: "Pølse", p: "噴-瑟", m: "香腸", d: "加油站最常見的快餐。" },
+            { cat: "超市與用餐", n: "Kvitering", p: "庫特-林", m: "收據", d: "結帳時店員會問你要不要。" },
+            { cat: "超市與用餐", n: "Pose", p: "普-瑟", m: "塑膠袋", d: "超市需要另外付費買袋子。" },
+            { cat: "超市與用餐", n: "Vaffel", p: "法-菲爾", m: "華夫餅", d: "形狀通常是愛心。" },
+            { cat: "超市與用餐", n: "God appetitt", p: "古-阿佩替", m: "祝胃口好", d: "用餐前說這句很專業。" },
+
+            // 分類：自然與氣候 (15句)
+            { cat: "自然與氣候", n: "Fjord", p: "費-歐", m: "峽灣", d: "挪威的代名詞。" },
+            { cat: "自然與氣候", n: "Fjell", p: "費-耶爾", m: "高山", d: "山區自駕的背景。" },
+            { cat: "自然與氣候", n: "Foss", p: "佛斯", m: "瀑布", d: "行程中會看到無數個。" },
+            { cat: "自然與氣候", n: "Isbre", p: "伊斯-布雷", m: "冰河", d: "如 Boyabreen 的壯麗景色。" },
+            { cat: "自然與氣候", n: "Vind", p: "份德", m: "風", d: "在燈塔時會感受到。" },
+            { cat: "自然與氣候", n: "Regn", p: "萊恩", m: "下雨", d: "卑爾根的日常。" },
+            { cat: "自然與氣候", n: "Snø", p: "司諾", m: "雪", d: "山頂終年可見。" },
+            { cat: "自然與氣候", n: "Sol", p: "蘇爾", m: "太陽", d: "挪威人最崇拜的東西。" },
+            { cat: "自然與氣候", n: "Midnattssol", p: "米-拿特-蘇爾", m: "午夜陽光", d: "夏季限定奇蹟。" },
+            { cat: "自然與氣候", n: "Tur", p: "突爾", m: "旅行/健行", d: "出去走走都叫 Tur。" },
+            { cat: "自然與氣候", n: "Skog", p: "斯科", m: "森林", d: "挪威的高覆蓋率地貌。" },
+            { cat: "自然與氣候", n: "Innsjø", p: "因-雪", m: "湖泊", d: "如 Mjøsa 湖。" },
+            { cat: "自然與氣候", n: "Utsikt", p: "屋特-希特", m: "風景/觀景台", d: "拍照必備地點。" },
+            { cat: "自然與氣候", n: "Reinsdyr", p: "萊恩-迪爾", m: "馴鹿", d: "在 Rondane 國家公園搜尋牠。" },
+            { cat: "自然與氣候", n: "Elg", p: "埃爾格", m: "駝鹿", d: "森林裡的巨大王者。" },
+
+            // 分類：挪威靈魂用語 (25句) - 精選最有趣的
+            { cat: "挪威靈魂用語", n: "Koselig", p: "庫-雪-利", m: "極致的舒適氛圍", d: "無可取代的文化詞彙。" },
+            { cat: "挪威靈魂用語", n: "Friluftsliv", p: "福利-路夫-利夫", m: "戶外生活精神", d: "對大自然的熱愛。" },
+            { cat: "挪威靈魂用語", n: "Utepils", p: "屋特-皮爾斯", m: "陽光下的啤酒", d: "北歐人的小確幸。" },
+            { cat: "挪威靈魂用語", n: "Matpakke", p: "罵特-趴格", m: "自帶便當", d: "樸實的生活態度。" },
+            { cat: "挪威靈魂用語", n: "Allemannsretten", p: "阿爾-曼斯-熱騰", m: "自由漫遊權", d: "自然屬於所有人。" },
+            { cat: "挪威靈魂用語", n: "Takk for sist", p: "塔克-佛-希斯特", m: "謝謝上次的見面", d: "再次見面時的標準開場。" },
+            { cat: "挪威靈魂用語", n: "Takk for maten", p: "塔克-佛-罵疼", m: "謝謝這餐飯", d: "在別人家做客必說。" },
+            { cat: "挪威靈魂用語", n: "Hytte", p: "修-特", m: "小木屋", d: "挪威人的靈魂寄託。" },
+            { cat: "挪威靈魂用語", n: "Dugnad", p: "度-納德", m: "社區義工/共助", d: "集體主義精神。" },
+            { cat: "挪威靈魂用語", n: "Lykke til", p: "隆克-提爾", m: "祝好運", d: "登山出發前互道。" },
+            { cat: "挪威靈魂用語", n: "Helt konge", p: "黑特-康給", m: "超讚/國王等級", d: "形容一件很酷的事。" },
+            { cat: "挪威靈魂用語", n: "Skaal!", p: "史科！", m: "乾杯！", d: "維京式喝酒法。" },
+            { cat: "挪威靈魂用語", n: "Skitt au!", p: "細特-歐", m: "管他的！", d: "輕鬆面對小挫折。" },
+            { cat: "挪威靈魂用語", n: "Marka", p: "馬爾-卡", m: "市郊森林區", d: "城市人的逃生口。" },
+            { cat: "挪威靈魂用語", n: "Snu", p: "斯努", m: "轉身/回頭", d: "挪威登山守則：回頭不丟臉。" },
+            { cat: "挪威靈魂用語", n: "Kjære", p: "雪-熱", m: "親愛的", d: "溫柔的稱呼。" },
+            { cat: "挪威靈魂用語", n: "Klem", p: "克雷姆", m: "擁抱", d: "信件結尾常用。" },
+            { cat: "挪威靈魂用語", n: "Glad i deg", p: "格拉-伊-呆", m: "我喜歡你", d: "比愛輕一點，更溫暖。" },
+            { cat: "挪威靈魂用語", n: "Stakkars", p: "史塔-卡斯", m: "可憐的", d: "表達同情。" },
+            { cat: "挪威靈魂用語", n: "Uff da", p: "屋夫-達", m: "哎呀/糟糕", d: "最有名的驚嘆詞。" },
+            { cat: "挪威靈魂用語", n: "Herlig", p: "海爾-利", m: "太美妙了", d: "看到美景時發出。" },
+            { cat: "挪威靈魂用語", n: "Virkelig?", p: "費爾-可利？", m: "真的嗎？", d: "表達驚訝。" },
+            { cat: "挪威靈魂用語", n: "Ro", p: "露", m: "寧靜", d: "內心平靜的最高境界。" },
+            { cat: "挪威靈魂用語", n: "Fred", p: "富瑞德", m: "和平", d: "社會的共識。" },
+            { cat: "挪威靈魂用語", n: "Drøm", p: "多若姆", m: "夢想", d: "這場挪威之旅的本質。" }
+        ];
+
+        function renderVocab(filter = "") {
+            const container = document.getElementById('languageContent');
+            container.innerHTML = "";
+            let currentCat = "";
+
+            const filtered = vocabulary.filter(v => 
+                v.n.toLowerCase().includes(filter.toLowerCase()) || 
+                v.m.includes(filter) ||
+                v.cat.includes(filter)
+            );
+
+            filtered.forEach(v => {
+                if (v.cat !== currentCat) {
+                    currentCat = v.cat;
+                    const header = document.createElement('div');
+                    header.className = 'category-header';
+                    header.innerHTML = `<span>${currentCat}</span><i class="fas fa-chevron-down"></i>`;
+                    container.appendChild(header);
+                }
+
+                const card = document.createElement('div');
+                card.className = 'phrase-card';
+                card.innerHTML = `
+                    <div class="d-flex justify-content-between">
+                        <span class="norsk">${v.n}</span>
+                        <span class="pronounce">${v.p}</span>
+                    </div>
+                    <div class="meaning">${v.m}</div>
+                    <div class="desc">${v.d}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        document.getElementById('phraseSearch').addEventListener('input', (e) => {
+            renderVocab(e.target.value);
+        });
+
+        renderVocab();
+    </script>
+</body>
+</html>
