@@ -16,7 +16,7 @@
             background: linear-gradient(-45deg, #FAF5F5, #EED6D3, #FDFBFB, #E8B4B8);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
-            margin: 0; padding-bottom: 150px; min-height: 100vh;
+            margin: 0; padding-bottom: 120px; min-height: 100vh;
         }
         @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
@@ -68,6 +68,10 @@
         .info-fold { background: rgba(255, 255, 255, 0.3); border-radius: 15px; padding: 10px 15px; margin-top: 10px; }
         .fold-header { font-size: 0.75rem; font-weight: 800; color: #888; display: flex; justify-content: space-between; align-items: center; }
 
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; display: flex; justify-content: space-around; padding: 15px; border-top: 1px solid #eee; z-index: 2000; }
+        .bottom-nav a { text-decoration:none; color:#888; text-align:center; font-size:0.7rem; }
+        .bottom-nav a.active { color:#E8B4B8; }
+
         .safe-area-spacer { height: 120px; }
         .animate-fadeInUp { animation: fadeInUp 0.4s ease-out forwards; }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
@@ -86,30 +90,30 @@
     <div id="dayContent"></div>
     <div class="safe-area-spacer"></div>
 
-    <nav class="bottom-nav" style="position: fixed; bottom: 0; left: 0; right: 0; background: white; display: flex; justify-content: space-around; padding: 15px; border-top: 1px solid #eee; z-index: 2000;">
-        <a href="index.html" style="text-decoration:none; color:#888; text-align:center; font-size:0.7rem;"><i class="fas fa-house-chimney d-block mb-1" style="font-size:1.2rem;"></i>總覽</a>
-        <a href="culture.html" style="text-decoration:none; color:#E8B4B8; text-align:center; font-size:0.7rem;"><i class="fas fa-compass d-block mb-1" style="font-size:1.2rem;"></i>行程</a>
-        <a href="guide.html" style="text-decoration:none; color:#888; text-align:center; font-size:0.7rem;"><i class="fas fa-feather-pointed d-block mb-1" style="font-size:1.2rem;"></i>指南</a>
+    <nav class="bottom-nav">
+        <a href="index.html"><i class="fas fa-house-chimney d-block mb-1" style="font-size:1.2rem;"></i>總覽</a>
+        <a href="culture.html" class="active"><i class="fas fa-compass d-block mb-1" style="font-size:1.2rem;"></i>行程</a>
+        <a href="guide.html"><i class="fas fa-feather-pointed d-block mb-1" style="font-size:1.2rem;"></i>指南</a>
     </nav>
 
     <script>
         const itineraryData = {
-            1: { title: "南下的白色序曲", weather: "18°C", icon: "fa-sun", outfit: "薄外套，預防南岸海風", hotel: "Radisson Blu Caledonien", hotelAmenity: "🍳 雪櫃/早餐", target: "Kristiansand", dist: "325 km", time: "4 hrs", desc: "取車後沿著 E18 公路南下。欣賞斯卡格拉克海峽。", history: "Kristiansand 的白色木屋是財富標誌。", humor: "別讓政府幫你拍天價照片。", spots: ["Posebyen 老城", "魚市場", "Odderøya 島"] },
-            2: { title: "本土最南端的孤獨", weather: "16°C", icon: "fa-cloud-sun", outfit: "防風外套，燈塔區風強", hotel: "Radisson Blu Caledonien", hotelAmenity: "🍳 續住同飯店", target: "Lindesnes Lighthouse", dist: "90 km", time: "1.5 hrs", desc: "前往挪威最南端燈塔 Lindesnes。", history: "Lindesnes 燈塔建於 1656 年。", humor: "小龍蝦為你的味蕾放棄了游泳。", spots: ["Lindesnes 燈塔", "Mandal 小鎮", "Sjøsanden"] },
-            3: { title: "諸神的聖壇", weather: "14°C", icon: "fa-cloud", outfit: "專業登山鞋，山頂溫差大", hotel: "Radisson Blu Atlantic", hotelAmenity: "🍳 早餐/雪櫃", target: "Stavanger Atlantic Hotel", dist: "40km", time: "1 hr", desc: "抵達斯塔萬格，準備明日攀登聖壇岩。", history: "一萬年前冰河時期形成的巨岩。", humor: "這裡沒有圍欄，重力很慷慨。", spots: ["Stavanger 老城", "石中劍", "石油博物館"] },
-            4: { title: "入住聖壇岩山莊", weather: "13°C", icon: "fa-mountain", outfit: "洋蔥式穿法，山頂風大", hotel: "Pulpit Rock Lodge", hotelAmenity: "🍳 早餐/山腳下", target: "Pulpit Rock Mountain Lodge", dist: "40km+登山", time: "5 hrs", desc: "入住登山口山莊，享受大自然。", history: "聖壇岩是挪威最受歡迎的登山徑。", humor: "登山是為了證明你比岩石更固執。", spots: ["Preikestolen", "Lysefjord", "山間小徑"] },
-            5: { title: "維京國王的發源地", weather: "15°C", icon: "fa-cloud-rain", outfit: "防水外套，西岸多陣雨", hotel: "Radisson Haugesund", hotelAmenity: "🍳 晚餐+早餐", target: "Radisson Hotel Haugesund", dist: "85 km", time: "2 hrs", desc: "北上前往 Haugesund 維京核心重鎮。", history: "Haraldshaugen 標誌著挪威統一。", humor: "不吃渡輪上的鬆餅會被鄙視。", spots: ["Haraldshaugen", "維京村", "碼頭"] },
-            6: { title: "卑爾根的時光長廊", weather: "13°C", icon: "fa-umbrella", outfit: "堅強雨衣，享受雨都魅力", hotel: "Thon Hotel Rosenkrantz", hotelAmenity: "🍳 超讚晚+早餐", target: "Thon Hotel Rosenkrantz Bergen", dist: "140 km", time: "3 hrs", desc: "漫步 Bryggen 彩色木屋與魚市場。", history: "Bryggen 曾是漢薩同盟中心。", humor: "下雨是正常發揮，享受濕潤感。", spots: ["Bryggen 木屋", "魚市場", "纜車"] },
-            7: { title: "跨越地心的隧道", weather: "12°C", icon: "fa-smog", outfit: "保暖針織衫，預防溫差", hotel: "Flåm Marina", hotelAmenity: "🍳 廚房/港口邊", target: "Flåm Marina", dist: "170 km", time: "2.5 hrs", desc: "穿過 Lærdal 隧道與 Flåm 鐵路。", history: "世界最美也最險峻的鐵路。", humor: "藍色燈光防疲勞，非異星入口。", spots: ["高山鐵路", "Stegastein", "奈勒伊峽灣"] },
-            8: { title: "冰河與山脈的史詩", weather: "10°C", icon: "fa-snowflake", outfit: "輕羽絨，冰河區體感極冷", hotel: "Stryn Kaffebar", hotelAmenity: "🍳 早餐/溫馨小店", target: "Stryn Kaffebar & Vertshus", dist: "210 km", time: "4 hrs", desc: "近距離觀察 Boyabreen 冰河。", history: "Stryn 湖區因冰河粉末呈翡翠綠。", humor: "羊群在開會，你只是個路客。", spots: ["Boyabreen 冰河", "Lovatnet 湖", "Stryn 纜車"] },
-            9: { title: "峽灣深處的秘密", weather: "12°C", icon: "fa-water", outfit: "防潑水衣物，瀑布水花大", hotel: "Geiranger Feriesenter", hotelAmenity: "🍳 廚房/洗衣/充電", target: "Geirangerfjorden Feriesenter", dist: "85 km", time: "2.5 hrs", desc: "搭船深度遊覽峽灣與瀑布群。", history: "農場居民曾收起木梯躲稅。", humor: "求婚者瀑布求婚失敗後酗酒。", spots: ["七姊妹瀑布", "老鷹之路", "碼頭"] },
-            10: { title: "蓋朗厄爾悠閒日", weather: "12°C", icon: "fa-cloud-sun", outfit: "休閒服，小木屋烹飪", hotel: "Geiranger Feriesenter", hotelAmenity: "🍳 續住小木屋", target: "Geirangerfjorden Feriesenter", dist: "0 km", time: "Free Day", desc: "在世界最美峽灣醒來，享受露營樂趣。", history: "世界遺產名錄中的明珠。", humor: "在這裡不拍照是不合法的。", spots: ["Dalsnibba", "Fossevandring", "巧克力店"] },
-            11: { title: "新藝術風格之美", weather: "14°C", icon: "fa-sun", outfit: "都市休閒裝，適合街拍", hotel: "Quality Hotel Ålesund", hotelAmenity: "🍳 早餐/海景", target: "Quality Hotel Ålesund", dist: "110 km", time: "3 hrs", desc: "前往挪威最美城市奧勒松。", history: "1904 年大火後石造建築重建。", humor: "爬上 Aksla 418 階，每階都在燃脂。", spots: ["Aksla 觀景台", "水族館", "老城區"] },
-            12: { title: "走進巨魔的領地", weather: "9°C", icon: "fa-mountain", outfit: "防風衣，山區氣溫低", hotel: "Grand Hotel Åndalsnes", hotelAmenity: "🍳 早餐/火車站旁", target: "Grand Hotel by Classic Norway", dist: "160 km", time: "3.5 hrs", desc: "征服 Trollstigen 髮夾彎。", history: "這條路於 1936 年開通。", humor: "石頭像人臉，是曬乾的巨魔。", spots: ["巨魔之路", "Romsdalseggen", "Gudbrandsjuvet"] },
-            13: { title: "苔原上的生命力", weather: "8°C", icon: "fa-hippo", outfit: "厚襪子，高地風大", hotel: "Rondane Gjestegård", hotelAmenity: "🍳 早餐/荒野美學", target: "Rondane Gjestegård", dist: "80 km", time: "1.5 hrs", desc: "進入首座國家公園 Rondane。", history: "野生馴鹿的最後堡壘。", humor: "馴鹿很害羞，請保持距離。", spots: ["Sohlbergplassen", "馴鹿中心", "公路美景"] },
-            14: { title: "重返奧斯陸", weather: "15°C", icon: "fa-city", outfit: "層次穿搭，便於進出室內", hotel: "HI Oslo Haraldsheim", hotelAmenity: "🍳 大廚房/便宜舒適", target: "HI Oslo Haraldsheim", dist: "290 km", time: "4 hrs", desc: "沿著 E6 南返奧斯陸。", history: "奧斯陸是全歐洲發展最快的城市。", humor: "紅綠燈變多，提醒假期結束。", spots: ["Munch 館", "歌劇院", "阿克碼頭"] },
-            15: { title: "奧斯陸深度探索", weather: "16°C", icon: "fa-ship", outfit: "輕便行裝，準備還車", hotel: "HI Oslo Haraldsheim", hotelAmenity: "🍳 續住最後一晚", target: "HI Oslo Haraldsheim", dist: "15 km", time: "All Day", desc: "參觀探險博物館與維格蘭公園。", history: "Fram 號載著探險家抵達南極。", humor: "魚罐頭請送給租車公司。", spots: ["維格蘭公園", "Fram 博物館", "皇宮"] },
-            16: { title: "挪威的戒斷症狀", weather: "15°C", icon: "fa-plane", outfit: "舒適機上服", hotel: "Radisson OSL Airport", hotelAmenity: "🍳 早餐/機場步行可達", target: "Radisson Oslo Airport", dist: "50 km", time: "1 hr", desc: "還車並準備登機，帶著記憶回家。", history: "挪威環保是全球標竿。", humor: "解藥是再出一趟國。", spots: ["免稅店", "加油站", "飛機窗景"] }
+            1: { title: "曼谷轉機之夜", weather: "30°C", icon: "fa-plane", outfit: "長途機上服裝 (BKK)", hotel: "Suvarnabhumi Airport", hotelAmenity: "✈️ 轉機過境", target: "BKK Airport", dist: "TPE-BKK", time: "3.5 hrs", desc: "18:50 起飛，21:35 抵達曼谷。準備半夜銜接奧斯陸航段。", history: "蘇凡納布機場是東南亞樞紐。", humor: "在轉機區練習維京式的睡眠法。", spots: ["TPE 機場", "BKK 轉機區", "免稅店"] },
+            2: { title: "南下的白色序曲", weather: "18°C", icon: "fa-car", outfit: "薄外套，預防海風", hotel: "Radisson Blu Caledonien", hotelAmenity: "🍳 早餐 / 雪櫃", target: "Kristiansand", dist: "325 km", time: "4 hrs", desc: "07:25抵達OSL。取車採買。經海達爾木板教堂南下。", history: "海達爾木板教堂是挪威最大的木構造建築。", humor: "別讓政府的測速相機幫你拍天價照片。", spots: ["Obs Jessheim 採買", "海達爾教堂", "魚市場"] },
+            3: { title: "本土最南端的孤獨", weather: "16°C", icon: "fa-cloud-sun", outfit: "防風外套，燈塔區風強", hotel: "Radisson Blu Atlantic", hotelAmenity: "🍳 早餐 / 雪櫃", target: "Stavanger Atlantic", dist: "90 km", time: "1.5 hrs", desc: "前往本土最南端 Lindesnes 燈塔，下午拜訪石中劍。", history: "石中劍象徵挪威的和平、團結與自由。", humor: "小龍蝦剛為你的味蕾放棄了游泳權。", spots: ["林德斯內燈塔", "石中劍", "彩色街"] },
+            4: { title: "諸神的聖壇", weather: "14°C", icon: "fa-mountain", outfit: "登山護膝，洋蔥式穿法", hotel: "Pulpit Rock Lodge", hotelAmenity: "🍳 早餐 / 登山口", target: "Preikestolen BaseCamp", dist: "40 km", time: "5 hrs Hike", desc: "挑戰 4.2km 單程聖壇岩步道。入住基地營山莊。", history: "冰河時期形成的 604 公尺斷崖。", humor: "這裡沒圍欄，重力在這裡很慷慨。", spots: ["聖壇岩", "Basecamp", "超市採買"] },
+            5: { title: "維京國王的發源地", weather: "15°C", icon: "fa-cloud-rain", outfit: "防水外套，渡輪風大", hotel: "Radisson Haugesund", hotelAmenity: "🍳 晚間輕食+早餐", target: "Radisson Haugesund", dist: "85 km", time: "2 hrs", desc: "北上經渡輪前往 Haugesund。拜訪哈拉爾一世紀念碑。", history: "Haraldshaugen 標誌著挪威統一。", humor: "不吃渡輪上的鬆餅會被當地人鄙視。", spots: ["渡輪風景", "哈拉爾一世紀念碑", "Obs 採買"] },
+            6: { title: "卑爾根的時光長廊", weather: "13°C", icon: "fa-umbrella", outfit: "堅強雨衣，享受雨都", hotel: "Thon Hotel Rosenkrantz", hotelAmenity: "🍳 超讚晚間輕食", target: "Bryggen", dist: "140 km", time: "3 hrs", desc: "E39公路北上。漫步布呂根彩色木屋與魚市場。", history: "Bryggen 曾是漢薩同盟貿易中心。", humor: "下雨是正常發揮，享受專業濕潤感。", spots: ["布呂根木屋", "魚市場", "弗洛伊恩纜車"] },
+            7: { title: "跨越地心的隧道", weather: "12°C", icon: "fa-smog", outfit: "保暖針織衫", hotel: "Flåm Marina", hotelAmenity: "🍳 廚房 / 港口邊", target: "Flåm Railway", dist: "170 km", time: "2.5 hrs", desc: "穿越 24.5km 萊達爾隧道。搭乘高山鐵路。", history: "世界最美也最險峻的鐵路段。", humor: "隧道藍光不是為了去異星，是怕你睡著。", spots: ["高山鐵路", "Stegastein", "奈勒伊峽灣"] },
+            8: { title: "冰河與山脈的史詩", weather: "10°C", icon: "fa-snowflake", outfit: "輕羽絨，冰河區體感冷", hotel: "Stryn Kaffebar", hotelAmenity: "🍳 早餐 / 溫馨", target: "Boyabreen Glacier", dist: "210 km", time: "4 hrs", desc: "近距離觀察 Boyabreen 冰河。經由最美 5 號公路。", history: "Stryn 湖水因冰河粉末呈翡翠綠。", humor: "羊群正在開會，你只是個路過的小咖。", spots: ["Boyabreen 冰河", "Loen 纜車", "Stryn 小鎮"] },
+            9: { title: "峽灣深處的秘密", weather: "12°C", icon: "fa-water", outfit: "防潑水衣物，瀑布多", hotel: "Geiranger Feriesenter", hotelAmenity: "🍳 廚房 / 洗衣 / 充電", target: "Geiranger", dist: "85 km", time: "2.5 hrs", desc: "挑戰 Dalsnibba 歐洲最高觀景台。入住峽灣木屋。", history: "農場居民曾收起木梯以躲避稅官。", humor: "求婚者瀑布求婚失敗後從此酗酒。", spots: ["Dalsnibba", "Flydalsjuvet", "瀑布步道"] },
+            10: { title: "蓋朗厄爾悠閒日", weather: "12°C", icon: "fa-cloud-sun", outfit: "休閒服，小木屋烹飪", hotel: "Geiranger Feriesenter", hotelAmenity: "🍳 續住 / 洗衣充電日", target: "Geiranger Fjord Cruise", dist: "0 km", time: "Free Day", desc: "預約峽灣遊船看七姊妹瀑布。享受自炊樂趣。", history: "世界遺產名錄中的峽灣明珠。", humor: "在這裡不拍照，相機都會感到憂鬱。", spots: ["七姊妹瀑布", "老鷹之路", "巧克力工坊"] },
+            11: { title: "新藝術風格之美", weather: "14°C", icon: "fa-sun", outfit: "都市休閒裝，適合攝影", hotel: "Quality Hotel Ålesund", hotelAmenity: "🍳 早餐 / 海景", target: "Aksla Viewpoint", dist: "110 km", time: "3 hrs", desc: "前往最美城市奧勒松。攀登 418 階觀景台。", history: "1904 年大火後以石造建築重建。", humor: "每爬一階都在燃燒昨晚吃掉的熱量。", spots: ["Aksla 觀景台", "老城區", "海港碼頭"] },
+            12: { title: "走進巨魔的領地", weather: "9°C", icon: "fa-mountain", outfit: "防風外套，山區氣溫低", hotel: "Grand Hotel Åndalsnes", hotelAmenity: "🍳 早餐 / 火車站旁", target: "Trollstigen", dist: "160 km", time: "3.5 hrs", desc: "征服巨魔之路髮夾彎。注意周日商場不開。", history: "巨魔之路於 1936 年正式通車。", humor: "覺得石頭像人臉？那是曬乾的巨魔。", spots: ["巨魔之路觀景台", "Gudbrandsjuvet", "港口散步"] },
+            13: { title: "苔原上的生命力", weather: "8°C", icon: "fa-hippo", outfit: "厚襪子，高地風大", hotel: "Rondane Gjestegård", hotelAmenity: "🍳 早餐 / 荒野", target: "Rondane National Park", dist: "80 km", time: "1.5 hrs", desc: "進入首座國家公園 Rondane。尋找野生馴鹿。", history: "這裡是北歐馴鹿的重要棲息地。", humor: "馴鹿很害羞，請保持社交距離。", spots: ["Sohlbergplassen", "國家公園公路", "山間漫步"] },
+            14: { title: "重返繁華之都", weather: "15°C", icon: "fa-city", outfit: "層次穿搭", hotel: "HI Oslo Haraldsheim", hotelAmenity: "🍳 大廚房 / 自炊", target: "Munch Museum", dist: "290 km", time: "4 hrs", desc: "南返奧斯陸。參觀孟克美術館與奧斯陸歌劇院。", history: "奧斯陸是全球發展最快的城市之一。", humor: "看到紅綠燈變多，代表假期餘額不足。", spots: ["孟克美術館", "歌劇院屋頂", "阿克碼頭"] },
+            15: { title: "維京魂的告別", weather: "16°C", icon: "fa-ship", outfit: "輕便行裝，準備還車", hotel: "HI Oslo Haraldsheim", hotelAmenity: "🍳 續住 / 最後打包", target: "Vigeland Park", dist: "15 km", time: "All Day", desc: "維格蘭公園散步。最後一次 Laundry 與行李打包。", history: "維格蘭公園內有兩百多件雕塑。", humor: "剩下的小魚罐頭請留給租車公司。", spots: ["維格蘭公園", "Fram 博物館", "皇宮"] },
+            16: { title: "挪威的戒斷症狀", weather: "15°C", icon: "fa-plane", outfit: "舒適機上服", hotel: "Radisson OSL Airport", hotelAmenity: "🍳 早餐 / 步行至機場", target: "Oslo Airport", dist: "50 km", time: "Sky High", desc: "14:35 班機起飛。帶著滿滿回憶完成 Great Saga。", history: "挪威的自然保育是世界的標竿。", humor: "唯一的治療藥方是開始計畫下一次。", spots: ["Budget 還車", "機場免稅店", "飛機窗景"] }
         };
 
         function renderDay(d) {
@@ -132,9 +136,8 @@
                         </div>
                         <div class="row align-items-end">
                             <div class="col-7">
-                                <h3 class="fw-bold mb-1">${data.title}</h3>
-                                <p class="small opacity-75 mb-3">${data.eng}</p>
-                                <div class="d-flex"><span class="meta-badge">${data.dist}</span><span class="meta-badge">${data.time}</span></div>
+                                <h3 class="fw-bold mb-1" style="font-size: 1.25rem;">${data.title}</h3>
+                                <div class="d-flex mt-2"><span class="meta-badge">${data.dist}</span><span class="meta-badge">${data.time}</span></div>
                             </div>
                             <div class="col-5">
                                 <div class="spotlight-box"><div class="fw-bold mb-2" style="font-size:0.6rem; color:#E8B4B8;">TOP SPOTS</div>${spotsList}</div>
@@ -144,13 +147,13 @@
 
                     <div class="gear-card">
                         <div class="gear-weather"><i class="fas ${data.icon} mb-1" style="color: #E8B4B8;"></i><div class="fw-bold">${data.weather}</div></div>
-                        <div class="gear-outfit"><strong>行前準備：</strong>${data.outfit}</div>
+                        <div class="gear-outfit"><strong>重點提醒：</strong>${data.outfit}</div>
                     </div>
                     
-                    <div class="glass-card mb-3 p-3" style="background: rgba(255,255,255,0.7); border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.05);">
-                        <p class="small text-muted mb-2">${data.desc}</p>
+                    <div class="glass-card mb-3 p-3" style="background: rgba(255,255,255,0.7); border-radius: 20px;">
+                        <p class="small text-muted mb-2" style="line-height: 1.5;">${data.desc}</p>
                         <div class="hotel-info">
-                            <i class="fas fa-bed text-primary"></i> <strong>當晚住宿：</strong> ${data.hotel} 
+                            <i class="fas fa-bed text-primary"></i> <strong>宿：</strong> ${data.hotel} 
                         </div>
                         <div class="small text-secondary mt-1" style="font-size: 0.65rem;">設施：${data.hotelAmenity}</div>
                         
