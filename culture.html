@@ -1,162 +1,168 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Norway 2026 | 16-Day Road Trip Saga</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>2026 Norway Trip - 行程</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
-        body { font-family: 'Inter', 'Noto Sans TC', sans-serif; background-color: #F3F4F6; }
-        .timeline-dot { position: relative; }
-        .timeline-dot::before {
-            content: ''; position: absolute; left: -25px; top: 5px;
-            width: 12px; height: 12px; border-radius: 50%; background: #5E81AC;
-        }
-        .day-card { transition: transform 0.2s; border-left: 4px solid #5E81AC; }
-        .day-card:hover { transform: translateY(-2px); }
-        .tag-breakfast { background: #EBCB8B; color: #8B6E31; }
-        .tag-kitchen { background: #A3BE8C; color: #4F6A3D; }
-        .sticky-header { backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.8); }
+        body { background: linear-gradient(135deg, #f0f4f8 0%, #e8f1f5 100%); }
+        .location-node { padding: 12px; margin: 6px 0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; border-left: 4px solid #3b82f6; }
+        .location-node:hover { transform: translateX(4px); background-color: #dbeafe; }
+        .location-node.active { background-color: #2563eb; color: white; border-left-color: #1d4ed8; }
+        @keyframes pulse { 0%, 100% { r: 6; opacity: 1; } 50% { r: 10; opacity: 0.6; } }
+        .map-point.pulse { animation: pulse 1.5s infinite; }
+        .word-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); min-height: 180px; }
     </style>
 </head>
-<body class="text-slate-800">
-
-    <nav class="sticky-header sticky top-0 z-50 border-b border-slate-200 px-6 py-4">
-        <div class="max-w-4xl mx-auto flex justify-between items-center">
-            <span class="font-extrabold text-xl tracking-tighter text-slate-700 underline decoration-blue-500">NORWAY 2026</span>
-            <div class="space-x-6 text-sm font-medium">
-                <a href="index.html" class="hover:text-blue-600">總覽</a>
-                <a href="culture.html" class="text-blue-600 font-bold border-b-2 border-blue-600 pb-1">16天行程</a>
-                <a href="guide.html" class="hover:text-blue-600">指南</a>
+<body>
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between">
+            <h1 class="text-2xl font-bold text-blue-600">🇳🇴 2026 Norway Trip</h1>
+            <div class="space-x-6">
+                <a href="index.html" class="text-gray-700 hover:text-blue-500 font-semibold">總覽</a>
+                <a href="culture.html" class="text-blue-600 border-b-2 border-blue-600 font-semibold">行程</a>
+                <a href="guide.html" class="text-gray-700 hover:text-blue-500 font-semibold">指南</a>
             </div>
         </div>
     </nav>
 
-    <header class="py-12 px-4 text-center">
-        <h1 class="text-4xl md:text-5xl font-black text-slate-900 mb-2">The Great Saga</h1>
-        <p class="text-blue-500 uppercase tracking-[0.4em] text-xs font-bold">16 Days Self-Drive Itinerary</p>
-    </header>
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto p-6">
+        <div class="grid grid-cols-3 gap-6">
+            <!-- Left: Location Nodes -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-bold mb-4">📍 行程地點</h2>
+                <div id="location-list"></div>
+            </div>
 
-    <main class="max-w-4xl mx-auto px-4 pb-20">
-        
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-            <div class="bg-white p-4 rounded-2xl shadow-sm text-center">
-                <div class="text-xs text-slate-400 uppercase">總天數</div>
-                <div class="text-xl font-bold text-slate-800">16 Days</div>
+            <!-- Center: Map -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-bold mb-4">🗺️ 地圖</h2>
+                <svg id="norway-map" viewBox="0 0 300 400" class="w-full h-96 border rounded">
+                    <path d="M150 50 L160 80 L170 90 L175 110 L170 130 L160 150 L155 170 L150 190 L145 210 L140 230 L135 250 L130 270 L125 290 L120 310 L130 330 L140 340 L145 350" fill="none" stroke="#cbd5e1" stroke-width="2"/>
+                    <circle id="marker-kristiansand" class="map-point" cx="140" cy="280" r="6" fill="#ef4444"></circle>
+                    <circle id="marker-stavanger" class="map-point" cx="135" cy="250" r="6" fill="#3b82f6"></circle>
+                    <circle id="marker-bergen" class="map-point" cx="120" cy="150" r="6" fill="#10b981"></circle>
+                    <circle id="marker-flam" class="map-point" cx="125" cy="110" r="6" fill="#f59e0b"></circle>
+                    <circle id="marker-geiranger" class="map-point" cx="140" cy="90" r="6" fill="#8b5cf6"></circle>
+                    <circle id="marker-aalesund" class="map-point" cx="130" cy="70" r="6" fill="#06b6d4"></circle>
+                    <circle id="marker-oslo" class="map-point" cx="155" cy="200" r="6" fill="#6b7280"></circle>
+                </svg>
             </div>
-            <div class="bg-white p-4 rounded-2xl shadow-sm text-center border-b-4 border-blue-400">
-                <div class="text-xs text-slate-400 uppercase">支付工具</div>
-                <div class="text-xl font-bold text-slate-800">Cathay CUBE</div>
-            </div>
-            <div class="bg-white p-4 rounded-2xl shadow-sm text-center">
-                <div class="text-xs text-slate-400 uppercase">主要區域</div>
-                <div class="text-xl font-bold text-slate-800">7 Counties</div>
-            </div>
-            <div class="bg-white p-4 rounded-2xl shadow-sm text-center border-b-4 border-amber-400">
-                <div class="text-xs text-slate-400 uppercase">預計哩程</div>
-                <div class="text-xl font-bold text-slate-800">~1,800 km</div>
+
+            <!-- Right: Word Card -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-bold mb-4">🇳🇴 每日一詞</h2>
+                <div id="word-card" class="word-card">
+                    <p class="text-gray-400">點擊左側地點開始</p>
+                </div>
             </div>
         </div>
 
-        <div class="ml-8 border-l-2 border-slate-200 pl-8 space-y-8">
-            
-            <section class="day-card bg-white p-6 rounded-2xl shadow-sm timeline-dot">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <span class="text-xs font-mono text-blue-500 font-bold">JUL 09 | DAY 2</span>
-                        <h3 class="text-xl font-bold text-slate-800">阿格德爾郡：克里斯蒂安桑</h3>
-                        <p class="text-slate-500 mt-1">Radisson Blu Caledonien Hotel</p>
-                    </div>
-                    <span class="px-3 py-1 rounded-full text-[10px] font-bold tag-breakfast uppercase">Breakfast</span>
-                </div>
-                <div class="mt-4 text-sm text-slate-600 space-x-4">
-                    <span>🛏️ 2 Rooms</span>
-                    <span>❄️ Mini fridge</span>
-                </div>
-            </section>
-
-            <section class="day-card bg-white p-6 rounded-2xl shadow-sm timeline-dot">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <span class="text-xs font-mono text-blue-500 font-bold">JUL 10 | DAY 3</span>
-                        <h3 class="text-xl font-bold text-slate-800">羅加蘭郡：斯塔萬格</h3>
-                        <p class="text-slate-500 mt-1">Radisson Blu Atlantic Hotel</p>
-                    </div>
-                    <span class="px-3 py-1 rounded-full text-[10px] font-bold tag-breakfast uppercase">Breakfast</span>
-                </div>
-                <div class="mt-4 text-sm text-slate-600">🛏️ 2 Rooms | 📍 斯塔萬格市中心探索</div>
-            </section>
-
-            <section class="day-card bg-white p-6 rounded-2xl shadow-sm timeline-dot">
-                <div class="flex justify-between items-start border-l-4 border-amber-400 pl-4 -ml-6">
-                    <div>
-                        <span class="text-xs font-mono text-amber-500 font-bold">JUL 11 | DAY 4</span>
-                        <h3 class="text-xl font-bold text-slate-800">羅加蘭郡：呂菲爾克</h3>
-                        <p class="text-slate-500 mt-1">Pulpit Rock Mountain Lodge</p>
-                    </div>
-                    <span class="px-3 py-1 rounded-full text-[10px] font-bold tag-breakfast uppercase">Breakfast</span>
-                </div>
-                <div class="mt-4 text-sm text-slate-600 font-medium">🛏️ Queen + Twins | 🥾 聖壇岩健行準備</div>
-            </section>
-
-            <section class="day-card bg-white p-6 rounded-2xl shadow-sm timeline-dot">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <span class="text-xs font-mono text-blue-500 font-bold">JUL 13 | DAY 6</span>
-                        <h3 class="text-xl font-bold text-slate-800">韋斯特蘭郡：卑爾根</h3>
-                        <p class="text-slate-500 mt-1">Thon Hotel Rosenkrantz Bergen</p>
-                    </div>
-                    <span class="px-3 py-1 rounded-full text-[10px] font-bold bg-orange-100 text-orange-600 uppercase">Breakfast + Dinner</span>
-                </div>
-                <div class="mt-4 text-sm text-slate-600 italic">"這家飯店包含晚餐，可以省下一筆外食費用！"</div>
-            </section>
-
-            <section class="day-card bg-white p-6 rounded-2xl shadow-sm timeline-dot border-l-4 border-green-500">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <span class="text-xs font-mono text-green-600 font-bold">JUL 16-17 | DAY 9-10</span>
-                        <h3 class="text-xl font-bold text-slate-800 underline decoration-green-400">蓋朗厄爾峽灣中心</h3>
-                        <p class="text-slate-500 mt-1 font-semibold text-blue-600">Geirangerfjorden Feriesenter (Cabins)</p>
-                    </div>
-                    <span class="px-3 py-1 rounded-full text-[10px] font-bold tag-kitchen uppercase">Full Kitchen + Laundry</span>
-                </div>
-                <div class="mt-4 grid grid-cols-2 gap-2 text-sm text-slate-600">
-                    <p>🍳 適合自行料理 (No Breakfast)</p>
-                    <p>🧺 提供洗衣設施 / 充電樁</p>
-                </div>
-            </section>
-
-            <section class="day-card bg-white p-6 rounded-2xl shadow-sm timeline-dot">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <span class="text-xs font-mono text-blue-500 font-bold">JUL 21-22 | DAY 14-15</span>
-                        <h3 class="text-xl font-bold text-slate-800">首都：奧斯陸</h3>
-                        <p class="text-slate-500 mt-1">HI Oslo Haraldsheim</p>
-                    </div>
-                    <span class="px-3 py-1 rounded-full text-[10px] font-bold tag-kitchen uppercase">Full Kitchen</span>
-                </div>
-                <div class="mt-4 text-sm text-slate-600">🛏️ 2 Rooms | 🛒 奧斯陸市區超市補給的好時機</div>
-            </section>
-
-            <section class="day-card bg-slate-800 p-6 rounded-2xl shadow-lg timeline-dot border-l-4 border-red-500 text-white">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <span class="text-xs font-mono text-red-400 font-bold tracking-widest uppercase">Departure | DAY 16</span>
-                        <h3 class="text-xl font-bold">奧斯陸機場 - 返家</h3>
-                        <p class="text-slate-400 mt-1">Radisson Hotel & Conference Centre Oslo Airport</p>
-                    </div>
-                    <span class="px-3 py-1 rounded-full text-[10px] font-bold tag-breakfast uppercase">Final Breakfast</span>
-                </div>
-                <div class="mt-4 text-sm text-slate-300">✈️ OSL-BKK-TPE | 旅程圓滿結束</div>
-            </section>
-
+        <!-- Hotel Information -->
+        <div class="mt-6 bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-bold mb-4">🏨 飯店資訊</h2>
+            <div id="hotel-info" class="grid grid-cols-2 gap-4">
+                <p class="text-gray-400">點擊左側地點查看飯店詳情</p>
+            </div>
         </div>
-    </main>
+    </div>
 
-    <footer class="py-12 text-center text-slate-400 text-[10px] tracking-widest uppercase bg-white mt-10">
-        &copy; 2026 Norway Saga Project | Managed via GitHub Copilot
-    </footer>
+    <script>
+        const itineraryData = {
+            "Kristiansand": {
+                date: "7/9 (THU) - Day 2",
+                word: "Lyst",
+                chinese: "光線; 歡樂",
+                pronunciation: "[lʏst]",
+                hotel: { name: "Radisson Blu Caledonien Hotel, Kristiansand", rooms: "2 Rooms", meals: "Breakfast included", notes: "Mini fridge" },
+                marker: "kristiansand"
+            },
+            "Stavanger": {
+                date: "7/10 (FRI) - Day 3",
+                word: "Fjell",
+                chinese: "山; 山峰",
+                pronunciation: "[ˈfjɛl]",
+                hotel: { name: "Radisson Blu Atlantic Hotel, Stavanger", rooms: "2 Rooms", meals: "Breakfast included", notes: "Mini fridge" },
+                marker: "stavanger"
+            },
+            "Bergen": {
+                date: "7/13 (MON) - Day 6",
+                word: "Hav",
+                chinese: "海; 海洋",
+                pronunciation: "[hɑːv]",
+                hotel: { name: "Thon Hotel Rosenkrantz Bergen", rooms: "1 Room", meals: "Breakfast + Dinner", notes: "Historic location" },
+                marker: "bergen"
+            },
+            "Flåm": {
+                date: "7/14 (TUE) - Day 7",
+                word: "Tog",
+                chinese: "火車; 列車",
+                pronunciation: "[toːɡ]",
+                hotel: { name: "Flåm Marina", rooms: "Queen + Sofa", meals: "Breakfast included", notes: "Kitchen available" },
+                marker: "flam"
+            },
+            "Geiranger": {
+                date: "7/16-17 (THU-FRI) - Day 9-10",
+                word: "Fjord",
+                chinese: "峽灣; 狹灣",
+                pronunciation: "[ˈfjɔːɾ]",
+                hotel: { name: "Geirangerfjorden Feriesenter - Cabins", rooms: "Cabin", meals: "No breakfast", notes: "Full kitchen & laundry" },
+                marker: "geiranger"
+            },
+            "Ålesund": {
+                date: "7/18 (SAT) - Day 11",
+                word: "Kunst",
+                chinese: "藝術; 美術",
+                pronunciation: "[ˈkʊnst]",
+                hotel: { name: "Quality Hotel Ålesund", rooms: "2 Rooms", meals: "Breakfast included", notes: "Art Nouveau architecture" },
+                marker: "aalesund"
+            },
+            "Oslo": {
+                date: "7/21-23 (TUE-THU) - Day 14-16",
+                word: "Hjem",
+                chinese: "家; 家鄉",
+                pronunciation: "[ˈhjɛm]",
+                hotel: { name: "HI Oslo Haraldsheim / Radisson Airport", rooms: "2 Rooms", meals: "Breakfast (Airport only)", notes: "Full kitchen at HI Oslo" },
+                marker: "oslo"
+            }
+        };
 
+        function selectLocation(locationName) {
+            document.querySelectorAll('.location-node').forEach(n => n.classList.remove('active'));
+            event.target.closest('.location-node')?.classList.add('active');
+            const data = itineraryData[locationName];
+            document.getElementById('word-card').innerHTML = `
+                <div class="text-2xl font-bold text-gray-800 mb-2">${locationName}</div>
+                <div class="text-sm text-gray-500 mb-4">${data.date}</div>
+                <div class="text-lg font-semibold text-blue-600 mb-1">${data.word}</div>
+                <div class="text-base text-gray-700 mb-1">${data.chinese}</div>
+                <div class="text-sm text-gray-500 italic">${data.pronunciation}</div>
+            `;
+            document.getElementById('hotel-info').innerHTML = `
+                <div class="col-span-2 p-4 bg-blue-50 rounded">
+                    <h3 class="font-bold text-lg mb-2">${data.hotel.name}</h3>
+                    <p><strong>房型:</strong> ${data.hotel.rooms}</p>
+                    <p><strong>早晚餐:</strong> ${data.hotel.meals}</p>
+                    <p><strong>備註:</strong> ${data.hotel.notes}</p>
+                </div>
+            `;
+            document.querySelectorAll('.map-point').forEach(p => p.classList.remove('pulse'));
+            document.getElementById('marker-' + data.marker)?.classList.add('pulse');
+        }
+
+        const locationList = document.getElementById('location-list');
+        Object.keys(itineraryData).forEach(location => {
+            const node = document.createElement('div');
+            node.className = 'location-node';
+            node.innerHTML = `<strong>${location}</strong><br><small class="text-gray-600">${itineraryData[location].date}</small>`;
+            node.onclick = () => selectLocation(location);
+            locationList.appendChild(node);
+        });
+
+        selectLocation(Object.keys(itineraryData)[0]);
+    </script>
 </body>
 </html>
