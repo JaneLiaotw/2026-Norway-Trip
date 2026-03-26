@@ -32,14 +32,13 @@
     
     <div class="day-nav" id="nav"></div>
     
-    <div class="content" id="app">
-        </div>
+    <div class="content" id="app"></div>
 </div>
 
 <script>
     const travelData = {
         1: { title: "奧斯陸：維京的起點", history: "奧斯陸在 1624 年曾因大火焚毀，國王克里斯蒂安四世下令在城堡旁重建城市，並以自己命名為克里斯蒂安尼亞。", humor: "在挪威，如果你迷路了，通常代表風景開始變漂亮了。", spots: ["維京船博物館", "阿克什胡斯城堡", "奧斯陸歌劇院"] },
-        2: { title: "南下克里斯蒂安桑", history: "這座城市是以國王克里斯蒂安四世命名的，擁有全挪威最完整的白色木屋老城區，曾是重要的貿易港口。", humor: "這裡的魚比人還懂得享受陽光。", spots: ["Posebyen 老城", "Fiskebrygga 魚市場", "Odderøya 島步道"] },
+        2: { title: "南下克里斯蒂安桑", history: "這座城市是以國王克里斯蒂安四世命名的，擁有全挪威最完整的白色木屋老城區��曾是重要的貿易港口。", humor: "這裡的魚比人還懂得享受陽光。", spots: ["Posebyen 老城", "Fiskebrygga 魚市場", "Odderøya 島步道"] },
         3: { title: "最南端燈塔之旅", history: "Lindesnes 燈塔是挪威最古老的燈塔（1656年），標誌著挪威本土的最南端。", humor: "在這裡，你離北極最遠，但離內心的寧靜最近。", spots: ["Lindesnes 燈塔", "Mandal 小鎮", "Sjøsanden 沙灘"] },
         4: { title: "前往聖壇岩門戶", history: "斯塔萬格是挪威的石油之都，但它的魅力來自於 18 世紀遺留下來的 170 多座白色木屋。", humor: "準備好你的膝蓋，聖壇岩正在對你微笑。", spots: ["斯塔萬格老城", "彩色街 Øvre Holmegate", "石油博物館"] },
         5: { title: "聖壇岩的壯闊視野", history: "Preikestolen 是在約一萬年前的冰河時期形成的，垂直高度達 604 公尺，直入呂瑟峽灣。", humor: "如果你在邊緣腿軟，那是大自然在提醒你重力的存在。", spots: ["聖壇岩健行", "呂瑟峽灣遊船", "劍之石紀念碑"] },
@@ -50,9 +49,9 @@
         10: { title: "最美 55 號景觀公路", history: "這條路穿過 Jotunheimen 國家公園，是北歐海拔最高的公路，沿途可見千年不化的冰河。", humor: "Mefjell 的石框正在等著你的美照（和電動車回電）。", spots: ["Mefjell 石框野餐", "Lom 木教堂", "Turtagrø 登山站"] },
         11: { title: "斯特林與藍色湖泊", history: "Stryn 以絕美的湖景聞名，這裡的湖水因含有冰河泥沙而呈現夢幻的綠色或藍色。", humor: "在這裡，超市（REMA 1000）的風景可能都比你家陽台好。", spots: ["Lovatnet 湖", "Stryn 舊橋步道", "Hjelle 老店"] },
         12: { title: "布里克斯達爾冰河", history: "這是歐洲大陸最大的 Jostedalsbreen 冰河的一條支流，景色隨季節與氣候不斷變遷。", humor: "搭精靈車時，請小心瀑布會幫你免費洗臉。", spots: ["冰河健行/精靈車", "Olden 峽灣村", "Loen 纜車"] },
-        13: { title: "蓋朗厄爾：峽灣之王", history: "這條峽灣被列入世界遺產，其獨特的 S 形彎道和壯麗的瀑布群被視為大自然的傑作。", humor: "瀑布聲會蓋過你的所有煩惱。", spots: ["七姊妹瀑布", "Dalsnibba 觀景台", "Flydalsjuvet"] },
+        13: { title: "蓋朗厄爾：峽灣之王", history: "這條峽灣被列入世界遺產，其獨特的 S 形彎道和壯麗的瀑布群被視為大自然的傑作。", humor: "瀑布聲會蓋過你的所有���惱。", spots: ["七姊妹瀑布", "Dalsnibba 觀景台", "Flydalsjuvet"] },
         14: { title: "精靈之路的髮夾彎", history: "Trollstigen（精靈之路）擁有 11 個驚險的髮夾彎，是由挪威工程師在艱困地形中修築而成。", humor: "如果你遇到精靈，請保持微笑並拍照，別問他為什麼沒穿褲子。", spots: ["精靈之路觀景台", "Stigfossen 瀑布", "Åndalsnes 小鎮"] },
-        15: { title: "重返奧斯陸的現代藝術", history: "當代奧斯陸以建築聞名，像是歌劇院與新慕尼黑美術館，展示了北歐設計的簡約與大膽。", humor: "歌劇院的屋頂是可以走上去的，但別在上面滑倒。", spots: ["歌劇院屋頂散步", "阿斯楚普費恩利美術館", "卡爾約翰大道採買"] },
+        15: { title: "重返奧斯陸的現代藝術", history: "當代奧斯陸以建築聞名，像是歌劇院與新慕尼黑美術館，展示了北歐設計的簡約與大膽。", humor: "歌劇院的屋頂是可以走上去的，但��在上面滑倒。", spots: ["歌劇院屋頂散步", "阿斯楚普費恩利美術館", "卡爾約翰大道採買"] },
         16: { title: "帶著挪威靈魂回家", history: "16 天的環線在今日閉合。挪威人的靈魂在於 Friluftsliv（戶外生活），希望您也帶走了一點這份精神。", humor: "你的行李箱現在比你的銀行帳戶還重，但回憶是無價的。", spots: ["奧斯陸機場最後衝刺", "雲端上的夕陽", "宜蘭買房新夢想"] }
     };
 
@@ -76,17 +75,14 @@
             </div>
         `;
         
-        // 更新導覽列狀態
         document.querySelectorAll('.day-link').forEach(el => {
             el.classList.toggle('active', el.dataset.day == day);
         });
 
-        // 自動捲動導覽列
         const activeLink = document.querySelector('.day-link.active');
         activeLink.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
     }
 
-    // 生成導覽按鈕
     for (let i = 1; i <= 16; i++) {
         const el = document.createElement('div');
         el.className = 'day-link';
@@ -96,7 +92,6 @@
         nav.appendChild(el);
     }
 
-    // 預設載入第一天
     render(1);
 </script>
 
