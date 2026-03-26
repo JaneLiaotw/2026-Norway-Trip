@@ -1,168 +1,162 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <title>2026 Norway Trip - 行程</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🇳🇴 Norge 16 Days Adventure</title>
     <style>
-        body { background: linear-gradient(135deg, #f0f4f8 0%, #e8f1f5 100%); }
-        .location-node { padding: 12px; margin: 6px 0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; border-left: 4px solid #3b82f6; }
-        .location-node:hover { transform: translateX(4px); background-color: #dbeafe; }
-        .location-node.active { background-color: #2563eb; color: white; border-left-color: #1d4ed8; }
-        @keyframes pulse { 0%, 100% { r: 6; opacity: 1; } 50% { r: 10; opacity: 0.6; } }
-        .map-point.pulse { animation: pulse 1.5s infinite; }
-        .word-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); min-height: 180px; }
+        :root {
+            --viking-blue: #2c3e50;
+            --fjord-cyan: #a2c2e1;
+            --ice-white: #f8f9fa;
+            --accent-orange: #ff7e5f;
+            --soft-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        body { font-family: -apple-system, "Helvetica Neue", sans-serif; background: #eef2f3; margin: 0; padding-bottom: 80px; }
+        
+        /* 頂部捲動導航 */
+        .sticky-header {
+            position: sticky; top: 0; background: white; z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .day-scroller {
+            display: flex; overflow-x: auto; padding: 15px 10px;
+            scrollbar-width: none; -webkit-overflow-scrolling: touch;
+        }
+        .day-scroller::-webkit-scrollbar { display: none; }
+        .day-btn {
+            flex: 0 0 auto; padding: 8px 18px; margin: 0 5px;
+            border-radius: 20px; background: #eee; font-weight: bold;
+            transition: 0.3s; cursor: pointer; color: #666;
+        }
+        .day-btn.active { background: var(--viking-blue); color: white; transform: scale(1.1); }
+
+        /* 卡片容器 */
+        #content { padding: 15px; }
+        .hero-card {
+            background: linear-gradient(135deg, var(--viking-blue), #4ca1af);
+            color: white; border-radius: 20px; padding: 25px;
+            margin-bottom: 20px; box-shadow: var(--soft-shadow);
+        }
+        .info-card {
+            background: white; border-radius: 15px; padding: 20px;
+            margin-bottom: 15px; box-shadow: var(--soft-shadow);
+        }
+        h2 { margin: 0 0 10px 0; font-size: 1.5rem; }
+        .route-info { font-size: 0.9rem; opacity: 0.9; margin-bottom: 15px; line-height: 1.6; }
+        
+        /* 標籤樣式 */
+        .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
+        .tag { background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 12px; font-size: 0.8rem; }
+        .tag-blue { background: #e3f2fd; color: #1976d2; }
+
+        /* 按鈕 */
+        .nav-btn {
+            display: flex; align-items: center; justify-content: center;
+            background: var(--accent-orange); color: white;
+            padding: 15px; border-radius: 12px; text-decoration: none;
+            font-weight: bold; font-size: 1.1rem; box-shadow: 0 4px 10px rgba(255,126,95,0.3);
+        }
+        
+        /* 列表樣式 */
+        ul { padding-left: 20px; margin: 10px 0; }
+        li { margin-bottom: 8px; color: #444; }
+
+        /* 動畫 */
+        .fade-in { animation: fadeIn 0.4s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="sticky top-0 z-50 bg-white shadow-md">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between">
-            <h1 class="text-2xl font-bold text-blue-600">🇳🇴 2026 Norway Trip</h1>
-            <div class="space-x-6">
-                <a href="index.html" class="text-gray-700 hover:text-blue-500 font-semibold">總覽</a>
-                <a href="culture.html" class="text-blue-600 border-b-2 border-blue-600 font-semibold">行程</a>
-                <a href="guide.html" class="text-gray-700 hover:text-blue-500 font-semibold">指南</a>
-            </div>
-        </div>
-    </nav>
 
-    <!-- Main Content -->
-    <div class="max-w-7xl mx-auto p-6">
-        <div class="grid grid-cols-3 gap-6">
-            <!-- Left: Location Nodes -->
-            <div class="bg-white rounded-lg shadow-md p-6">
-                <h2 class="text-xl font-bold mb-4">📍 行程地點</h2>
-                <div id="location-list"></div>
+<div class="sticky-header">
+    <div class="day-scroller" id="dayScroller"></div>
+</div>
+
+<div id="content"></div>
+
+<script>
+    const itineraryData = {
+        1: { title: "南下的白色序曲", eng: "The White Prelude", route: "Oslo Airport ➟ Kristiansand", dist: "325 km", time: "4 hrs", history: "Kristiansand 的白色木屋群曾是 19 世紀財富的標誌。", humor: "別讓政府幫你拍天價照片（超速罰單）。", gear: "輕便防風外套", spots: ["Posebyen 老城", "魚市場", "Odderøya 島", "大教堂", "Bystranda 海灘"] },
+        2: { title: "本土最南端的孤獨", eng: "Southernmost Solitude", route: "Kristiansand ➟ Lindesnes", dist: "90 km", time: "1.5 hrs", history: "Lindesnes 燈塔建於 1656 年，是挪威最南端。", humor: "小龍蝦剛為你的味蕾放棄了游泳權。", gear: "防水鞋、圍巾", spots: ["Lindesnes 燈塔", "Mandal 小鎮", "Sjøsanden 沙灘", "Under 餐廳", "Vigeland 觀景"] },
+        3: { title: "諸神的聖壇", eng: "Pulpit of the Gods", route: "Stavanger ➟ Preikestolen", dist: "40km + 8km Hike", time: "5 hrs", history: "聖壇岩是在一萬年前冰河時期形成的。", humor: "如果你在邊緣腿軟，那是正常的重力反應。", gear: "專業登山鞋、保暖層", spots: ["Preikestolen 步道", "呂瑟峽灣景觀", "Stavanger 老城", "彩色街 Øvre Holmegate"] },
+        4: { title: "維京之王的搖籃", eng: "Cradle of Viking Kings", route: "Stavanger ➟ Haugesund", dist: "85 km", time: "2 hrs", history: "Haugesund 是首位統一挪威的國王居住地。", humor: "這裡的人不拿斧頭了，改拿信用卡。", gear: "雨具備用", spots: ["Haraldshaugen 紀念碑", "Akarbrygge 港口", "老城中心", "Avaldsnes 維京村"] },
+        5: { title: "卑爾根的時光碼頭", eng: "Bergen's Timeless Wharf", route: "Haugesund ➟ Bergen", dist: "140 km", time: "3 hrs", history: "Bryggen 木造倉庫群是聯合國教科文組織遺產。", humor: "卑爾根一年下 240 天雨，如果沒雨請檢查天空是否故障。", gear: "最強防水外套", spots: ["Bryggen 布呂根", "Fløyen 纜車", "魚市場", "KODE 美術館", "Clean Kokos 洗衣店"] },
+        6: { title: "穿越地心之旅", eng: "Into the Heart of Earth", route: "Bergen ➟ Flåm", dist: "170 km", time: "2.5 hrs", history: "挪威的隧道技術世界第一，有的隧道裡還有圓環。", humor: "在山洞裡轉彎時，請別懷疑導航。", gear: "長袖薄外套", spots: ["Flåm Marina", "高山鐵路", "Naerøyfjord 船遊", "Stegastein 觀景台"] },
+        7: { title: "冰川與雪牆的史詩", eng: "Epic of Glaciers", route: "Flåm ➟ 雪之路 ➟ Flåm", dist: "50 km", time: "2 hrs", history: "雪之路（Aurlandsfjellet）最高點達 1306 公尺。", humor: "【18:30 計畫】夏天看雪牆，這就是挪威式的浪漫。", gear: "厚外套（山上極冷）", spots: ["Stegastein 夕陽", "最高點雪牆", "Vedahaugane 藝術品", "Flotane 休息站"] },
+        8: { title: "征服高山與石框", eng: "The High Mountain Path", route: "Flåm ➟ 55公路 ➟ Stryn", dist: "210 km", time: "4.5 hrs", history: "55號公路是北歐最高的海拔公路。", humor: "Mefjell 的石框正等著你的電動車「回電」。", gear: "野餐墊、毛帽", spots: ["Mefjell 石框野餐", "Lom 木教堂", "Lovatnet 湖", "Stryn 舊橋", "REMA 1000 Bytunet"] },
+        9: { title: "峽灣的深處秘密", eng: "Secrets of the Fjord", route: "Stryn ➟ Geiranger", dist: "85 km", time: "2.5 hrs", history: "Geirangerfjord 被譽為全球最美峽灣。", humor: "瀑布會幫你免費洗臉。", gear: "太陽眼鏡", spots: ["Dalsnibba 觀景台", "七姊妹瀑布", "老斯特里尼公路", "Flydalsjuvet"] },
+        10: { title: "新藝術之城", eng: "Art Nouveau Elegance", route: "Geiranger ➟ Ålesund", dist: "110 km", time: "3 hrs", history: "1904 年大火後，整座城市以新藝術風格重建。", humor: "這是一個長得像童話故事的城市。", gear: "相機腳架", spots: ["Aksla 觀景台", "大西洋水族館", "Ålesund 市中心步道"] },
+        11: { title: "精靈的階梯", eng: "The Troll's Path", route: "Ålesund ➟ Trollstigen ➟ Dombås", dist: "160 km", time: "3.5 hrs", history: "精靈之路有 11 個驚險的髮夾彎。", humor: "如果你遇到精靈，請保持微笑並拍照。", gear: "暈車藥（選備）", spots: ["Trollstigen 平台", "Stigfossen 瀑布", "Dombås 鎮"] },
+        12: { title: "苔原上的生命", eng: "Life on the Tundra", route: "Dombås ➟ Rondane", dist: "80 km", time: "1.5 hrs", history: "Rondane 是挪威第一個國家公園。", humor: "這裏的麋鹿比人還多。", gear: "保暖防護", spots: ["Rondane 觀景公路", "Sohohl 瀑布", "苔原漫步"] },
+        13: { title: "通往現代之路", eng: "Road to Modernity", route: "Rondane ➟ Oslo", dist: "290 km", time: "4 hrs", history: "沿著 E6 回到首都是挪威現代化的縮影。", humor: "準備好回到人類文明（和塞車）。", gear: "舒適休閒服", spots: ["Mjøsa 湖", "Lillehammer", "Oslo 市中心"] },
+        14: { title: "屋頂漫步者", eng: "Roofwalks", route: "Oslo City Day", dist: "15 km", time: "All Day", history: "奧斯陸歌劇院的屋頂設計是可以讓人走上去的。", humor: "在歌劇院屋頂滑倒比看歌劇還刺激。", gear: "好走的平底鞋", spots: ["歌劇院屋頂", "Aker Brygge", "Nobel Peace Center"] },
+        15: { title: "告別維京之魂", eng: "Farewell Viking Soul", route: "Oslo ➟ Airport", dist: "50 km", time: "1 hr", history: "最後一眼阿克什胡斯城堡。", humor: "不要哭，你的行李超重費會讓你分心。", gear: "搭機舒適服", spots: ["Akershus Fortress", "最後採買"] },
+        16: { title: "挪威戒斷症", eng: "Norway Withdrawal", route: "Oslo Airport ✈️ Home", dist: "0 km", time: "Sky High", history: "這趟旅程將變成你最美的記憶。", humor: "歡迎回到現實，下個目標是 Yilan 買房！", gear: "眼罩", spots: ["飛機上的日落", "充滿照片的手機"] }
+    };
+
+    function renderDay(dayNum) {
+        const d = itineraryData[dayNum];
+        const content = document.getElementById('content');
+        
+        const html = `
+            <div class="hero-card fade-in">
+                <div style="font-size: 0.8rem; text-transform: uppercase; margin-bottom: 5px;">DAY ${dayNum}</div>
+                <h2>${d.title}</h2>
+                <div style="font-size: 1rem; opacity: 0.8; margin-bottom: 15px;">${d.eng}</div>
+                <div class="tag-row">
+                    <div class="tag">🚗 ${d.dist}</div>
+                    <div class="tag">⏳ ${d.time}</div>
+                    <div class="tag">🛡️ History Inside</div>
+                </div>
+                <div class="route-info"><strong>📍 路線：</strong>${d.route}</div>
             </div>
 
-            <!-- Center: Map -->
-            <div class="bg-white rounded-lg shadow-md p-6">
-                <h2 class="text-xl font-bold mb-4">🗺️ 地圖</h2>
-                <svg id="norway-map" viewBox="0 0 300 400" class="w-full h-96 border rounded">
-                    <path d="M150 50 L160 80 L170 90 L175 110 L170 130 L160 150 L155 170 L150 190 L145 210 L140 230 L135 250 L130 270 L125 290 L120 310 L130 330 L140 340 L145 350" fill="none" stroke="#cbd5e1" stroke-width="2"/>
-                    <circle id="marker-kristiansand" class="map-point" cx="140" cy="280" r="6" fill="#ef4444"></circle>
-                    <circle id="marker-stavanger" class="map-point" cx="135" cy="250" r="6" fill="#3b82f6"></circle>
-                    <circle id="marker-bergen" class="map-point" cx="120" cy="150" r="6" fill="#10b981"></circle>
-                    <circle id="marker-flam" class="map-point" cx="125" cy="110" r="6" fill="#f59e0b"></circle>
-                    <circle id="marker-geiranger" class="map-point" cx="140" cy="90" r="6" fill="#8b5cf6"></circle>
-                    <circle id="marker-aalesund" class="map-point" cx="130" cy="70" r="6" fill="#06b6d4"></circle>
-                    <circle id="marker-oslo" class="map-point" cx="155" cy="200" r="6" fill="#6b7280"></circle>
-                </svg>
-            </div>
-
-            <!-- Right: Word Card -->
-            <div class="bg-white rounded-lg shadow-md p-6">
-                <h2 class="text-xl font-bold mb-4">🇳🇴 每日一詞</h2>
-                <div id="word-card" class="word-card">
-                    <p class="text-gray-400">點擊左側地點開始</p>
+            <div class="info-card fade-in" style="border-left: 5px solid #ff7e5f;">
+                <h3 style="margin-top:0">📢 導覽重點</h3>
+                <p style="color:#555; line-height:1.6;">${d.history}</p>
+                <div style="background:#fff9f0; padding:10px; border-radius:8px; font-style:italic; font-size:0.9rem;">
+                    " ${d.humor} "
                 </div>
             </div>
-        </div>
 
-        <!-- Hotel Information -->
-        <div class="mt-6 bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-xl font-bold mb-4">🏨 飯店資訊</h2>
-            <div id="hotel-info" class="grid grid-cols-2 gap-4">
-                <p class="text-gray-400">點擊左側地點查看飯店詳情</p>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const itineraryData = {
-            "Kristiansand": {
-                date: "7/9 (THU) - Day 2",
-                word: "Lyst",
-                chinese: "光線; 歡樂",
-                pronunciation: "[lʏst]",
-                hotel: { name: "Radisson Blu Caledonien Hotel, Kristiansand", rooms: "2 Rooms", meals: "Breakfast included", notes: "Mini fridge" },
-                marker: "kristiansand"
-            },
-            "Stavanger": {
-                date: "7/10 (FRI) - Day 3",
-                word: "Fjell",
-                chinese: "山; 山峰",
-                pronunciation: "[ˈfjɛl]",
-                hotel: { name: "Radisson Blu Atlantic Hotel, Stavanger", rooms: "2 Rooms", meals: "Breakfast included", notes: "Mini fridge" },
-                marker: "stavanger"
-            },
-            "Bergen": {
-                date: "7/13 (MON) - Day 6",
-                word: "Hav",
-                chinese: "海; 海洋",
-                pronunciation: "[hɑːv]",
-                hotel: { name: "Thon Hotel Rosenkrantz Bergen", rooms: "1 Room", meals: "Breakfast + Dinner", notes: "Historic location" },
-                marker: "bergen"
-            },
-            "Flåm": {
-                date: "7/14 (TUE) - Day 7",
-                word: "Tog",
-                chinese: "火車; 列車",
-                pronunciation: "[toːɡ]",
-                hotel: { name: "Flåm Marina", rooms: "Queen + Sofa", meals: "Breakfast included", notes: "Kitchen available" },
-                marker: "flam"
-            },
-            "Geiranger": {
-                date: "7/16-17 (THU-FRI) - Day 9-10",
-                word: "Fjord",
-                chinese: "峽灣; 狹灣",
-                pronunciation: "[ˈfjɔːɾ]",
-                hotel: { name: "Geirangerfjorden Feriesenter - Cabins", rooms: "Cabin", meals: "No breakfast", notes: "Full kitchen & laundry" },
-                marker: "geiranger"
-            },
-            "Ålesund": {
-                date: "7/18 (SAT) - Day 11",
-                word: "Kunst",
-                chinese: "藝術; 美術",
-                pronunciation: "[ˈkʊnst]",
-                hotel: { name: "Quality Hotel Ålesund", rooms: "2 Rooms", meals: "Breakfast included", notes: "Art Nouveau architecture" },
-                marker: "aalesund"
-            },
-            "Oslo": {
-                date: "7/21-23 (TUE-THU) - Day 14-16",
-                word: "Hjem",
-                chinese: "家; 家鄉",
-                pronunciation: "[ˈhjɛm]",
-                hotel: { name: "HI Oslo Haraldsheim / Radisson Airport", rooms: "2 Rooms", meals: "Breakfast (Airport only)", notes: "Full kitchen at HI Oslo" },
-                marker: "oslo"
-            }
-        };
-
-        function selectLocation(locationName) {
-            document.querySelectorAll('.location-node').forEach(n => n.classList.remove('active'));
-            event.target.closest('.location-node')?.classList.add('active');
-            const data = itineraryData[locationName];
-            document.getElementById('word-card').innerHTML = `
-                <div class="text-2xl font-bold text-gray-800 mb-2">${locationName}</div>
-                <div class="text-sm text-gray-500 mb-4">${data.date}</div>
-                <div class="text-lg font-semibold text-blue-600 mb-1">${data.word}</div>
-                <div class="text-base text-gray-700 mb-1">${data.chinese}</div>
-                <div class="text-sm text-gray-500 italic">${data.pronunciation}</div>
-            `;
-            document.getElementById('hotel-info').innerHTML = `
-                <div class="col-span-2 p-4 bg-blue-50 rounded">
-                    <h3 class="font-bold text-lg mb-2">${data.hotel.name}</h3>
-                    <p><strong>房型:</strong> ${data.hotel.rooms}</p>
-                    <p><strong>早晚餐:</strong> ${data.hotel.meals}</p>
-                    <p><strong>備註:</strong> ${data.hotel.notes}</p>
+            <div class="info-card fade-in">
+                <h3 style="margin-top:0">🧳 Gear Up & Top 5</h3>
+                <div class="tag-row">
+                    <div class="tag tag-blue">🧥 穿搭：${d.gear}</div>
                 </div>
-            `;
-            document.querySelectorAll('.map-point').forEach(p => p.classList.remove('pulse'));
-            document.getElementById('marker-' + data.marker)?.classList.add('pulse');
-        }
-
-        const locationList = document.getElementById('location-list');
-        Object.keys(itineraryData).forEach(location => {
-            const node = document.createElement('div');
-            node.className = 'location-node';
-            node.innerHTML = `<strong>${location}</strong><br><small class="text-gray-600">${itineraryData[location].date}</small>`;
-            node.onclick = () => selectLocation(location);
-            locationList.appendChild(node);
+                <ul>
+                    ${d.spots.map(s => `<li>${s}</li>`).join('')}
+                </ul>
+                <a href="https://www.google.com/maps/search/${encodeURIComponent(d.spots[0] + ' Norway')}" class="nav-btn">📍 Google Maps 導航</a>
+            </div>
+        `;
+        content.innerHTML = html;
+        
+        // 更新按鈕狀態
+        document.querySelectorAll('.day-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.day == dayNum);
         });
+        
+        // 自動捲動頂部按鈕
+        const activeBtn = document.querySelector('.day-btn.active');
+        activeBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    }
 
-        selectLocation(Object.keys(itineraryData)[0]);
-    </script>
+    // 初始化 Scroller
+    const scroller = document.getElementById('dayScroller');
+    for (let i = 1; i <= 16; i++) {
+        const btn = document.createElement('div');
+        btn.className = 'day-btn';
+        btn.innerText = `Day ${i}`;
+        btn.dataset.day = i;
+        btn.onclick = () => renderDay(i);
+        scroller.appendChild(btn);
+    }
+
+    // 預設載入第一天
+    renderDay(1);
+</script>
+
 </body>
 </html>
