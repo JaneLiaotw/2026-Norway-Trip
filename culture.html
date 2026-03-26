@@ -2,160 +2,102 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🇳🇴 Norge 16 Days Adventure</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Norge 16 Days: The Original Guide</title>
     <style>
-        :root {
-            --viking-blue: #2c3e50;
-            --fjord-cyan: #a2c2e1;
-            --ice-white: #f8f9fa;
-            --accent-orange: #ff7e5f;
-            --soft-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        body { font-family: -apple-system, "Helvetica Neue", sans-serif; background: #eef2f3; margin: 0; padding-bottom: 80px; }
-        
-        /* 頂部捲動導航 */
-        .sticky-header {
-            position: sticky; top: 0; background: white; z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        .day-scroller {
-            display: flex; overflow-x: auto; padding: 15px 10px;
-            scrollbar-width: none; -webkit-overflow-scrolling: touch;
-        }
-        .day-scroller::-webkit-scrollbar { display: none; }
-        .day-btn {
-            flex: 0 0 auto; padding: 8px 18px; margin: 0 5px;
-            border-radius: 20px; background: #eee; font-weight: bold;
-            transition: 0.3s; cursor: pointer; color: #666;
-        }
-        .day-btn.active { background: var(--viking-blue); color: white; transform: scale(1.1); }
-
-        /* 卡片容器 */
-        #content { padding: 15px; }
-        .hero-card {
-            background: linear-gradient(135deg, var(--viking-blue), #4ca1af);
-            color: white; border-radius: 20px; padding: 25px;
-            margin-bottom: 20px; box-shadow: var(--soft-shadow);
-        }
-        .info-card {
-            background: white; border-radius: 15px; padding: 20px;
-            margin-bottom: 15px; box-shadow: var(--soft-shadow);
-        }
-        h2 { margin: 0 0 10px 0; font-size: 1.5rem; }
-        .route-info { font-size: 0.9rem; opacity: 0.9; margin-bottom: 15px; line-height: 1.6; }
-        
-        /* 標籤樣式 */
-        .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
-        .tag { background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 12px; font-size: 0.8rem; }
-        .tag-blue { background: #e3f2fd; color: #1976d2; }
-
-        /* 按鈕 */
-        .nav-btn {
-            display: flex; align-items: center; justify-content: center;
-            background: var(--accent-orange); color: white;
-            padding: 15px; border-radius: 12px; text-decoration: none;
-            font-weight: bold; font-size: 1.1rem; box-shadow: 0 4px 10px rgba(255,126,95,0.3);
-        }
-        
-        /* 列表樣式 */
-        ul { padding-left: 20px; margin: 10px 0; }
-        li { margin-bottom: 8px; color: #444; }
-
-        /* 動畫 */
-        .fade-in { animation: fadeIn 0.4s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        body { font-family: 'Avenir', -apple-system, sans-serif; background-color: #f0f4f8; color: #2c3e50; margin: 0; padding: 20px; }
+        .container { max-width: 600px; margin: auto; background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); overflow: hidden; }
+        .header { background: #a2c2e1; color: white; padding: 30px; text-align: center; }
+        .day-nav { display: flex; overflow-x: auto; padding: 10px; background: #fff; border-bottom: 1px solid #eee; scrollbar-width: none; }
+        .day-nav::-webkit-scrollbar { display: none; }
+        .day-link { padding: 10px 20px; cursor: pointer; white-space: nowrap; font-weight: bold; color: #a2c2e1; transition: 0.3s; }
+        .day-link.active { color: #2c3e50; border-bottom: 3px solid #2c3e50; transform: scale(1.1); }
+        .content { padding: 30px; line-height: 1.6; min-height: 400px; }
+        .history-box { background: #fef9f9; border-left: 4px solid #f4d3d3; padding: 15px; margin: 20px 0; font-size: 0.95em; color: #555; }
+        .humor-tag { display: inline-block; background: #e8f4f8; color: #5dade2; padding: 8px 15px; border-radius: 20px; font-size: 0.85em; margin-top: 15px; border: 1px solid #d4eaf4; }
+        .spot-list { list-style: none; padding: 0; margin-top: 20px; }
+        .spot-item { padding: 12px 0; border-bottom: 1px dashed #eee; display: flex; align-items: center; font-size: 1.05em; }
+        .spot-item::before { content: '🏔️'; margin-right: 12px; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .fade-in { animation: fadeIn 0.5s ease; }
     </style>
 </head>
 <body>
 
-<div class="sticky-header">
-    <div class="day-scroller" id="dayScroller"></div>
+<div class="container">
+    <div class="header">
+        <h1 style="margin:0; font-size: 1.8em;">🇳🇴 Velkommen!</h1>
+        <p style="opacity:0.9; margin-top: 5px;">挪威 16 天自駕原創導覽書</p>
+    </div>
+    
+    <div class="day-nav" id="nav"></div>
+    
+    <div class="content" id="app">
+        </div>
 </div>
 
-<div id="content"></div>
-
 <script>
-    const itineraryData = {
-        1: { title: "南下的白色序曲", eng: "The White Prelude", route: "Oslo Airport ➟ Kristiansand", dist: "325 km", time: "4 hrs", history: "Kristiansand 的白色木屋群曾是 19 世紀財富的標誌。", humor: "別讓政府幫你拍天價照片（超速罰單）。", gear: "輕便防風外套", spots: ["Posebyen 老城", "魚市場", "Odderøya 島", "大教堂", "Bystranda 海灘"] },
-        2: { title: "本土最南端的孤獨", eng: "Southernmost Solitude", route: "Kristiansand ➟ Lindesnes", dist: "90 km", time: "1.5 hrs", history: "Lindesnes 燈塔建於 1656 年，是挪威最南端。", humor: "小龍蝦剛為你的味蕾放棄了游泳權。", gear: "防水鞋、圍巾", spots: ["Lindesnes 燈塔", "Mandal 小鎮", "Sjøsanden 沙灘", "Under 餐廳", "Vigeland 觀景"] },
-        3: { title: "諸神的聖壇", eng: "Pulpit of the Gods", route: "Stavanger ➟ Preikestolen", dist: "40km + 8km Hike", time: "5 hrs", history: "聖壇岩是在一萬年前冰河時期形成的。", humor: "如果你在邊緣腿軟，那是正常的重力反應。", gear: "專業登山鞋、保暖層", spots: ["Preikestolen 步道", "呂瑟峽灣景觀", "Stavanger 老城", "彩色街 Øvre Holmegate"] },
-        4: { title: "維京之王的搖籃", eng: "Cradle of Viking Kings", route: "Stavanger ➟ Haugesund", dist: "85 km", time: "2 hrs", history: "Haugesund 是首位統一挪威的國王居住地。", humor: "這裡的人不拿斧頭了，改拿信用卡。", gear: "雨具備用", spots: ["Haraldshaugen 紀念碑", "Akarbrygge 港口", "老城中心", "Avaldsnes 維京村"] },
-        5: { title: "卑爾根的時光碼頭", eng: "Bergen's Timeless Wharf", route: "Haugesund ➟ Bergen", dist: "140 km", time: "3 hrs", history: "Bryggen 木造倉庫群是聯合國教科文組織遺產。", humor: "卑爾根一年下 240 天雨，如果沒雨請檢查天空是否故障。", gear: "最強防水外套", spots: ["Bryggen 布呂根", "Fløyen 纜車", "魚市場", "KODE 美術館", "Clean Kokos 洗衣店"] },
-        6: { title: "穿越地心之旅", eng: "Into the Heart of Earth", route: "Bergen ➟ Flåm", dist: "170 km", time: "2.5 hrs", history: "挪威的隧道技術世界第一，有的隧道裡還有圓環。", humor: "在山洞裡轉彎時，請別懷疑導航。", gear: "長袖薄外套", spots: ["Flåm Marina", "高山鐵路", "Naerøyfjord 船遊", "Stegastein 觀景台"] },
-        7: { title: "冰川與雪牆的史詩", eng: "Epic of Glaciers", route: "Flåm ➟ 雪之路 ➟ Flåm", dist: "50 km", time: "2 hrs", history: "雪之路（Aurlandsfjellet）最高點達 1306 公尺。", humor: "【18:30 計畫】夏天看雪牆，這就是挪威式的浪漫。", gear: "厚外套（山上極冷）", spots: ["Stegastein 夕陽", "最高點雪牆", "Vedahaugane 藝術品", "Flotane 休息站"] },
-        8: { title: "征服高山與石框", eng: "The High Mountain Path", route: "Flåm ➟ 55公路 ➟ Stryn", dist: "210 km", time: "4.5 hrs", history: "55號公路是北歐最高的海拔公路。", humor: "Mefjell 的石框正等著你的電動車「回電」。", gear: "野餐墊、毛帽", spots: ["Mefjell 石框野餐", "Lom 木教堂", "Lovatnet 湖", "Stryn 舊橋", "REMA 1000 Bytunet"] },
-        9: { title: "峽灣的深處秘密", eng: "Secrets of the Fjord", route: "Stryn ➟ Geiranger", dist: "85 km", time: "2.5 hrs", history: "Geirangerfjord 被譽為全球最美峽灣。", humor: "瀑布會幫你免費洗臉。", gear: "太陽眼鏡", spots: ["Dalsnibba 觀景台", "七姊妹瀑布", "老斯特里尼公路", "Flydalsjuvet"] },
-        10: { title: "新藝術之城", eng: "Art Nouveau Elegance", route: "Geiranger ➟ Ålesund", dist: "110 km", time: "3 hrs", history: "1904 年大火後，整座城市以新藝術風格重建。", humor: "這是一個長得像童話故事的城市。", gear: "相機腳架", spots: ["Aksla 觀景台", "大西洋水族館", "Ålesund 市中心步道"] },
-        11: { title: "精靈的階梯", eng: "The Troll's Path", route: "Ålesund ➟ Trollstigen ➟ Dombås", dist: "160 km", time: "3.5 hrs", history: "精靈之路有 11 個驚險的髮夾彎。", humor: "如果你遇到精靈，請保持微笑並拍照。", gear: "暈車藥（選備）", spots: ["Trollstigen 平台", "Stigfossen 瀑布", "Dombås 鎮"] },
-        12: { title: "苔原上的生命", eng: "Life on the Tundra", route: "Dombås ➟ Rondane", dist: "80 km", time: "1.5 hrs", history: "Rondane 是挪威第一個國家公園。", humor: "這裏的麋鹿比人還多。", gear: "保暖防護", spots: ["Rondane 觀景公路", "Sohohl 瀑布", "苔原漫步"] },
-        13: { title: "通往現代之路", eng: "Road to Modernity", route: "Rondane ➟ Oslo", dist: "290 km", time: "4 hrs", history: "沿著 E6 回到首都是挪威現代化的縮影。", humor: "準備好回到人類文明（和塞車）。", gear: "舒適休閒服", spots: ["Mjøsa 湖", "Lillehammer", "Oslo 市中心"] },
-        14: { title: "屋頂漫步者", eng: "Roofwalks", route: "Oslo City Day", dist: "15 km", time: "All Day", history: "奧斯陸歌劇院的屋頂設計是可以讓人走上去的。", humor: "在歌劇院屋頂滑倒比看歌劇還刺激。", gear: "好走的平底鞋", spots: ["歌劇院屋頂", "Aker Brygge", "Nobel Peace Center"] },
-        15: { title: "告別維京之魂", eng: "Farewell Viking Soul", route: "Oslo ➟ Airport", dist: "50 km", time: "1 hr", history: "最後一眼阿克什胡斯城堡。", humor: "不要哭，你的行李超重費會讓你分心。", gear: "搭機舒適服", spots: ["Akershus Fortress", "最後採買"] },
-        16: { title: "挪威戒斷症", eng: "Norway Withdrawal", route: "Oslo Airport ✈️ Home", dist: "0 km", time: "Sky High", history: "這趟旅程將變成你最美的記憶。", humor: "歡迎回到現實，下個目標是 Yilan 買房！", gear: "眼罩", spots: ["飛機上的日落", "充滿照片的手機"] }
+    const travelData = {
+        1: { title: "奧斯陸：維京的起點", history: "奧斯陸在 1624 年曾因大火焚毀，國王克里斯蒂安四世下令在城堡旁重建城市，並以自己命名為克里斯蒂安尼亞。", humor: "在挪威，如果你迷路了，通常代表風景開始變漂亮了。", spots: ["維京船博物館", "阿克什胡斯城堡", "奧斯陸歌劇院"] },
+        2: { title: "南下克里斯蒂安桑", history: "這座城市是以國王克里斯蒂安四世命名的，擁有全挪威最完整的白色木屋老城區，曾是重要的貿易港口。", humor: "這裡的魚比人還懂得享受陽光。", spots: ["Posebyen 老城", "Fiskebrygga 魚市場", "Odderøya 島步道"] },
+        3: { title: "最南端燈塔之旅", history: "Lindesnes 燈塔是挪威最古老的燈塔（1656年），標誌著挪威本土的最南端。", humor: "在這裡，你離北極最遠，但離內心的寧靜最近。", spots: ["Lindesnes 燈塔", "Mandal 小鎮", "Sjøsanden 沙灘"] },
+        4: { title: "前往聖壇岩門戶", history: "斯塔萬格是挪威的石油之都，但它的魅力來自於 18 世紀遺留下來的 170 多座白色木屋。", humor: "準備好你的膝蓋，聖壇岩正在對你微笑。", spots: ["斯塔萬格老城", "彩色街 Øvre Holmegate", "石油博物館"] },
+        5: { title: "聖壇岩的壯闊視野", history: "Preikestolen 是在約一萬年前的冰河時期形成的，垂直高度達 604 公尺，直入呂瑟峽灣。", humor: "如果你在邊緣腿軟，那是大自然在提醒你重力的存在。", spots: ["聖壇岩健行", "呂瑟峽灣遊船", "劍之石紀念碑"] },
+        6: { title: "維京皇室的領地", history: "海格松（Haugesund）附近是第一位統一挪威的國王 Harald Fairhair 的居住地，充滿傳奇色彩。", humor: "這裡的人不拿斧頭了，現在改拿信用卡。", spots: ["國王紀念碑", "Avaldsnes 維京村", "Åkrafjorden 瀑布"] },
+        7: { title: "卑爾根：世界遺產之光", history: "布呂根（Bryggen）是 14 到 16 世紀漢薩同盟在北歐的重要貿易樞紐，木造倉庫極具代表性。", humor: "卑爾根一年下 240 天雨，如果沒雨請檢查天空是否故障。", spots: ["布呂根木屋區", "弗洛伊恩山纜車", "卑爾根魚市場"] },
+        8: { title: "穿越長隧道與雪之路", history: "雪之路（Aurlandsfjellet）最高點海拔 1306 公尺，即使在夏季，路旁也常有數公尺高的殘雪牆。", humor: "18:30 出發看夕陽，避開人群也避開了高溫。", spots: ["Stegastein 觀景台", "雪之路殘雪牆", "Flåm Marina"] },
+        9: { title: "峽灣深處的寧靜", history: "Flåm 高山鐵路被譽為全球最美鐵路之一，在 20 公里的長度內攀升了 863 公尺。", humor: "火車在轉彎時，別忘了把驚掉的下巴推回去。", spots: ["Flåm 高山火車", "艾於蘭峽灣", "Undredal 羊奶起司村"] },
+        10: { title: "最美 55 號景觀公路", history: "這條路穿過 Jotunheimen 國家公園，是北歐海拔最高的公路，沿途可見千年不化的冰河。", humor: "Mefjell 的石框正在等著你的美照（和電動車回電）。", spots: ["Mefjell 石框野餐", "Lom 木教堂", "Turtagrø 登山站"] },
+        11: { title: "斯特林與藍色湖泊", history: "Stryn 以絕美的湖景聞名，這裡的湖水因含有冰河泥沙而呈現夢幻的綠色或藍色。", humor: "在這裡，超市（REMA 1000）的風景可能都比你家陽台好。", spots: ["Lovatnet 湖", "Stryn 舊橋步道", "Hjelle 老店"] },
+        12: { title: "布里克斯達爾冰河", history: "這是歐洲大陸最大的 Jostedalsbreen 冰河的一條支流，景色隨季節與氣候不斷變遷。", humor: "搭精靈車時，請小心瀑布會幫你免費洗臉。", spots: ["冰河健行/精靈車", "Olden 峽灣村", "Loen 纜車"] },
+        13: { title: "蓋朗厄爾：峽灣之王", history: "這條峽灣被列入世界遺產，其獨特的 S 形彎道和壯麗的瀑布群被視為大自然的傑作。", humor: "瀑布聲會蓋過你的所有煩惱。", spots: ["七姊妹瀑布", "Dalsnibba 觀景台", "Flydalsjuvet"] },
+        14: { title: "精靈之路的髮夾彎", history: "Trollstigen（精靈之路）擁有 11 個驚險的髮夾彎，是由挪威工程師在艱困地形中修築而成。", humor: "如果你遇到精靈，請保持微笑並拍照，別問他為什麼沒穿褲子。", spots: ["精靈之路觀景台", "Stigfossen 瀑布", "Åndalsnes 小鎮"] },
+        15: { title: "重返奧斯陸的現代藝術", history: "當代奧斯陸以建築聞名，像是歌劇院與新慕尼黑美術館，展示了北歐設計的簡約與大膽。", humor: "歌劇院的屋頂是可以走上去的，但別在上面滑倒。", spots: ["歌劇院屋頂散步", "阿斯楚普費恩利美術館", "卡爾約翰大道採買"] },
+        16: { title: "帶著挪威靈魂回家", history: "16 天的環線在今日閉合。挪威人的靈魂在於 Friluftsliv（戶外生活），希望您也帶走了一點這份精神。", humor: "你的行李箱現在比你的銀行帳戶還重，但回憶是無價的。", spots: ["奧斯陸機場最後衝刺", "雲端上的夕陽", "宜蘭買房新夢想"] }
     };
 
-    function renderDay(dayNum) {
-        const d = itineraryData[dayNum];
-        const content = document.getElementById('content');
+    const nav = document.getElementById('nav');
+    const app = document.getElementById('app');
+
+    function render(day) {
+        const data = travelData[day];
         
-        const html = `
-            <div class="hero-card fade-in">
-                <div style="font-size: 0.8rem; text-transform: uppercase; margin-bottom: 5px;">DAY ${dayNum}</div>
-                <h2>${d.title}</h2>
-                <div style="font-size: 1rem; opacity: 0.8; margin-bottom: 15px;">${d.eng}</div>
-                <div class="tag-row">
-                    <div class="tag">🚗 ${d.dist}</div>
-                    <div class="tag">⏳ ${d.time}</div>
-                    <div class="tag">🛡️ History Inside</div>
+        app.innerHTML = `
+            <div class="fade-in">
+                <h2 style="color:#2c3e50; font-size: 1.4em;">Day ${day}: ${data.title}</h2>
+                <div class="history-box">
+                    <strong>🕰️ 歷史筆記：</strong><br>
+                    ${data.history}
                 </div>
-                <div class="route-info"><strong>📍 路線：</strong>${d.route}</div>
-            </div>
-
-            <div class="info-card fade-in" style="border-left: 5px solid #ff7e5f;">
-                <h3 style="margin-top:0">📢 導覽重點</h3>
-                <p style="color:#555; line-height:1.6;">${d.history}</p>
-                <div style="background:#fff9f0; padding:10px; border-radius:8px; font-style:italic; font-size:0.9rem;">
-                    " ${d.humor} "
-                </div>
-            </div>
-
-            <div class="info-card fade-in">
-                <h3 style="margin-top:0">🧳 Gear Up & Top 5</h3>
-                <div class="tag-row">
-                    <div class="tag tag-blue">🧥 穿搭：${d.gear}</div>
-                </div>
-                <ul>
-                    ${d.spots.map(s => `<li>${s}</li>`).join('')}
+                <ul class="spot-list">
+                    ${data.spots.map(s => `<li class="spot-item">${s}</li>`).join('')}
                 </ul>
-                <a href="https://www.google.com/maps/search/${encodeURIComponent(d.spots[0] + ' Norway')}" class="nav-btn">📍 Google Maps 導航</a>
+                <div class="humor-tag">💡 挪威幽默：${data.humor}</div>
             </div>
         `;
-        content.innerHTML = html;
         
-        // 更新按鈕狀態
-        document.querySelectorAll('.day-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.day == dayNum);
+        // 更新導覽列狀態
+        document.querySelectorAll('.day-link').forEach(el => {
+            el.classList.toggle('active', el.dataset.day == day);
         });
-        
-        // 自動捲動頂部按鈕
-        const activeBtn = document.querySelector('.day-btn.active');
-        activeBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+
+        // 自動捲動導覽列
+        const activeLink = document.querySelector('.day-link.active');
+        activeLink.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
     }
 
-    // 初始化 Scroller
-    const scroller = document.getElementById('dayScroller');
+    // 生成導覽按鈕
     for (let i = 1; i <= 16; i++) {
-        const btn = document.createElement('div');
-        btn.className = 'day-btn';
-        btn.innerText = `Day ${i}`;
-        btn.dataset.day = i;
-        btn.onclick = () => renderDay(i);
-        scroller.appendChild(btn);
+        const el = document.createElement('div');
+        el.className = 'day-link';
+        el.innerText = `D${i}`;
+        el.dataset.day = i;
+        el.onclick = () => render(i);
+        nav.appendChild(el);
     }
 
     // 預設載入第一天
-    renderDay(1);
+    render(1);
 </script>
 
 </body>
