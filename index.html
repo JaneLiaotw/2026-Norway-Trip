@@ -82,28 +82,48 @@
             else document.getElementById('nok').value = val ? (val / rate).toFixed(1) : '';
         }
 
-        window.onload = function() {
+       window.onload = function() {
+            // 讀取當前天數，若無則預設為 Day 1
             const savedDay = parseInt(localStorage.getItem('norway_last_day')) || 1;
-            const progress = Math.round((savedDay / 16) * 100);
             
+            // 計算進度百分比 (更新為 18 天)
+            const progress = Math.round((savedDay / 18) * 100);
+            
+            // 動態畫出進度條
             setTimeout(() => {
                 document.getElementById('progressCircle').style.strokeDashoffset = 100 - progress;
                 document.getElementById('progressText').innerText = progress + "%";
             }, 500);
 
+            // 與 18 天行程完美對齊的導航目標
             const itinerary = { 
-                1: "Kristiansand", 2: "Lindesnes Lighthouse", 3: "Preikestolen", 4: "Haugesund", 
-                5: "Bergen", 6: "Flåm", 7: "Stryn", 8: "Geiranger", 9: "Seven Sisters Waterfall", 
-                10: "Ålesund", 11: "Trollstigen", 12: "Rondane National Park", 
-                13: "Oslo", 14: "Vigeland Park", 15: "Oslo Airport", 16: "Oslo Airport" 
+                1: "Suvarnabhumi Airport",           // Day 1: 曼谷轉機
+                2: "Kristiansand",                   // Day 2: 南下
+                3: "Stavanger",                      // Day 3: 最南端與石中劍
+                4: "Preikestolen Basecamp",          // Day 4: 聖壇岩
+                5: "Haraldshaugen, Haugesund",       // Day 5: 斯庫德內斯港與豪格松
+                6: "Bryggen, Bergen",                // Day 6: 卑爾根
+                7: "Stegastein",                     // Day 7: 艾於蘭與弗萊姆
+                8: "Stryn",                          // Day 8: 書鎮與冰川
+                9: "Geiranger",                      // Day 9: 蓋朗厄爾老鷹之路
+                10: "Geiranger Fjord",               // Day 10: 峽灣釣魚
+                11: "Ålesund",                       // Day 11: 奧勒松新藝術街區
+                12: "Trollstigen",                   // Day 12: 巨魔之路
+                13: "Sohlbergplassen",               // Day 13: 苔原與觀景台
+                14: "Oslo Youth Hostel Haraldsheim", // Day 14: 利勒哈默爾與奧斯陸
+                15: "Opera House, Oslo",             // Day 15: 奧斯陸市區藝術
+                16: "Nordby Shoppingcenter, Sweden", // Day 16: 快閃瑞典
+                17: "Oslo Airport",                  // Day 17: 奧斯陸起飛
+                18: "Saphan Khwai BTS"               // Day 18: 曼谷快閃與賦歸
             };
 
             const target = itinerary[savedDay] || "Oslo";
-            document.getElementById('targetName').innerText = "Day " + savedDay + ": " + target;
+            document.getElementById('targetName').innerText = "Day " + savedDay + ": " + target.split(',')[0];
             
-            // 重要修復：正確的 Google Maps Directions API 格式
-            const googleMapsUrl = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(target + ", Norway");
+            // Google Maps 導航連結
+            const googleMapsUrl = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(target + (savedDay===16?"":", Norway"));
             document.getElementById('navLink').href = googleMapsUrl;
+       
         };
     </script>
 </body>
