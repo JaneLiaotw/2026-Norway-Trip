@@ -88,13 +88,9 @@
 
     <div class="day-scroller mb-4" id="dayPicker"></div>
     <div id="dayContent"></div>
-    <div class="safe-area-spacer"></div>
-
-    <nav class="bottom-nav">
-        <a href="index.html"><i class="fas fa-house-chimney d-block mb-1" style="font-size:1.2rem;"></i>總覽</a>
-        <a href="culture.html" class="active"><i class="fas fa-compass d-block mb-1" style="font-size:1.2rem;"></i>行程</a>
-        <a href="guide.html"><i class="fas fa-feather-pointed d-block mb-1" style="font-size:1.2rem;"></i>指南</a>
-    </nav>
+    <div class="safe-area-spacer">
+        
+    </div>
 
     <script>
        const itineraryData = {
@@ -320,5 +316,12 @@
         document.querySelector(`.day-id-${savedDay}`).classList.add('active');
         setTimeout(() => { document.querySelector(`.day-id-${savedDay}`).scrollIntoView({ behavior: 'smooth', inline: 'center' }); }, 300);
     </script>
+    <nav class="bottom-nav">
+        <!-- 注意看這裡，active 在「總覽」 -->
+        <a href="index.html" class="active"><i class="fas fa-house-chimney"></i><span>總覽</span></a>
+        <a href="culture.html"><i class="fas fa-compass"></i><span>行程</span></a>
+        <a href="guide.html"><i class="fas fa-feather-pointed"></i><span>指南</span></a>
+        <a href="language.html"><i class="fas fa-language"></i><span>會話</span></a>
+    </nav>
 </body>
 </html>
