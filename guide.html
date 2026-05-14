@@ -44,55 +44,102 @@
         <a href="culture.html"><i class="fas fa-compass"></i><span>行程</span></a>
         <a href="guide.html" class="active"><i class="fas fa-feather-pointed"></i><span>指南</span></a>
     </nav>
-
-    <script>
-        const fullGuideData = {
-            driving: [
-                { title: "M-Plass：山路禮讓", imp: "high", desc: "看到藍底白字『M』是避車彎。若你這側有 M 且對向有大車，請停下。", tip: "對方閃燈是說 Takk (謝謝)。請舉手回禮。", humor: "停在 M 拍照會讓後方大客車司機用眼神把你送回家。" },
-                { title: "AutoPass 收費", imp: "med", desc: "全挪威公路與渡輪皆自動感應車牌。", tip: "不需找零錢，直接開過去即可。", humor: "還車後，租車公司會直接從信用卡扣除，不用擔心。" }
-            ],
-            apps: [
-                { title: "Yr.no 氣象", imp: "high", desc: "挪威氣象局官方數據，極度精準。", tip: "登山前必看每小時的風速與降雨預報。", humor: "在挪威，Yr 的話就是真理。" },
-                { title: "EasyPark 停車", imp: "high", desc: "全挪威最通用的停車 App。", tip: "在台灣先綁好信用卡並完成手機號碼註冊。", humor: "粉紅圓圈圖示，看到它就是救星。" }
-            ],
-            grocery: [
-                { title: "週日超市公休", imp: "high", desc: "絕大多數超市週日不營業，務必提前囤貨。", tip: "週六下午 6 點後連啤酒都會禁賣，請提早。", humor: "週日餓肚子是自找的，這叫北歐式震撼教育。" }
-            ],
-            weather: [
-                { title: "洋蔥式穿衣", imp: "high", desc: "內層排汗、中層保暖、外層防風防水。", tip: "夏天也會有 5 度的山區，薄羽絨必備。", humor: "沒有壞天氣，只有穿錯衣服的觀光客。" }
-            ],
-            emergency: [
-                { title: "救援：112 / 113", imp: "high", desc: "112 警察、113 醫療急救。", tip: "手機安裝 Hjelp 113 App 自動同步座標。", humor: "祝這張卡片直到你回國前都是裝飾品。" }
+       <script>
+    // 擴充後的完整戰術資料庫
+    const fullGuideData = {
+        driving: {
+            icon: "🚗", name: "道路戰術",
+            items: [
+                { title: "M-Plass：避車彎美德", imp: "high", desc: "單線道狹窄處會有藍底白字『M』。絕對禁止停車拍照。", tip: "對向大車進不來時，你有 M 就請靠邊。對方閃燈致謝，請舉手回禮。", humor: "佔用 M 拍照，會收穫全挪威職業司機的白眼大禮包。" },
+                { title: "電動車充電術", imp: "high", desc: "超市旁通常有快充 (Mer, Recharge, Tesla)。", tip: "車子充電，人去買菜，這是最高效率的老新店人戰術。", humor: "看著油車的油價，你會覺得省下來的錢能多吃兩口鮭魚。" },
+                { title: "無感收費 AutoPass", imp: "med", desc: "全挪威公路與大部分渡輪皆為自動感應。", tip: "租車時已內建，不需找零錢，還車時租車公司會一併結算。", humor: "這是一個讓你花錢花得毫無知覺的魔法系統。" }
             ]
-        };
-
-        function switchGuide(category) {
-            document.querySelectorAll('.cat-tag').forEach(tag => {
-                tag.classList.remove('active');
-                if(tag.getAttribute('onclick') && tag.getAttribute('onclick').includes(category)) tag.classList.add('active');
-            });
-            renderList(category);
+        },
+        ferry: {
+            icon: "⛴️", name: "渡輪戰術",
+            items: [
+                { title: "上船不用慌", imp: "high", desc: "車子跟著排隊線走，會有指揮員引導你停在哪個車道。", tip: "停好車後拉起手煞車。多數航線車牌會被自動掃描計費。", humor: "開進船肚子的那一刻，會有一種被巨大鯨魚吞噬的科幻感。" },
+                { title: "甲板上的 Svele", imp: "med", desc: "挪威渡輪必吃的傳統甜點：半月型鬆餅。", tip: "夾著棕色起司 (Brunost) 或奶油糖霜，配上一杯黑咖啡。", humor: "不吃渡輪上的鬆餅，別跟人說你來過挪威。" }
+            ]
+        },
+        laundry: {
+            icon: "🧺", name: "洗衣生存",
+            items: [
+                { title: "無人洗衣店 (Clean Kokos)", imp: "high", desc: "第 7 天的救星，北歐的現代化自助洗衣。", tip: "通常不收現金，需備妥信用卡，有些甚至要下載專屬 App 操作。", humor: "看著髒衣服在滾筒裡轉，是長途旅行中最療癒的畫面之一。" },
+                { title: "自備洗衣膠囊", imp: "med", desc: "雖然很多洗衣房會自動投藥，但有些營區需要自備。", tip: "從台灣帶幾顆洗衣膠囊放夾鏈袋，省空間又防破裂。", humor: "如果膠囊破在行李箱裡，你的衣服在穿之前就已經洗好了。" }
+            ]
+        },
+        apps: {
+            icon: "📱", name: "必備工具",
+            items: [
+                { title: "Yr.no 氣象戰神", imp: "high", desc: "挪威官方氣象 App，精準到每小時降雨。", tip: "出門前必看 Cloudiness (雲量)，決定去觀景台會不會白跑。", humor: "在挪威，Yr 說會下雨，你連雨衣的拉鍊都不用懷疑要拉多高。" },
+                { title: "EasyPark 停車救星", imp: "high", desc: "全挪威最通用的停車 App。", tip: "在台灣先綁好信用卡，停車時轉動轉盤設定預計離開時間，提早走可提早結束計費。", humor: "粉紅色的圓圈，是你免於收受巨額罰款的護身符。" }
+            ]
+        },
+        grocery: {
+            icon: "🛒", name: "超市生存",
+            items: [
+                { title: "週日：超市荒漠", imp: "high", desc: "週日絕大多數超市公休（包含 Meny, REMA 1000）。", tip: "週六下午務必囤足週日的糧食。買酒請在週六 18:00 前完成。", humor: "週日沒食物吃，你只能去加油站買天價大亨堡，那味道叫後悔。" },
+                { title: "Pant：空罐回收金", imp: "low", desc: "買飲料會多收 2-3 NOK 押金。", tip: "喝完別捏扁！去超市門口機器投入，印出抵用券可直接折抵消費。", humor: "這不是撿破爛，這是維京人環保的藝術，還能賺回一顆蘋果。" }
+            ]
+        },
+        emergency: {
+            icon: "🆘", name: "緊急救援",
+            items: [
+                { title: "救護車 113 / 警察 112", imp: "high", desc: "免費的緊急救援電話。", tip: "如果遇到醫療緊急狀況，直接按下方按鈕撥打。", humor: "希望這個按鈕直到你回國前，都只是網頁上的一個裝飾品。", action: { text: "📞 立即撥打 113", link: "tel:113", class: "btn-danger" } }
+            ]
         }
+    };
 
-        function renderList(category) {
-            const sectionData = fullGuideData[category];
-            const html = sectionData.map((item, index) => `
-                <div class="glass-card tactical-card d-flex p-3" style="animation-delay: ${index * 0.1}s">
-                    <div class="importance-strip imp-${item.imp}"></div>
-                    <div class="flex-grow-1">
-                        <h5 class="fw-bold mb-1">${item.title}</h5>
-                        <p class="small text-muted mb-2">${item.desc}</p>
-                        <div class="pro-tip-box">
-                            <i class="fas fa-lightbulb text-info me-2"></i><strong>戰術：</strong> ${item.tip}
-                        </div>
-                        <span class="humor-quote">"${item.humor}"</span>
+    let currentCategory = 'driving';
+
+    // 1. 自動生成頂部導航按鈕
+    function renderNav() {
+        const navContainer = document.getElementById('catNav');
+        navContainer.innerHTML = ''; // 清空舊的
+        
+        Object.keys(fullGuideData).forEach(key => {
+            const cat = fullGuideData[key];
+            const btn = document.createElement('div');
+            btn.className = `cat-tag ${key === currentCategory ? 'active' : ''}`;
+            btn.innerHTML = `${cat.icon} ${cat.name}`;
+            btn.onclick = () => switchGuide(key);
+            navContainer.appendChild(btn);
+        });
+    }
+
+    // 2. 切換分類
+    function switchGuide(categoryKey) {
+        currentCategory = categoryKey;
+        renderNav(); // 重新渲染導航以更新 Active 狀態
+        renderList(categoryKey);
+    }
+
+    // 3. 渲染戰術卡片
+    function renderList(categoryKey) {
+        const sectionData = fullGuideData[categoryKey].items;
+        const html = sectionData.map((item, index) => `
+            <div class="glass-card tactical-card d-flex p-3" style="animation-delay: ${index * 0.1}s">
+                <div class="importance-strip imp-${item.imp}"></div>
+                <div class="flex-grow-1">
+                    <h5 class="fw-bold mb-1">${item.title}</h5>
+                    <p class="small text-muted mb-2">${item.desc}</p>
+                    <div class="pro-tip-box">
+                        <i class="fas fa-lightbulb text-info me-2"></i><strong>戰術：</strong> ${item.tip}
                     </div>
+                    <span class="humor-quote mb-2">"${item.humor}"</span>
+                    ${item.action ? `<a href="${item.action.link}" class="btn ${item.action.class} btn-sm mt-2 w-100 fw-bold rounded-pill shadow-sm">${item.action.text}</a>` : ''}
                 </div>
-            `).join('');
-            document.getElementById('guideDisplay').innerHTML = html;
-        }
+            </div>
+        `).join('');
+        document.getElementById('guideDisplay').innerHTML = html;
+    }
 
-        switchGuide('driving');
-    </script>
+    // 網頁載入時初始化
+    window.onload = () => {
+        renderNav();
+        renderList(currentCategory);
+    };
+</script>
 </body>
 </html>
