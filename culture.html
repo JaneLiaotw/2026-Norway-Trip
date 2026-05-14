@@ -97,23 +97,151 @@
     </nav>
 
     <script>
-        const itineraryData = {
-            1: { title: "曼谷轉機之夜", weather: "30°C", icon: "fa-plane", outfit: "長途機上服裝 (BKK)", hotel: "Suvarnabhumi Airport", hotelAmenity: "✈️ 轉機過境", target: "BKK Airport", dist: "TPE-BKK", time: "3.5 hrs", desc: "18:50 起飛，21:35 抵達曼谷。準備半夜銜接奧斯陸航段。", history: "蘇凡納布機場是東南亞樞紐。", humor: "在轉機區練習維京式的睡眠法。", spots: ["TPE 機場", "BKK 轉機區", "免稅店"] },
-            2: { title: "南下的白色序曲", weather: "18°C", icon: "fa-car", outfit: "薄外套，預防海風", hotel: "Radisson Blu Caledonien", hotelAmenity: "🍳 早餐 / 雪櫃", target: "Kristiansand", dist: "325 km", time: "4 hrs", desc: "07:25抵達OSL。取車採買。經海達爾木板教堂南下。", history: "海達爾木板教堂是挪威最大的木構造建築。", humor: "別讓政府的測速相機幫你拍天價照片。", spots: ["Obs Jessheim 採買", "海達爾教堂", "魚市場"] },
-            3: { title: "本土最南端的孤獨", weather: "16°C", icon: "fa-cloud-sun", outfit: "防風外套，燈塔區風強", hotel: "Radisson Blu Atlantic", hotelAmenity: "🍳 早餐 / 雪櫃", target: "Stavanger Atlantic", dist: "90 km", time: "1.5 hrs", desc: "前往本土最南端 Lindesnes 燈塔，下午拜訪石中劍。", history: "石中劍象徵挪威的和平、團結與自由。", humor: "小龍蝦剛為你的味蕾放棄了游泳權。", spots: ["林德斯內燈塔", "石中劍", "彩色街"] },
-            4: { title: "諸神的聖壇", weather: "14°C", icon: "fa-mountain", outfit: "登山護膝，洋蔥式穿法", hotel: "Pulpit Rock Lodge", hotelAmenity: "🍳 早餐 / 登山口", target: "Preikestolen BaseCamp", dist: "40 km", time: "5 hrs Hike", desc: "挑戰 4.2km 單程聖壇岩步道。入住基地營山莊。", history: "冰河時期形成的 604 公尺斷崖。", humor: "這裡沒圍欄，重力在這裡很慷慨。", spots: ["聖壇岩", "Basecamp", "超市採買"] },
-            5: { title: "維京國王的發源地", weather: "15°C", icon: "fa-cloud-rain", outfit: "防水外套，渡輪風大", hotel: "Radisson Haugesund", hotelAmenity: "🍳 晚間輕食+早餐", target: "Radisson Haugesund", dist: "85 km", time: "2 hrs", desc: "北上經渡輪前往 Haugesund。拜訪哈拉爾一世紀念碑。", history: "Haraldshaugen 標誌著挪威統一。", humor: "不吃渡輪上的鬆餅會被當地人鄙視。", spots: ["渡輪風景", "哈拉爾一世紀念碑", "Obs 採買"] },
-            6: { title: "卑爾根的時光長廊", weather: "13°C", icon: "fa-umbrella", outfit: "堅強雨衣，享受雨都", hotel: "Thon Hotel Rosenkrantz", hotelAmenity: "🍳 超讚晚間輕食", target: "Bryggen", dist: "140 km", time: "3 hrs", desc: "E39公路北上。漫步布呂根彩色木屋與魚市場。", history: "Bryggen 曾是漢薩同盟貿易中心。", humor: "下雨是正常發揮，享受專業濕潤感。", spots: ["布呂根木屋", "魚市場", "弗洛伊恩纜車"] },
-            7: { title: "跨越地心的隧道", weather: "12°C", icon: "fa-smog", outfit: "保暖針織衫", hotel: "Flåm Marina", hotelAmenity: "🍳 廚房 / 港口邊", target: "Flåm Railway", dist: "170 km", time: "2.5 hrs", desc: "穿越 24.5km 萊達爾隧道。搭乘高山鐵路。", history: "世界最美也最險峻的鐵路段。", humor: "隧道藍光不是為了去異星，是怕你睡著。", spots: ["高山鐵路", "Stegastein", "奈勒伊峽灣"] },
-            8: { title: "冰河與山脈的史詩", weather: "10°C", icon: "fa-snowflake", outfit: "輕羽絨，冰河區體感冷", hotel: "Stryn Kaffebar", hotelAmenity: "🍳 早餐 / 溫馨", target: "Boyabreen Glacier", dist: "210 km", time: "4 hrs", desc: "近距離觀察 Boyabreen 冰河。經由最美 5 號公路。", history: "Stryn 湖水因冰河粉末呈翡翠綠。", humor: "羊群正在開會，你只是個路過的小咖。", spots: ["Boyabreen 冰河", "Loen 纜車", "Stryn 小鎮"] },
-            9: { title: "峽灣深處的秘密", weather: "12°C", icon: "fa-water", outfit: "防潑水衣物，瀑布多", hotel: "Geiranger Feriesenter", hotelAmenity: "🍳 廚房 / 洗衣 / 充電", target: "Geiranger", dist: "85 km", time: "2.5 hrs", desc: "挑戰 Dalsnibba 歐洲最高觀景台。入住峽灣木屋。", history: "農場居民曾收起木梯以躲避稅官。", humor: "求婚者瀑布求婚失敗後從此酗酒。", spots: ["Dalsnibba", "Flydalsjuvet", "瀑布步道"] },
-            10: { title: "蓋朗厄爾悠閒日", weather: "12°C", icon: "fa-cloud-sun", outfit: "休閒服，小木屋烹飪", hotel: "Geiranger Feriesenter", hotelAmenity: "🍳 續住 / 洗衣充電日", target: "Geiranger Fjord Cruise", dist: "0 km", time: "Free Day", desc: "預約峽灣遊船看七姊妹瀑布。享受自炊樂趣。", history: "世界遺產名錄中的峽灣明珠。", humor: "在這裡不拍照，相機都會感到憂鬱。", spots: ["七姊妹瀑布", "老鷹之路", "巧克力工坊"] },
-            11: { title: "新藝術風格之美", weather: "14°C", icon: "fa-sun", outfit: "都市休閒裝，適合攝影", hotel: "Quality Hotel Ålesund", hotelAmenity: "🍳 早餐 / 海景", target: "Aksla Viewpoint", dist: "110 km", time: "3 hrs", desc: "前往最美城市奧勒松。攀登 418 階觀景台。", history: "1904 年大火後以石造建築重建。", humor: "每爬一階都在燃燒昨晚吃掉的熱量。", spots: ["Aksla 觀景台", "老城區", "海港碼頭"] },
-            12: { title: "走進巨魔的領地", weather: "9°C", icon: "fa-mountain", outfit: "防風外套，山區氣溫低", hotel: "Grand Hotel Åndalsnes", hotelAmenity: "🍳 早餐 / 火車站旁", target: "Trollstigen", dist: "160 km", time: "3.5 hrs", desc: "征服巨魔之路髮夾彎。注意周日商場不開。", history: "巨魔之路於 1936 年正式通車。", humor: "覺得石頭像人臉？那是曬乾的巨魔。", spots: ["巨魔之路觀景台", "Gudbrandsjuvet", "港口散步"] },
-            13: { title: "苔原上的生命力", weather: "8°C", icon: "fa-hippo", outfit: "厚襪子，高地風大", hotel: "Rondane Gjestegård", hotelAmenity: "🍳 早餐 / 荒野", target: "Rondane National Park", dist: "80 km", time: "1.5 hrs", desc: "進入首座國家公園 Rondane。尋找野生馴鹿。", history: "這裡是北歐馴鹿的重要棲息地。", humor: "馴鹿很害羞，請保持社交距離。", spots: ["Sohlbergplassen", "國家公園公路", "山間漫步"] },
-            14: { title: "重返繁華之都", weather: "15°C", icon: "fa-city", outfit: "層次穿搭", hotel: "HI Oslo Haraldsheim", hotelAmenity: "🍳 大廚房 / 自炊", target: "Munch Museum", dist: "290 km", time: "4 hrs", desc: "南返奧斯陸。參觀孟克美術館與奧斯陸歌劇院。", history: "奧斯陸是全球發展最快的城市之一。", humor: "看到紅綠燈變多，代表假期餘額不足。", spots: ["孟克美術館", "歌劇院屋頂", "阿克碼頭"] },
-            15: { title: "維京魂的告別", weather: "16°C", icon: "fa-ship", outfit: "輕便行裝，準備還車", hotel: "HI Oslo Haraldsheim", hotelAmenity: "🍳 續住 / 最後打包", target: "Vigeland Park", dist: "15 km", time: "All Day", desc: "維格蘭公園散步。最後一次 Laundry 與行李打包。", history: "維格蘭公園內有兩百多件雕塑。", humor: "剩下的小魚罐頭請留給租車公司。", spots: ["維格蘭公園", "Fram 博物館", "皇宮"] },
-            16: { title: "挪威的戒斷症狀", weather: "15°C", icon: "fa-plane", outfit: "舒適機上服", hotel: "Radisson OSL Airport", hotelAmenity: "🍳 早餐 / 步行至機場", target: "Oslo Airport", dist: "50 km", time: "Sky High", desc: "14:35 班機起飛。帶著滿滿回憶完成 Great Saga。", history: "挪威的自然保育是世界的標竿。", humor: "唯一的治療藥方是開始計畫下一次。", spots: ["Budget 還車", "機場免稅店", "飛機窗景"] }
+       const itineraryData = {
+            1: { 
+                title: "啟程：曼谷轉機之夜", weather: "30°C", icon: "fa-plane", outfit: "輕便機上服 (BKK)", 
+                hotel: "Suvarnabhumi Airport (BKK)", hotelAmenity: "✈️ 轉機過境", target: "BKK Airport", dist: "TPE-BKK", time: "Flight", 
+                desc: "14:30 出發前往桃園機場，18:50 起飛。準備在曼谷素萬那普機場感受熱帶的夜晚，這將是我們最後一次體驗 30 度的溫暖，準備迎接北境的微涼。", 
+                history: "素萬那普機場是東南亞樞紐，我們在這裡儲備體力。", 
+                humor: "在轉機區練習維京式的睡眠法，為明天的自駕大考驗做準備。", 
+                spots: ["桃園機場 TPE", "曼谷機場 BKK"] 
+            },
+            2: { 
+                title: "南下序曲：木板教堂與冰寶任務", weather: "18°C", icon: "fa-car", outfit: "防風薄外套", 
+                hotel: "Radisson Blu Caledonien", hotelAmenity: "🍳 早餐 / 老城區", target: "Kristiansand", dist: "350 km", time: "4.5 hrs", 
+                desc: "07:25 抵達奧斯陸！09:00 取車後直奔 Obs 採買最重要的戰略物資：Kjøleelement (冰寶)。接著造訪宏偉的海達爾木板教堂，並在 Porsgrunds 瓷器廠午餐充電。傍晚抵達克里斯蒂安桑，漫步老城區與魚市場。", 
+                history: "海達爾木板教堂是挪威最大的木構造建築，展現中世紀工藝。", 
+                humor: "買到冰寶的那一刻，代表我們的挪威移動保鮮庫正式上線！", 
+                spots: ["Obs Jessheim", "海達爾木板教堂", "克里斯蒂安桑魚市場"] 
+            },
+            3: { 
+                title: "最南端孤獨：燈塔與石中劍", weather: "16°C", icon: "fa-cloud-sun", outfit: "防風外套，燈塔風大", 
+                hotel: "Radisson Blu Atlantic", hotelAmenity: "🍳 早餐 / 停車 $300kr", target: "Stavanger", dist: "230 km", time: "3.5 hrs", 
+                desc: "前往挪威本土最南端 Lindesnes 燈塔吹海風。下午拜訪象徵和平的石中劍 (Sverd i fjell)，然後進駐斯塔萬格。晚上漫步全挪威最老的斯塔萬格主教堂與繽紛的彩色街。", 
+                history: "石中劍紀念哈拉爾一世統一挪威，象徵和平、團結與自由。", 
+                humor: "這三把劍很大，但相信我，再強壯的維京戰士也拔不動它們。", 
+                spots: ["Lindesnes 燈塔", "石中劍", "斯塔萬格彩色街"] 
+            },
+            4: { 
+                title: "諸神的聖壇：護膝與勇氣的考驗", weather: "14°C", icon: "fa-mountain", outfit: "登山裝備、護膝必備", 
+                hotel: "Preikestolen BaseCamp", hotelAmenity: "🍳 登山口基地營", target: "Preikestolen", dist: "40 km + 4.2km Hike", time: "5 hrs", 
+                desc: "早上先去超市採買午晚餐食材，因為明天週日商場不開！下午戴上護膝，挑戰 4.2 公里的聖壇岩步道。站在無護欄的 604 公尺斷崖上，俯瞰呂瑟峽灣，今晚就在基地營好好慶祝。", 
+                history: "聖壇岩形成於一萬年前的冰河時期，是全球網美與探險者的聖地。", 
+                humor: "腿痠是短暫的，但你在懸崖邊發抖的照片會流傳一輩子。", 
+                spots: ["BaseCamp 洗衣", "聖壇岩", "呂瑟峽灣"] 
+            },
+            5: { 
+                title: "維京發源地：斯庫德內斯港與紀念碑", weather: "15°C", icon: "fa-cloud-rain", outfit: "雨衣待命，渡輪風大", 
+                hotel: "Radisson Hotel Haugesund", hotelAmenity: "🍳 晚間輕食", target: "Haugesund", dist: "130 km", time: "3 hrs", 
+                desc: "週日商場公休大作戰！過隧道前記得上廁所。如果天氣好，開車前往斯庫德內斯港感受白色木屋的魅力。接著拜訪哈拉爾一世紀念碑，晚上回飯店享用輕食，並規劃明天的行程。", 
+                history: "豪格松被認為是挪威最早的行政中心。", 
+                humor: "週日的挪威像座空城，我們昨天買的乾糧現在看起來像米其林大餐。", 
+                spots: ["斯庫德內斯港", "哈拉爾紀念碑", "豪格松"] 
+            },
+            6: { 
+                title: "雨都漫步：布呂根與弗洛伊恩山", weather: "13°C", icon: "fa-umbrella", outfit: "最帥的防水衣物", 
+                hotel: "Thon Hotel Rosenkrantz", hotelAmenity: "🍳 超讚晚間輕食 / P-hus $390kr", target: "Bryggen", dist: "140 km", time: "3 hrs", 
+                desc: "沿 E39 公路北上，搭乘渡輪前往雨都卑爾根。下午逛逛世界遺產布呂根 (Bryggen) 的彩色木屋與魚市場。晚上吃完飯店輕食後，搭乘弗洛伊恩山纜車俯瞰整座城市的夜景。", 
+                history: "布呂根曾是漢薩同盟商人活躍的貿易中心。", 
+                humor: "在卑爾根，下雨不叫天氣不好，叫『氣氛絕佳』。", 
+                spots: ["布呂根木屋", "卑爾根魚市場", "弗洛伊恩山纜車"] 
+            },
+            7: { 
+                title: "峽灣前奏：艾於蘭老路與觀景台", weather: "12°C", icon: "fa-smog", outfit: "保暖外套", 
+                hotel: "Flåm Marina", hotelAmenity: "🍳 港口邊 / 自炊大空間", target: "Stegastein", dist: "170 km", time: "3 hrs", 
+                desc: "早晨先去 Clean Kokos 解決衣服問題。中午順路逛 IKEA 並在 Meny 採買晚餐（記得充飽電！）。下午勇闖艾於蘭老路，造訪 Flotane 與懸空在峽灣之上的 Stegastein 觀景台。", 
+                history: "Stegastein 觀景台完美融合了木材與玻璃，是國家級景觀建築。", 
+                humor: "在峽灣開車，你的脖子需要極佳的靈活度，因為每個轉角都是大景。", 
+                spots: ["Clean Kokos 洗衣", "Flotane", "Stegastein 觀景台"] 
+            },
+            8: { 
+                title: "冰川與書鎮：蒙達爾的羊奶起司", weather: "10°C", icon: "fa-snowflake", outfit: "輕羽絨防寒", 
+                hotel: "Stryn Kaffebar & Vertshus", hotelAmenity: "🍳 溫馨 / 石拱橋散步", target: "Stryn", dist: "210 km", time: "4 hrs", 
+                desc: "穿過世界最長的洛達爾隧道。拜訪 Mundal 書鎮，別忘了品嚐 Fjærland 當地的羊奶起司。下午參觀冰川博物館，經由休爾巴卡內觀景台，傍晚到 REMA 1000 採買後入住房間。", 
+                history: "Mundal 被稱為挪威的書鎮，二手書店林立在峽灣旁。", 
+                humor: "隧道裡的藍光不是為了去異星冒險，而是怕你無聊到睡著。", 
+                spots: ["Mundal 書鎮", "冰川博物館", "Stryn 石拱橋"] 
+            },
+            9: { 
+                title: "老鷹之路：蓋朗厄爾的壯麗俯瞰", weather: "12°C", icon: "fa-water", outfit: "防風防水外套放後座", 
+                hotel: "Geiranger Feriesenter", hotelAmenity: "🍳 峽灣第一排 / 洗衣", target: "Geiranger", dist: "85 km", time: "2.5 hrs", 
+                desc: "早上至 REMA 1000 大補給（確保電量 70% 以上）。走舊斯特林山路，登上 Dalsnibba 俯瞰峽灣，再造訪 Queen's Chair。下午抵達營區卸行李洗衣服，傍晚衝刺老鷹之路觀景台。", 
+                history: "蓋朗厄爾峽灣與老鷹之路，展現了人類與險峻自然搏鬥的工程奇蹟。", 
+                humor: "如果 Dalsnibba 雲太厚，別氣餒，我們還有 Flydalsjuvet 當備胎。", 
+                spots: ["Dalsnibba 空中步道", "老鷹之路", "峽灣中心"] 
+            },
+            10: { 
+                title: "悠閒峽灣：無照釣魚大師", weather: "12°C", icon: "fa-fish", outfit: "不怕弄髒的休閒服", 
+                hotel: "Geiranger Feriesenter", hotelAmenity: "🍳 續住 / 營區自炊", target: "Geiranger Fjord", dist: "0 km", time: "Free Day", 
+                desc: "今天是自由探索日！租一艘 4 人汽艇（免駕照），買一套手搖釣組（Håndvinde）。老手戰術：傍晚 6 點到 9 點光線最美、魚最活躍。注意岩石上有白色鳥糞的地方，那就是熱門中魚點！", 
+                history: "峽灣的純淨水質孕育了豐富的漁業資源，這也是維京人早期的生活方式。", 
+                humor: "找釣點的秘訣：跟著鳥的排泄物走，準沒錯！", 
+                spots: ["Homlong 最佳釣點", "峽灣遊船", "營區洗衣發呆"] 
+            },
+            11: { 
+                title: "新藝術城：奧勒松運河漫步", weather: "14°C", icon: "fa-city", outfit: "都市休閒裝", 
+                hotel: "Quality Hotel Ålesund", hotelAmenity: "🍳 早餐 / 路邊停車免費 (週六後)", target: "Ålesund", dist: "110 km", time: "3 hrs", 
+                desc: "搭乘渡輪告別蓋朗厄爾，參觀斯圖達爾教堂。週日商場公休，今天務必在 Obs 或 Meny 備齊糧食。下午入住奧勒松，傍晚沿著 Brosundet 運河散步，欣賞浴火重生的新藝術街區。", 
+                history: "奧勒松於 1904 年大火後以新藝術風格重建，被譽為挪威最美城市。", 
+                humor: "週六下午 16:00 後路邊停車免費，這是老新店人最愛的挪威小確幸。", 
+                spots: ["斯圖達爾教堂", "Brosundet 運河", "新藝術街區"] 
+            },
+            12: { 
+                title: "精靈的髮夾彎：挑戰巨魔之路", weather: "9°C", icon: "fa-route", outfit: "保暖外套，山頂雲霧冷", 
+                hotel: "Grand Hotel Åndalsnes", hotelAmenity: "🍳 百年飯店 / 洗衣店", target: "Trollstigen", dist: "160 km", time: "4 hrs", 
+                desc: "早上搭電梯直達 Aksla 觀景台俯瞰全城。中午在 Valldal 休息後，準備挑戰 11 個髮夾彎的精靈之路 (Trollstigen)！晚上抵達翁達爾斯內斯，洗衣店就在汽車廠裡面。", 
+                history: "精靈之路於 1936 年通車，是工程難度極高的國家旅遊路線。", 
+                humor: "開這 11 個彎時，全家人會自動開啟靜音模式，安靜到能聽見心跳聲。", 
+                spots: ["Aksla 觀景台", "精靈之路", "翁達爾斯內斯"] 
+            },
+            13: { 
+                title: "自然荒野：巨魔之牆與苔原", weather: "8°C", icon: "fa-hippo", outfit: "厚襪子、羊毛衣", 
+                hotel: "Rondane River Lodge", hotelAmenity: "🍳 荒野風情 / 安靜鄉間", target: "Rondane", dist: "180 km", time: "3.5 hrs", 
+                desc: "造訪雄偉的巨魔之牆，接著在 Dombås 補給充電。下午進入 Fokstumyra 自然保護區尋找野生動物，並在索爾堡觀景台 (Sohlbergplassen) 欣賞畫中實景，今晚入住河畔木屋。", 
+                history: "龍達訥是挪威第一座國家公園，以石海與地衣地貌聞名。", 
+                humor: "在自然保護區請放輕腳步，因為你踩的可能是一萬年前留下來的地衣。", 
+                spots: ["巨魔之牆", "Fokstumyra 保護區", "索爾堡觀景台"] 
+            },
+            14: { 
+                title: "重返都市：跳台滑雪與夜景", weather: "15°C", icon: "fa-skiing", outfit: "層次穿搭", 
+                hotel: "Oslo Youth Hostel Haraldsheim", hotelAmenity: "🍳 青年旅館 / 洗衣房", target: "Lillehammer", dist: "280 km", time: "4 hrs", 
+                desc: "參觀林厄比木板教堂後，直奔利勒哈默爾的跳台滑雪場上方停車場。中午在 IKEA Ringsaker 用餐。下午抵達奧斯陸青旅放行李，晚上前往 Grefsenkollen 觀景台看奧斯陸夜景。", 
+                history: "利勒哈默爾曾舉辦 1994 年冬季奧運，跳台滑雪是挪威國技。", 
+                humor: "看著跳台的高度，你會覺得自己還是好好開電動車就好了。", 
+                spots: ["林厄比木板教堂", "跳台滑雪場", "Grefsenkollen 夜景"] 
+            },
+            15: { 
+                title: "藝術洗禮：圖書館與國家美術館", weather: "16°C", icon: "fa-palette", outfit: "文青都市風格", 
+                hotel: "Oslo Youth Hostel Haraldsheim", hotelAmenity: "🍳 續住 / Ruter 24h 車票", target: "Oslo City", dist: "15 km", time: "All Day", 
+                desc: "今天用 Ruter App 買 24h 車票穿梭奧斯陸。早上直奔最美的戴希曼圖書館 5 樓，接著在歌劇院屋頂散步。中午吃 The Salmon (已訂位)，下午去國家美術館，晚上逛美食廣場。", 
+                history: "奧斯陸正透過壯觀的現代建築，向世界展現北歐設計的實力。", 
+                humor: "在圖書館 5 樓裝個文青，這是一場免費且高質感的角色扮演。", 
+                spots: ["戴希曼圖書館", "奧斯陸歌劇院", "國家美術館"] 
+            },
+            16: { 
+                title: "快閃瑞典：岩畫與蝦三明治", weather: "17°C", icon: "fa-globe-europe", outfit: "跨國輕裝", 
+                hotel: "Oslo Youth Hostel Haraldsheim", hotelAmenity: "🍳 Check in / Budget 還車", target: "Sweden Border", dist: "260 km", time: "4 hrs", 
+                desc: "行李寄放青旅，我們跨國去瑞典！造訪菲特利克岩畫，中午去吃鮮美的瑞典蝦三明治 (Strömstad Räkor)。別忘了去瑞典公賣局買酒和 Nordby 購物中心血拼，晚上回奧斯陸還車。", 
+                history: "瑞典俚語 På en räkmacka 意指「坐在蝦三明治上」，形容人生順遂、不費吹灰之力。", 
+                humor: "這趟去瑞典的唯一目的：讓自己像坐在蝦三明治上一樣順遂！", 
+                spots: ["菲特利克岩畫", "瑞典公賣局", "Nordby 購物中心"] 
+            },
+            17: { 
+                title: "告別北境：奧斯陸起飛", weather: "15°C", icon: "fa-plane-departure", outfit: "機上舒適服裝", 
+                hotel: "Flight to BKK", hotelAmenity: "✈️ 萬里長空", target: "Oslo Airport", dist: "50 km", time: "11 hrs", 
+                desc: "早上在青旅享受最後的挪威早餐。10:00 Check Out，準備前往機場搭乘 13:45 的航班離開這片峽灣與森林，飛往曼谷轉機。這趟 18 天的史詩冒險，正式進入尾聲。", 
+                history: "我們把挪威的純淨空氣與峽灣記憶，打包進了這 18 天的行囊中。", 
+                humor: "現在只剩下一個挑戰：如何把滿滿的行李箱拉上飛機。", 
+                spots: ["青旅早餐", "奧斯陸機場", "機上窗景"] 
+            },
+            18: { 
+                title: "平安賦歸：曼谷半日遊", weather: "32°C", icon: "fa-home", outfit: "夏季輕裝", 
+                hotel: "Sweet Home", hotelAmenity: "🇹🇼 台灣溫暖的家", target: "TPE Airport", dist: "BKK-TPE", time: "Flight", 
+                desc: "清晨 06:15 抵達曼谷。08:00 入境泰國，搭乘 BTS 到 Saphan Khwai 站 (3號出口) 享受半天的熱帶風情。14:00 回機場準備 17:15 飛往台北，預計 11:50 平安回到溫暖的家！", 
+                history: "從北緯 60 度的冰川回到亞熱帶的台灣，這是一場跨越半個地球的壯遊。", 
+                humor: "這趟旅程最神奇的地方在於，你昨天還在穿羊毛衣，今天就在流汗吃泰式炒河粉。", 
+                spots: ["入境曼谷", "Saphan Khwai", "溫暖的家"] 
+            }
         };
 
         function renderDay(d) {
