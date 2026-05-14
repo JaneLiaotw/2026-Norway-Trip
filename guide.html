@@ -39,11 +39,7 @@
 
     <div style="height: 100px;"></div>
 
-    <nav class="footer-nav">
-        <a href="index.html"><i class="fas fa-house-chimney"></i><span>總覽</span></a>
-        <a href="culture.html"><i class="fas fa-compass"></i><span>行程</span></a>
-        <a href="guide.html" class="active"><i class="fas fa-feather-pointed"></i><span>指南</span></a>
-    </nav>
+
        <script>
     // 擴充後的完整戰術資料庫
     const fullGuideData = {
@@ -141,5 +137,12 @@
         renderList(currentCategory);
     };
 </script>
+    <nav class="bottom-nav">
+        <!-- 注意看這裡，active 在「總覽」 -->
+        <a href="index.html" class="active"><i class="fas fa-house-chimney"></i><span>總覽</span></a>
+        <a href="culture.html"><i class="fas fa-compass"></i><span>行程</span></a>
+        <a href="guide.html"><i class="fas fa-feather-pointed"></i><span>指南</span></a>
+        <a href="language.html"><i class="fas fa-language"></i><span>會話</span></a>
+    </nav>
 </body>
 </html>
