@@ -8,13 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        body {
-            background: linear-gradient(-45deg, #FAF5F5, #EED6D3, #FDFBFB, #E8B4B8);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            padding-bottom: 120px; 
-        }
-        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         .stagger-in { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .progress-container { position: relative; width: 75px; height: 75px; }
@@ -23,13 +16,12 @@
         .progress-circle-front { fill: none; stroke: white; stroke-width: 3.5; stroke-dasharray: 100; stroke-dashoffset: 100; transition: 1.5s cubic-bezier(0.4, 0, 0.2, 1); }
         .charge-section-optimized { background: linear-gradient(135deg, rgba(168, 218, 220, 0.5) 0%, rgba(238, 214, 211, 0.5) 100%); }
         .map-btn-soft { background: white; border-radius: 12px; padding: 10px; text-decoration: none; color: #434C5E; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; transition: 0.2s; border: none; }
-        .map-btn-soft:active { transform: scale(0.95); opacity: 0.8; }
     </style>
 </head>
-<body class="p-3">
+<body class="p-3 bg-warm">
     <header class="mb-4 mt-3 px-2 stagger-in" style="animation-delay: 0.1s">
         <div class="d-flex justify-content-between align-items-center">
-            <div><h2 class="fw-bold mb-0">Strategy Center</h2><p class="text-soft small mb-0">Norway Roadtrip 2026</p></div>
+            <div><h2 class="fw-bold mb-0">Strategy Center</h2><p class="text-muted small mb-0">Norway Roadtrip 2026</p></div>
             <div class="progress-container">
                 <svg class="progress-svg" viewBox="0 0 36 36">
                     <path class="progress-circle-back" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
@@ -50,13 +42,13 @@
     </div>
 
     <div class="glass-card charge-section-optimized stagger-in mb-3" style="animation-delay: 0.3s">
-        <h6 class="fw-bold mb-3"><i class="fas fa-charging-station me-2"></i>補給戰術中心</h6>
+        <h6 class="fw-bold mb-3"><i class="fas fa-satellite-dish me-2"></i>補給戰術雷達</h6>
         <div class="d-flex gap-2">
-            <a href="https://www.google.com/maps/search/?api=1&query=Gas+Station" target="_blank" class="map-btn-soft flex-fill">
-                <i class="fas fa-gas-pump me-2 text-danger"></i>加油站
+            <a href="https://www.google.com/maps/search/?api=1&query=Supermarket" target="_blank" class="map-btn-soft flex-fill">
+                <i class="fas fa-shopping-cart text-success me-2"></i>找超市
             </a>
             <a href="https://www.google.com/maps/search/?api=1&query=EV+Charging+Station" target="_blank" class="map-btn-soft flex-fill">
-                <i class="fas fa-bolt text-warning me-2"></i>充電站
+                <i class="fas fa-bolt text-warning me-2"></i>找充電
             </a>
         </div>
     </div>
@@ -73,6 +65,7 @@
         <a href="index.html" class="active"><i class="fas fa-house-chimney"></i><span>總覽</span></a>
         <a href="culture.html"><i class="fas fa-compass"></i><span>行程</span></a>
         <a href="guide.html"><i class="fas fa-feather-pointed"></i><span>指南</span></a>
+        <a href="language.html"><i class="fas fa-language"></i><span>會話</span></a>
     </nav>
 
     <script>
@@ -82,73 +75,28 @@
             else document.getElementById('nok').value = val ? (val / rate).toFixed(1) : '';
         }
 
-       window.onload = function() {
-            // 讀取當前天數，若無則預設為 Day 1
+        window.onload = function() {
             const savedDay = parseInt(localStorage.getItem('norway_last_day')) || 1;
-            
-            // 計算進度百分比 (更新為 18 天)
             const progress = Math.round((savedDay / 18) * 100);
             
-            // 動態畫出進度條
             setTimeout(() => {
                 document.getElementById('progressCircle').style.strokeDashoffset = 100 - progress;
                 document.getElementById('progressText').innerText = progress + "%";
             }, 500);
 
-            // 與 18 天行程完美對齊的導航目標
             const itinerary = { 
-                1: "Suvarnabhumi Airport",           // Day 1: 曼谷轉機
-                2: "Kristiansand",                   // Day 2: 南下
-                3: "Stavanger",                      // Day 3: 最南端與石中劍
-                4: "Preikestolen Basecamp",          // Day 4: 聖壇岩
-                5: "Haraldshaugen, Haugesund",       // Day 5: 斯庫德內斯港與豪格松
-                6: "Bryggen, Bergen",                // Day 6: 卑爾根
-                7: "Stegastein",                     // Day 7: 艾於蘭與弗萊姆
-                8: "Stryn",                          // Day 8: 書鎮與冰川
-                9: "Geiranger",                      // Day 9: 蓋朗厄爾老鷹之路
-                10: "Geiranger Fjord",               // Day 10: 峽灣釣魚
-                11: "Ålesund",                       // Day 11: 奧勒松新藝術街區
-                12: "Trollstigen",                   // Day 12: 巨魔之路
-                13: "Sohlbergplassen",               // Day 13: 苔原與觀景台
-                14: "Oslo Youth Hostel Haraldsheim", // Day 14: 利勒哈默爾與奧斯陸
-                15: "Opera House, Oslo",             // Day 15: 奧斯陸市區藝術
-                16: "Nordby Shoppingcenter, Sweden", // Day 16: 快閃瑞典
-                17: "Oslo Airport",                  // Day 17: 奧斯陸起飛
-                18: "Saphan Khwai BTS"               // Day 18: 曼谷快閃與賦歸
+                1: "Suvarnabhumi Airport", 2: "Kristiansand", 3: "Stavanger", 4: "Preikestolen Basecamp", 
+                5: "Haraldshaugen", 6: "Bryggen, Bergen", 7: "Stegastein", 8: "Stryn", 9: "Geiranger", 
+                10: "Geiranger Fjord", 11: "Ålesund", 12: "Trollstigen", 13: "Sohlbergplassen", 
+                14: "Haraldsheim, Oslo", 15: "Opera House, Oslo", 16: "Nordby Shoppingcenter, Sweden", 
+                17: "Oslo Airport", 18: "Saphan Khwai BTS" 
             };
 
             const target = itinerary[savedDay] || "Oslo";
             document.getElementById('targetName').innerText = "Day " + savedDay + ": " + target.split(',')[0];
-            
-            // Google Maps 導航連結
-            const googleMapsUrl = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(target + (savedDay===16?"":", Norway"));
-            document.getElementById('navLink').href = googleMapsUrl;
-       
+            const searchPlace = (savedDay === 1 || savedDay === 16 || savedDay === 18) ? target : target + ", Norway";
+            document.getElementById('navLink').href = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(searchPlace);
         };
     </script>
-    <!-- 升級版 4 按鈕底部導航列 (index.html 專用版) -->
-    <nav class="bottom-nav">
-        <!-- index 總覽頁面：加上 active 讓它變成粉紅色 -->
-        <a href="index.html" class="active">
-            <i class="fas fa-house-chimney"></i>
-            <span>總覽</span>
-        </a>
-        
-        <a href="culture.html">
-            <i class="fas fa-compass"></i>
-            <span>行程</span>
-        </a>
-        
-        <a href="guide.html">
-            <i class="fas fa-feather-pointed"></i>
-            <span>指南</span>
-        </a>
-        
-        <!-- 新增的語言會話入口 -->
-        <a href="language.html">
-            <i class="fas fa-language"></i>
-            <span>會話</span>
-        </a>
-    </nav>
 </body>
 </html>
