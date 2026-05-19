@@ -4,6 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Norway 2026 | The Great Saga</title>
+<!-- 引入 App 身分證 -->
+    <link rel="manifest" href="/2026-Norway-Trip/manifest.json">
+    
+    <!-- 呼叫 Service Worker 管家 -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/2026-Norway-Trip/sw.js')
+            .then(registration => {
+              console.log('離線管家已經就緒！範圍:', registration.scope);
+            })
+            .catch(error => {
+              console.log('離線管家安裝失敗:', error);
+            });
+        });
+      }
+    </script>
     
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
