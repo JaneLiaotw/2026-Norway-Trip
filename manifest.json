@@ -1,1 +1,15 @@
-
+{
+  "name": "Norway Strategy 2026",
+  "short_name": "挪威戰術地圖",
+  "start_url": "/2026-Norway-Trip/index.html",
+  "display": "standalone",
+  "background_color": "#FAF5F5",
+  "theme_color": "#E8B4B8",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/828/828066.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
